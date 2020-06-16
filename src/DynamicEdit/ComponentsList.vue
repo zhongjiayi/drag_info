@@ -25,6 +25,7 @@
             v-for="component of componentsList"
             :key="component.type"
             draggable="true"
+            @dragstart="dragstart_handler.bind(this, component)"
             ref="dragComponent"
           >
             <!-- 
@@ -74,21 +75,19 @@ export default class ComponentsList extends GreetingProps {
 
   constructor() {
     super();
-    this.dragstart_handler = this.dragstart_handler.bind(this);
   }
   created() {}
 
   mounted() {
-    const element = this.$refs.dragComponent as Element[];
-    element.forEach((el) => {
-      el.addEventListener("dragstart", this.dragstart_handler);
-    });
+    // const element = this.$refs.dragComponent as Element[];
+    // element.forEach((el) => {
+    //   el.addEventListener("dragstart", this.dragstart_handler);
+    // });
   }
 
-  dragstart_handler(ev: any) {
+  dragstart_handler(ev: any, componentData: any) {
     console.log("开始拖动", ev);
-    ev.dataTransfer.setData("data", JSON.stringify({}));
-    
+    ev.dataTransfer.setData("data", JSON.stringify(componentData));
     // Change the source element's background color to signify drag has started
     // ev.currentTarget.style.border = "dashed";
     // Add the id of the drag source element to the drag data payload so
