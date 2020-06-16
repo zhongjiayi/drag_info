@@ -1,45 +1,12 @@
 ﻿<template>
-  <BasicStyle>
+  <basicStyle>
     <template #headerLeft>
-      <!--退出收索按钮-->
-      <div
-        v-if="isSearchMode"
-        class="header-icon-box"
-        @click.left.stop="changeSearchMode"
-      >
-        <svg class="svg-icon " viewBox="0 0 12 11" aria-hidden="true">
-          <path
-            d="M3.578 6.498L6.5 9.493 5.029 11 .305 6.16a1.084 1.084 0 0 1 0-1.508L5.029 0 6.5 1.507 3.437 4.502h7.565a.998.998 0 1 1 0 1.996H3.578z"
-          ></path>
-        </svg>
-      </div>
-      <!--添加节目-->
-      <p v-else>组件列表</p>
+      <p>组件列表</p>
     </template>
     <template #headerRight>
-      <!--收索输入框-->
-      <transition name="search">
-        <div v-if="isSearchMode" class="layer-search">
-          <div class="search-icon">
-            <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
-              <path
-                d="M10.077 11.67l-1.99-1.99a5.227 5.227 0 0 1-2.828.837 5.259 5.259 0 1 1 5.259-5.258c0 1.043-.313 2.01-.837 2.828l1.989 1.988a1.128 1.128 0 0 1-1.593 1.595zm-4.84-9.433a3 3 0 1 0 .001 6.001 3 3 0 0 0 0-6.001z"
-              ></path>
-            </svg>
-          </div>
-          <input
-            v-if="isSearchMode"
-            class="hzInput searchInput"
-            type="text"
-            placeholder="关键字搜索"
-            v-model="filterKey"
-          />
-        </div>
-      </transition>
       <!--搜索按钮-->
       <div
-        v-if="!isSearchMode"
-        class="pane-searchButton header-icon-box"
+        class="pane-searchButton header-icon"
         @click.left.stop="changeSearchMode"
       >
         <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
@@ -48,8 +15,7 @@
           ></path>
         </svg>
       </div>
-      <!--折叠按钮-->
-      <slot v-if="!isSearchMode" name="stretchButton"></slot>
+      <slot name="stretchButton"></slot>
     </template>
     <template #main>
       <div class="layer-sortable-list">
@@ -62,6 +28,9 @@
             @dragstart="dragstart_handler($event,component)"
             ref="dragComponent"
           >
+            <!-- 
+            <p v-if="component.type === 'text'"></p>
+            <p v-if="component.type === 'image'"></p> -->
             <div class="component-icon-wrapper">
               <svg class="svg-icon">
                 <path v-for="item of component.path" :d="item"></path>
@@ -74,39 +43,46 @@
     </template>
     <!--拖动条插槽-->
     <slot name="operateHor"></slot>
-  </BasicStyle>
+  </basicStyle>
 </template>
 
 <script lang="ts">
-import { Vue, Prop, Component } from "vue-property-decorator";
-import BasicStyle from "./BasicStyle.vue";
+import { Vue, Component, Prop } from "vue-property-decorator";
+import BasicStyle from "./BasicStyle";
+
+// Define the props by using Vue's canonical way.
+const GreetingProps = Vue.extend({
+  props: {
+    components: Array,
+  },
+});
 
 @Component({
   components: {
     BasicStyle,
   },
 })
-export default class ComponentsList extends Vue {
-  @Prop() components!: { scope: string; name: string }[];
-
-  private filterKey = "";
+export default class ComponentsList extends GreetingProps {
+  private isSearchMode = false;
 
   private isModel = "local";
 
   get componentsList() {
-    return this.components.filter(
-      (item) =>
-        item.scope.indexOf(this.isModel) !== -1 &&
-        item.name.indexOf(this.filterKey) !== -1
+    return (this.$store.state.components || []).filter(
+      (item: { scope: string }) => item.scope.indexOf(this.isModel) !== -1
     );
   }
 
-  // 搜索模式切换
-  private isSearchMode = false;
+  constructor() {
+    super();
+  }
+  created() {}
 
-  changeSearchMode(): void {
-    this.isSearchMode = !this.isSearchMode;
-    this.filterKey = "";
+  mounted() {
+    // const element = this.$refs.dragComponent as Element[];
+    // element.forEach((el) => {
+    //   el.addEventListener("dragstart", this.dragstart_handler);
+    // });
   }
 
   dragstart_handler(ev: any, componentData: any) {
@@ -120,6 +96,8 @@ export default class ComponentsList extends Vue {
     // Tell the browser both copy and move are possible
     // ev.effectAllowed = "copyMove";
   }
+
+  changeSearchMode(): void {}
 }
 </script>
 

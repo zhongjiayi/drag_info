@@ -61,7 +61,7 @@
       <div class=" ht-pane rightPane">
         <div v-for="(item,index) of rightPane" :key="index" :class="index === 0 ? 'firstNode' : 'otherNode'"
              :style="{height:item.height + 'px'}">
-          <component :is="item.component" :components="components" :editArr="editArr">
+          <component :is="item.component">
             <!--拖动条-->
             <template #operateHor>
               <div v-if="index !== 0" class="pane-operateHor"
@@ -185,34 +185,33 @@
           pIndex: 1,
           progName: "节目1",
           progDuration: "00:00:30",
-          playTime: 1,
           progBgImage: "url(“xxx/xxx/xxx”)",
           elemList: [
             {
               pIndex: 1,
-              elemName: "视频1",
-              elemType: "video",
-              content: "xxx/xxx/xxx.mp4",
+              elemName: "视频1",  //string
+              elemType: "video", //string
+              content: "xxx/xxx/xxx.mp4",  // string
               elemComAttr:
                 {
-                  coordinate: "500,500",
-                  widthHeight: "400*300",
+                  coordinate: "500,500",  //string
+                  widthHeight: "400*300",  //string
                   elemTime: 1, // number
-                  duration: "00:00:30",
+                  duration: "00:00:30", // string
                 }
             },
             {
               pIndex: 2,
-              elemName: "视频2",
-              elemType: "video",
-              content: "xxx/xxx/xxx.mp4",
+              elemName: "视频2",  //string
+              elemType: "video", //string
+              content: "xxx/xxx/xxx.mp4",  // string
               elemComAttr:
                 {
                   pIndex: 1,
-                  coordinate: "500,500",
-                  widthHeight: "400*300",
+                  coordinate: "500,500",  //string
+                  widthHeight: "400*300",  //string
                   elemTime: 1, // number
-                  duration: "00:00:30",
+                  duration: "00:00:30", // string
                 }
             }
           ]
@@ -221,7 +220,6 @@
           pIndex: 2,
           progName: "节目2",
           progDuration: "00:00:30",
-          playTime: 1,
           progBgImage: "url(“xxx/xxx/xxx”)",
           elemList: []
         },
@@ -229,7 +227,6 @@
           pIndex: 3,
           progName: "节目3",
           progDuration: "00:00:30",
-          playTime: 1,
           progBgImage: "url(“xxx/xxx/xxx”)",
           elemList: []
         },
@@ -237,7 +234,6 @@
           pIndex: 4,
           progName: "节目4",
           progDuration: "00:00:30",
-          playTime: 1,
           progBgImage: "url(“xxx/xxx/xxx”)",
           elemList: []
         }
@@ -250,41 +246,6 @@
       // @ts-ignore
       return this.playbillData.progList.reduce((o, cur) => (o[cur.pIndex] = cur) && o, {})
     }// 节目列表对象
-
-    get editArr() {
-      let arr = []
-      if (this.activeProgramIndex === -1 && this.activeElemIndex === -1) {
-        arr.push({
-          model: 'playbill',
-          data: this.playbillData
-        })
-      } else if (this.activeProgramIndex !== -1 && this.activeElemIndex === -1) {
-        arr.push({
-          model: 'program',
-          // @ts-ignore
-          data: this.programsListObj[this.activeProgramIndex]
-        })
-      } else {
-        // @ts-ignore
-        const elemList = this.activeProgramIndex === -1 ? this.playbillData.elemList : this.programsListObj[this.activeProgramIndex].elemList
-        let elem
-        for(const item of elemList) {
-          if (item.pIndex === this.activeElemIndex) {
-            elem = item
-            break
-          }
-        }
-        arr.push({
-          model: 'commonElem',
-          data: elem.elemComAttr
-        })
-        arr.push({
-          model: elem.elemType,
-          data: elem.elemSupAttr
-        })
-      }
-      return arr
-    }
 
     // 修改激活的编号
     changeActiveIndex(type: string, value: number) {
@@ -299,14 +260,17 @@
     /**
      * 左右盘数据
      */
+
     private leftPane = [
       {component: 'PageList'},
       {component: 'ElementList', height: 400}
     ]
+
     private rightPane = [
       {component: 'Editor'},
       {component: 'ComponentsList', height: 400}
     ]
+
     private min = 36
     private max = 500
 
@@ -367,7 +331,7 @@
      */
     private offsetX = 0 // x偏移量
     private offsetY = 0 // y偏移量
-    private scale = 0.6 // 缩放比例
+    private scale = 0.2 // 缩放比例
 
     // 滚动事件
     mousewheelHandle(e: { deltaY: number }) {

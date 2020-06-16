@@ -37,8 +37,9 @@
 
 <script lang="ts">
 import { Vue, Prop, Component } from "vue-property-decorator";
+import textSet from "../components/componentList/text/textSet";
 
-@Component({})
+@Component({ components: { textSet } })
 export default class HomePage extends Vue {
   @Prop() resolution!: string; // �ֱ���
   @Prop() offsetX!: string; // x�������
@@ -112,7 +113,6 @@ export default class HomePage extends Vue {
     ev.dataTransfer.dropEffect = "copy";
     console.log("dragOver");
   }
-
 }
 </script>
 
@@ -125,5 +125,9 @@ export default class HomePage extends Vue {
   position: absolute;
   pointer-events: none;
   background: white;
+}
+.modelText {
+  z-index: 100;
+  background-color: aqua;
 }
 </style>
