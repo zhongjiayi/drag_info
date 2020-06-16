@@ -25,11 +25,12 @@
       }"
     >
       <div v-for="(item, index) of stageDisplay" :key="index">
-        <span v-if="item.type === 'text'" class="modelText">
+        <span>{{item.name}}</span>
+        <!-- <span v-if="item.type === 'text'" class="modelText"> -->
           <!-- <textSet :dragValue="item"></textSet> -->
-          <span v-if="!editing" @dblclick="edit">请对文本框进行编辑</span>
+          <!-- <span v-if="!editing" @dblclick="edit">请对文本框进行编辑</span>
           <input v-else type="text" value="请对文本框进行编辑" />
-        </span>
+        </span> -->
       </div>
     </div>
   </div>
@@ -37,9 +38,8 @@
 
 <script lang="ts">
 import { Vue, Prop, Component } from "vue-property-decorator";
-import textSet from "../components/componentList/text/textSet";
 
-@Component({ components: { textSet } })
+@Component({})
 export default class HomePage extends Vue {
   @Prop() resolution!: string; // �ֱ���
   @Prop() offsetX!: string; // x�������
@@ -113,6 +113,7 @@ export default class HomePage extends Vue {
     ev.dataTransfer.dropEffect = "copy";
     console.log("dragOver");
   }
+
 }
 </script>
 
@@ -126,6 +127,7 @@ export default class HomePage extends Vue {
   pointer-events: none;
   background: white;
 }
+
 .modelText {
   z-index: 100;
   background-color: aqua;

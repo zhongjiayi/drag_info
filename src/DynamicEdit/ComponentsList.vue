@@ -58,19 +58,23 @@
             class="component"
             v-for="component of componentsList"
             :key="component.type"
-            draggable="true"
-            @dragstart="dragstart_handler($event,component)"
-            ref="dragComponent"
           >
             <div class="component-icon-wrapper">
               <svg class="svg-icon">
-                <path v-for="item of component.path" :d="item"></path>
+                <path
+                  v-for="item of component.path"
+                  :key="item.id"
+                  :d="item"
+                  @click="handleClick()"
+                ></path>
               </svg>
             </div>
             <span>{{ component.name }}</span>
           </li>
         </ul>
       </div>
+      <template>
+      </template>
     </template>
     <!--拖动条插槽-->
     <slot name="operateHor"></slot>
@@ -108,17 +112,8 @@ export default class ComponentsList extends Vue {
     this.isSearchMode = !this.isSearchMode;
     this.filterKey = "";
   }
+  open() {
 
-  dragstart_handler(ev: any, componentData: any) {
-    console.log("开始拖动", ev);
-    ev.dataTransfer.setData("data", JSON.stringify(componentData));
-    // Change the source element's background color to signify drag has started
-    // ev.currentTarget.style.border = "dashed";
-    // Add the id of the drag source element to the drag data payload so
-    // it is available when the drop event is fired
-    // ev.dataTransfer.setData("text", ev.target.id);
-    // Tell the browser both copy and move are possible
-    // ev.effectAllowed = "copyMove";
   }
 }
 </script>

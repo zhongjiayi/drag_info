@@ -66,9 +66,9 @@
     color: $fontColor3;
   }
 
-  .sub-panel .sub-panel-body{
+  .sub-panel > .sub-panel-body{
     color: $gbColor5;
-    padding: 0px 14px;
+    padding: 0px 14px 10px;
   }
 </style>
 <style scoped lang="scss">

@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="ht-viewport">
-        <div class="artBoard">
+        <!-- <div class="artBoard">
           <div class="trackBox">
             <div class="track x-track" ref="trackX">
               <div class="handler x-handler" :style="{left: 45 - 0.45 * offsetX + '%'}"
@@ -56,7 +56,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
+        <conponText :name="'sadsadasdasd'"></conponText>
       </div>
       <div class=" ht-pane rightPane">
         <div v-for="(item,index) of rightPane" :key="index" :class="index === 0 ? 'firstNode' : 'otherNode'"
@@ -93,6 +94,7 @@
   import Editor from './Editor.vue' // 编辑页
   import ElementList from './ElementList.vue' // 元素列
   import Viewport from "./Viewport.vue" // 背景页
+  import conponText from '../md-components/commonComponents/compon_text'
 
   @Component({
     components: {
@@ -100,7 +102,8 @@
       PageList,
       Editor,
       ElementList,
-      Viewport
+      Viewport,
+      conponText
     }
   })
   export default class HomePage extends Vue {
@@ -113,21 +116,91 @@
         type: 'text',
         scope: 'local',
         path: ['M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z'],
-        sPath: ['M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z']
+        sPath: ['M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z'],
+        attributes: [
+          {
+            code: 'name',
+            label: '名称',
+            type: 'STRING',
+            value: '名称'
+          },
+          {
+            code: 'fontSize',
+            label: '字体大小',
+            type: 'NUMBER',
+            value: 14
+          }
+        ]
       },
       {
         name: '图片',
         type: 'picture',
         scope: 'local',
         path: ['M26.86 18.433a.995.995 0 0 0 .14-.51V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v12.923a1 1 0 0 0 .038.272l3.625-3.099 2.931 2.255L19.7 11.09l7.16 7.344zM7 2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6.25 9.77c-1.243 0-2.25-1.034-2.25-2.308 0-1.275 1.007-2.308 2.25-2.308s2.25 1.033 2.25 2.308c0 1.274-1.007 2.307-2.25 2.307z'],
-        sPath: ['M0 0h12v12H0V0zm1 1v10h10V1H1zm2 2h2v2H3V3zm-1 7V9l1.778-2 1.778 1.5L8.222 5 10 8v2H2z']
+        sPath: ['M0 0h12v12H0V0zm1 1v10h10V1H1zm2 2h2v2H3V3zm-1 7V9l1.778-2 1.778 1.5L8.222 5 10 8v2H2z'],
+        attributes: [
+          {
+            code: 'name',
+            label: '名称',
+            type: 'STRING',
+            value: '名称'
+          },
+          {
+            code: 'src',
+            label: '链接地址',
+            type: 'STRING',
+            value: ''
+          },
+          {
+            code: 'width',
+            label: '宽度',
+            type: 'STRING',
+            // auto
+            value: '100px'
+          },
+          {
+            code: 'height',
+            label: '高度',
+            type: 'STRING',
+            // auto
+            value: '100px'
+          }
+        ]
       },
       {
         scope: 'local',
         name: '视频',
         type: 'video',
         path: ['M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z'],
-        sPath: ['M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z']
+        sPath: ['M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z'],
+        attributes: [
+          {
+            code: 'name',
+            label: '名称',
+            type: 'STRING',
+            value: '名称'
+          },
+          {
+            code: 'src',
+            label: '链接地址',
+            type: 'STRING',
+            value: ''
+          },
+          {
+            code: 'width',
+            label: '宽度',
+            type: 'STRING',
+            // auto
+            value: '100px'
+          },
+          {
+            code: 'height',
+            label: '高度',
+            type: 'STRING',
+            // auto
+            value: '100px'
+          }
+        ]
       },
       {
         name: '轮播组',
@@ -169,8 +242,10 @@
           elemType: "time",
           content: "",
           elemComAttr: {
-            coordinate: "500,500",
+            coordinate: "500*500",
             widthHeight: "400*300",
+            rotate: 0,
+            opacity: 100,
             elemTime: 1,
             duration: "00:00:30",
           },
@@ -621,6 +696,7 @@
     flex-direction: column;
     min-width: 400px;
     flex: 1 1 0%;
+    z-index: 1;
   }
 
   // 滚动条
