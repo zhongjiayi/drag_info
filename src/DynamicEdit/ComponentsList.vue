@@ -26,7 +26,6 @@
             :key="component.type"
             draggable="true"
             ref="dragComponent"
-            :id="component.id"
           >
             <!-- 
             <p v-if="component.type === 'text'"></p>
@@ -87,14 +86,16 @@ export default class ComponentsList extends GreetingProps {
   }
 
   dragstart_handler(ev: any) {
-    // console.log("开始拖动", ev);
-    // ev.dataTransfer.setData("data", JSON.stringify({}));
-
-    console.log("dragStart");
-    ev.currentTarget.style.border = "dashed";
-    ev.dataTransfer.setData("text", ev.target.id);
-    console.log(ev.target.id)
-    ev.effectAllowed = "copyMove";
+    console.log("开始拖动", ev);
+    ev.dataTransfer.setData("data", JSON.stringify({}));
+    
+    // Change the source element's background color to signify drag has started
+    // ev.currentTarget.style.border = "dashed";
+    // Add the id of the drag source element to the drag data payload so
+    // it is available when the drop event is fired
+    // ev.dataTransfer.setData("text", ev.target.id);
+    // Tell the browser both copy and move are possible
+    // ev.effectAllowed = "copyMove";
   }
 
   changeSearchMode(): void {}

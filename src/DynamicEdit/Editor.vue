@@ -4,17 +4,19 @@
       <p>编辑</p>
     </template>
     <template #main>
-      123
+      <textSet/>
     </template>
   </basicStyle>
 </template>
 
 <script lang="ts">
   import {Vue, Component} from 'vue-property-decorator'
+  import textSet from '../components/componentList/text/textSet'
   import BasicStyle from "./BasicStyle.vue"
 
   @Component({
     components: {
+      textSet,
       BasicStyle
     }
   })

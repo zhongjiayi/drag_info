@@ -55,10 +55,14 @@ export default class HomePage extends Vue {
     super();
     this.drop_handler = this.drop_handler.bind(this);
   }
+  // data() {
+  //   return {
+  //     stageDisplay: Array<any> = []
+  //   }
+  // }
+  stageDisplay: Array<any> = [];
 
-  created() {
-    // this.
-  }
+  created() {}
 
   mounted() {
     (this.$refs.screenView as Element).addEventListener(
@@ -73,21 +77,22 @@ export default class HomePage extends Vue {
 
   // 放下时的操作
   drop_handler(ev: any) {
-    // console.log("放下了", ev.dataTransfer.getData("data"));
+    console.log("放下了", ev.dataTransfer.getData("data"));
     ev.preventDefault();
-
-    var id = ev.dataTransfer.getData("text");
-    // Only Move the element if the source and destination ids are both "move"
-    if (id == "text" && ev.target.id == "text")
-    console.log(id,ev.target.id);
+    this.stageDisplay.push({
+      111: 111,
+    });
+    console.log(this.stageDisplay);
+    // var id = ev.dataTransfer.getData("text");
+    // if (id == "text" && ev.target.id == "text")
+    // console.log(id,ev.target.id);
     // ev.target.appendChild(document.getElementById(id));
-    if (id == "text" && ev.target.id == "text") {
-      // var nodeCopy = document.getElementById(id).cloneNode(true);
-      var nodeCopy = document.getElementById(id).cloneNode(true);
-      // nodeCopy.id = "textNew";
-      console.log(nodeCopy)
-      ev.target.appendChild(nodeCopy);
-    }
+    // if (id == "text" && ev.target.id == "text") {
+    //   var nodeCopy = document.getElementById(id).cloneNode(true);
+    //   nodeCopy.id = "textNew";
+    //   console.log(nodeCopy)
+    //   ev.target.appendChild(nodeCopy);
+    // }
   }
 
   dragover_handler(ev: any) {
