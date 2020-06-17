@@ -57,7 +57,11 @@
             </div>
           </div>
         </div> -->
-        <conponText :name="'sadsadasdasd'"></conponText>
+        <!-- <conponText :name="'sadsadasdasd'"></conponText>
+        <conponImage></conponImage> -->
+        <!-- <conponVideo></conponVideo> -->
+        <!-- <conponRotate></conponRotate> -->
+        <conponTime></conponTime>
       </div>
       <div class=" ht-pane rightPane">
         <div v-for="(item,index) of rightPane" :key="index" :class="index === 0 ? 'firstNode' : 'otherNode'"
@@ -94,7 +98,11 @@
   import Editor from './Editor.vue' // 编辑页
   import ElementList from './ElementList.vue' // 元素列
   import Viewport from "./Viewport.vue" // 背景页
-  import conponText from '../md-components/commonComponents/compon_text'
+  import conponText from '../md-components/commonComponents/compon_text' //文本
+  import conponImage from '../md-components/commonComponents/compon_image' //图片
+  import conponVideo from '../md-components/commonComponents/compon_video' //视频
+  import conponRotate from '../md-components/commonComponents/compon_rotate'//轮播图
+  import conponTime from '../md-components/commonComponents/compon_time'
 
   @Component({
     components: {
@@ -103,7 +111,11 @@
       Editor,
       ElementList,
       Viewport,
-      conponText
+      conponText,
+      conponImage,
+      conponVideo,
+      conponRotate,
+      conponTime
     }
   })
   export default class HomePage extends Vue {

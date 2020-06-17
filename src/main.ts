@@ -1,21 +1,20 @@
-import Vue from "vue"
-import Antd from 'ant-design-vue';
+import Vue from "vue";
+import Antd from "ant-design-vue";
 
-import App from "./App.vue"
-import store from "./store"
+import App from "./App.vue";
+import store from "./store";
 
-import 'ant-design-vue/dist/antd.css';
+import "ant-design-vue/dist/antd.css";
 
-Vue.config.productionTip = false;
 
 // import axios from 'axios'
 // import './common/common.ts'
 // @ts-ignore
 // axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? `http://${document.location.host}/smartpark-web` : 'api'
 Vue.use(Antd);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   store,
-  render: h => h(App)
-}).$mount("#app")
+  render: (h) => h(App),
+}).$mount("#app");

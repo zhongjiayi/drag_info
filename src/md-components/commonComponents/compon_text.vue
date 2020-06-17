@@ -1,21 +1,42 @@
 <template>
   <div>
-    <p :style="{ fontSize: fontSize + 'px', width: width }">{{ name }}</p>
+    <p
+      :style="{
+        fontSize: fontSize + 'px',
+        width: width,
+        backgroundColor: backgroundColor,
+      }"
+    >
+      {{ name }}
+    </p>
   </div>
 </template>
-<script lang="ts">
-import { Vue, Component, Prop, Watch } from "vue-property-decorator";
-
-@Component({
-  components: {},
-})
-export default class ComponentText extends Vue {
-  /**
-   * 通过装饰器标题 name属性是一个props
-   */
-  @Prop() name!: string;
-  @Prop() fontSize!: number;
-  @Prop() width!: string;
-}
+<script>
+export default {
+  props: {
+    fontSize: {
+      hot: Number,
+      default: 14,
+    },
+    width: {
+      hot: String,
+      default: "100px",
+    },
+    name: {
+      hot: String,
+      default: "请输入编辑文字",
+    },
+    backgroundColor: {
+      hot: String,
+      default: "transparent",
+    },
+  },
+  data() {
+    return {};
+  },
+  created() {},
+  mounted() {},
+  methods: {},
+};
 </script>
 <style lang="Sass"></style>
