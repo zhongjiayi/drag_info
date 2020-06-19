@@ -19,11 +19,11 @@
         </div>
         <div class="panel-horizon">
           <div class="insideInputBox">
-            <el-input-number v-model="width" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="msgData.width" controls-position="right" :min="1" :max="9999" size="mini"/>
             <div class="title">W</div>
           </div>
           <div class="insideInputBox">
-            <el-input-number v-model="height" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="msgData.height" controls-position="right" :min="1" :max="9999" size="mini"/>
             <div class="title">H</div>
           </div>
           <div class="insideInputBox">
@@ -39,11 +39,11 @@
         <div class="panel-horizon">
           <div class="insideInputBox">
             <div class="title">X</div>
-            <el-input-number v-model="offsetX" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="msgData.pointX" controls-position="right" :min="1" :max="9999" size="mini"/>
           </div>
           <div class="insideInputBox">
             <div class="title">Y</div>
-            <el-input-number v-model="offsetY" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="msgData.pointY" controls-position="right" :min="1" :max="9999" size="mini"/>
           </div>
           <div class="insideInputBox">
             <div class="title">透明度</div>
@@ -61,46 +61,39 @@
   @Component({})
 
   export default class commonElem extends Vue {
-    @Prop() msgData!: {
-      coordinate: string
-      widthHeight: string
-      elemTime: number
-      duration: string
-      rotate: number
-      opacity: number
-    }
+    @Prop() msgData!: Elem
 
-    private width: number = 0
-    private height: number = 0
+    // private width: number = 0
+    // private height: number = 0
+    //
+    // private offsetX: number = 0
+    // private offsetY: number = 0
 
-    private offsetX: number = 0
-    private offsetY: number = 0
-
-    @Watch('width')
-    getWidth(newVal: number, oldVal: number) {
-      this.msgData.widthHeight = newVal + '*' + this.height
-    }
-
-    @Watch('height')
-    getHeight(newVal: number, oldVal: number) {
-      this.msgData.widthHeight = this.width + '*' + newVal
-    }
-
-    @Watch('offsetX')
-    getOffsetX(newVal: number, oldVal: number) {
-      this.msgData.coordinate = newVal + '*' + this.offsetY
-    }
-
-    @Watch('offsetY')
-    getOffsetY(newVal: number, oldVal: number) {
-      this.msgData.coordinate = this.offsetX + '*' + newVal
-    }
+    // @Watch('width')
+    // getWidth(newVal: number, oldVal: number) {
+    //   this.msgData.widthHeight = newVal + '*' + this.height
+    // }
+    //
+    // @Watch('height')
+    // getHeight(newVal: number, oldVal: number) {
+    //   this.msgData.widthHeight = this.width + '*' + newVal
+    // }
+    //
+    // @Watch('offsetX')
+    // getOffsetX(newVal: number, oldVal: number) {
+    //   this.msgData.coordinate = newVal + '*' + this.offsetY
+    // }
+    //
+    // @Watch('offsetY')
+    // getOffsetY(newVal: number, oldVal: number) {
+    //   this.msgData.coordinate = this.offsetX + '*' + newVal
+    // }
 
     created(): void {
-      this.width = Number(this.msgData.widthHeight.split('*')[0])
-      this.height = Number(this.msgData.widthHeight.split('*')[1])
-      this.offsetX = Number(this.msgData.coordinate.split('*')[0])
-      this.offsetY = Number(this.msgData.coordinate.split('*')[1])
+      // this.width = Number(this.msgData.widthHeight.split('*')[0])
+      // this.height = Number(this.msgData.widthHeight.split('*')[1])
+      // this.offsetX = Number(this.msgData.coordinate.split('*')[0])
+      // this.offsetY = Number(this.msgData.coordinate.split('*')[1])
     }
 
     private stretch = true

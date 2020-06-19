@@ -6,11 +6,11 @@
     <div class="no-zoom-area"
          :style="{top:computeScale / 2 + '%',left:computeScale / 2 + '%',width:(100 - computeScale) + '%',height:(100 - computeScale) + '%'}"></div>
     <div class="playbill-area zoom-area" :style="{transform: 'scale(' + scale + ')',background:playbillBg}">
-      <ElemBox :elemList="playbillElemList" :model="model" :elemActive="elemActive"></ElemBox>
+      <ElemBox :elemList="playbillElemList" :model="model" :elemActive="elemActive" :scale="scale" :resolution="resolution"></ElemBox>
     </div>
     <div v-if="program" class="program-area zoom-area"
          :style="{transform: 'scale(' + scale + ')',background: program.progBg}">
-      <ElemBox :elemList="program.elemList" :model="model" :elemActive="elemActive"></ElemBox>
+      <ElemBox :elemList="program.elemList" :model="model" :elemActive="elemActive" :scale="scale" :resolution="resolution"></ElemBox>
     </div>
   </div>
 </template>
@@ -26,16 +26,16 @@
   })
 
   export default class Viewport extends Vue {
-    @Prop() resolution!: string // ï¿½Ö±ï¿½ï¿½ï¿½
-    @Prop() offsetX!: string // xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    @Prop() offsetY!: string // yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    @Prop() scale!: number // ï¿½ï¿½ï¿½ï¿½
-    @Prop() playbillBg!: string // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
-    @Prop() program!: Program // ï¿½ï¿½Ä¿
-    @Prop() playbillElemList!: Elem // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½Ð±ï¿½
-    @Prop() elemActive!: number // ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Î»ï¿½ï¿½
+    @Prop() resolution!: string // ·Ö±æÂÊ
+    @Prop() offsetX!: string // xÖá²àÒÆÁ¿
+    @Prop() offsetY!: string // yÖá²àÒÆÁ¿
+    @Prop() scale!: number // ±ÈÀý
+    @Prop() playbillBg!: string // ½ÚÄ¿µ¥±³¾°Í¼°¸
+    @Prop() program!: Program // ½ÚÄ¿
+    @Prop() playbillElemList!: Elem // ½ÚÄ¿µ¥µÄÔªËØÁÐ±í
+    @Prop() elemActive!: number // ¼¤»îµÄÔªËØÎ»ÖÃ
 
-    private model = 'edit'  // ï¿½ï¿½Ç°Ä£Ê½  ï¿½ï¿½ play he model
+    private model = 'edit'  // µ±Ç°Ä£Ê½  ·Ö play he model
 
     get width() {
       return this.resolution.split('*')[0]

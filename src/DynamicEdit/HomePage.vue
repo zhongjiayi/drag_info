@@ -21,11 +21,6 @@
           :playbillElemList="playbillData.elemList"
           :elemActive="activeElemIndex"
         />
-        <!-- <conponText :params="params"></conponText> -->
-        <!-- <conponImage></conponImage> -->
-        <!-- <conponRotate :params="params"></conponRotate> -->
-        <!-- <conponVideo></conponVideo> -->
-        <!-- <conponTime></conponTime>  -->
       </div>
       <div class="widget"></div>
       <div class="ht-pane leftPane">
@@ -151,13 +146,6 @@ import Editor from "./Editor.vue"; // 编辑页
 import ElementList from "./ElementList.vue"; // 元素列
 import Viewport from "./Viewport.vue"; // 背景页
 
-import conponText from "../md-components/commonComponents/compon_text"; //文本
-import conponImage from "../md-components/commonComponents/compon_image"; //图片
-import conponVideo from "../md-components/commonComponents/compon_video"; //视频
-import conponRotate from "../md-components/commonComponents/compon_rotate"; //轮播图
-import conponTime from "../md-components/commonComponents/compon_time"; //时间
-import conponEdit from "../md-components/conponentEdit/conponentEdit"; //编辑页面
-
 @Component({
   components: {
     ComponentsList,
@@ -165,56 +153,12 @@ import conponEdit from "../md-components/conponentEdit/conponentEdit"; //编辑�
     Editor,
     ElementList,
     Viewport,
-
-    conponText,
-    conponImage,
-    conponVideo,
-    conponRotate,
-    conponTime,
   },
 })
 export default class HomePage extends Vue {
-  private params = {
-    // fontColor: "black",
-    // fontSize: 14,
-    // name: "编辑文字",
-    // backgroundColor: "transparent",
-    // name: "bobob",
-    // // 自动播放
-    // autoplay: true,
-    // // 宽度
-    // width: "200px",
-    // // 高度（未生效）
-    // height: "150px",
-    // // 轮播时间间隔
-    // interval: 1000,
-    // // 是否显示面板指示点
-    // dots: true,
-    // // 面板指示点位置 top bottom left right
-    // dotPosition: "bottom",
-    // // 是否显示左右按钮
-    // HandleButton: true,
-    // // 切换特效
-    // effectStyle: "scrollx",
-    // // 图片资源
-    // imageSrc: [
-    //   {
-    //     img:
-    //       "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
-    //     id: 1,
-    //   },
-    //   {
-    //     img:
-    //       "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
-    //     id: 2,
-    //   },
-    // ],
-  };
-
   /**
    * 全局数据
    */
-
   private components = [
     {
       name: "文本",
@@ -238,7 +182,7 @@ export default class HomePage extends Vue {
           value: "red",
         },
         {
-          name: "背景颜色",
+          name: "背景",
           code: "backgroundColor",
           type: "COLOR",
           value: "red",
@@ -266,7 +210,7 @@ export default class HomePage extends Vue {
             },
           ],
           // 默认14
-          value: 14,
+          value: 28,
         },
       ],
     },
@@ -289,6 +233,15 @@ export default class HomePage extends Vue {
         "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
       ],
       sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+      attributes: [
+        {
+          name: "静音播放",
+          code: "muted",
+          type: "BOOLEAN",
+          // 默认14
+          value: false,
+        },
+      ],
     },
     {
       name: "轮播组",
@@ -301,6 +254,68 @@ export default class HomePage extends Vue {
       ],
       sPath: [
         "M1 8H0V2h1v6zm13 0h-1V2h1v6zM3 1v8h8V1H3zm-.167-1h8.334c.46 0 .833.373.833.833v8.334c0 .46-.373.833-.833.833H2.833A.833.833 0 0 1 2 9.167V.833C2 .373 2.373 0 2.833 0zM4 8V7l1.75-2L7 6.5 9 4l1 2v2H4zm0-6h2v2H4V2z",
+      ],
+      attributes: [
+        {
+          name: "间隔",
+          code: "interval",
+          type: "ENUM",
+          options: [
+            {
+              label: "1000ms",
+              value: "1000",
+            },
+            {
+              label: "2000ms",
+              value: "2000",
+            },
+            {
+              label: "3000ms",
+              value: "3000",
+            },
+            {
+              label: "4000ms",
+              value: "4000",
+            },
+            {
+              label: "5000ms",
+              value: "5000",
+            },
+          ],
+          value: "1000",
+        },
+        {
+          name: "方向",
+          code: "dotPosition",
+          type: "ENUM",
+          options: [
+            {
+              label: "上下切换",
+              value: "right",
+            },
+            {
+              label: "左右切换",
+              value: "bottom",
+            },
+          ],
+          value: "bottom",
+        },
+        {
+          name: "特效",
+          code: "effectStyle",
+          type: "ENUM",
+          options: [
+            {
+              label: "线性滑动",
+              value: "scrollx",
+            },
+            {
+              label: "渐隐渐显",
+              value: "fade",
+            },
+          ],
+          value: "scrollx",
+        },
       ],
     },
     {
@@ -342,8 +357,10 @@ export default class HomePage extends Vue {
         elemType: "time",
         content: "",
         elemComAttr: {
-          coordinate: "500*500",
-          widthHeight: "400*300",
+          pointX: 300,
+          pointY: 500,
+          width: 400,
+          height: 300,
           rotate: 0,
           opacity: 100,
           elemTime: 1,
@@ -369,8 +386,12 @@ export default class HomePage extends Vue {
             elemType: "video",
             content: "xxx/xxx/xxx.mp4",
             elemComAttr: {
-              coordinate: "300*500",
-              widthHeight: "400*300",
+              pointX: 300,
+              pointY: 500,
+              width: 400,
+              height: 300,
+              rotate: 0,
+              opacity: 100,
               elemTime: 1, // number
               duration: "00:00:30",
             },
@@ -382,8 +403,12 @@ export default class HomePage extends Vue {
             content: "xxx/xxx/xxx.mp4",
             elemComAttr: {
               pIndex: 1,
-              coordinate: "500*500",
-              widthHeight: "400*300",
+              pointX: 300,
+              pointY: 500,
+              width: 400,
+              height: 300,
+              rotate: 0,
+              opacity: 100,
               elemTime: 1, // number
               duration: "00:00:30",
             },

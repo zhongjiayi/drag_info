@@ -90,6 +90,20 @@
             :placeholder="formParams.name"
           />
         </div>
+        <div v-if="formParams.type == 'BOOLEAN'">
+          <a-switch
+            checked-children="开"
+            un-checked-children="关"
+            v-decorator="[
+              formParams.code,
+              {
+                initialValue: attribute[formParams.code],
+              },
+              'switch',
+              { valuePropName: 'checked' },
+            ]"
+          />
+        </div>
       </a-form-item>
 
       <!-- <a-form-item label="颜色">
@@ -137,30 +151,6 @@
         </div>
       </a-form-item>
 
-      <a-form-item label="字号" className="fontSetect">
-        <a-select
-          default-value="14"
-          style="width: 80px"
-          @change="handleFontSizeChange"
-          dropdownClassName="fontSizeSelect"
-        >
-          <a-select-option
-            v-for="(item, index) of fontSizeGroup"
-            :key="index"
-            :value="item.fontSize"
-          >
-            {{ item.fontSize }}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-
-      <a-form-item label="文本" className="fontText">
-        <a-input
-          placeholder="文本"
-          v-model="changeText"
-          @change="handleTextChange"
-        />
-      </a-form-item>
 
       <a-form-item label="静音">
         <a-switch
@@ -259,29 +249,6 @@ export default {
     transStyle: "scrollx",
     position: "botton",
 
-    // params: {
-    //   // color: "",
-    //   // backgroundColor: "",
-    //   // fontSize: "",
-
-    //   name: "bobob",
-    //   // 自动播放
-    //   autoplay: true,
-    //   // 宽度
-    //   width: "200px",
-    //   // 高度（未生效）
-    //   height: "150px",
-    //   // 轮播时间间隔
-    //   interval: 1000,
-    //   // 是否显示面板指示点
-    //   dots: true,
-    //   // 面板指示点位置 top bottom left right
-    //   dotPosition: "bottom",
-    //   // 是否显示左右按钮
-    //   HandleButton: true,
-    //   // 切换特效
-    //   effectStyle: "scrollx",
-    //   // 图片资源
     //   imageSrc: [
     //     {
     //       img:
@@ -293,9 +260,7 @@ export default {
     //         "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
     //       id: 2,
     //     },
-    //   ],
-    // },
-    
+
     newParams: [],
     color: "#000",
     // 颜色选择器
@@ -305,7 +270,7 @@ export default {
     // 自定义渲染变量
     attribute: {},
   }),
-  
+
   components: {
     "sketch-picker": Sketch,
   },
@@ -315,7 +280,7 @@ export default {
       onValuesChange: (props, values) => {
         this.attribute = Object.assign({}, this.attribute, values);
         console.log(this.attribute);
-        this.changeParams()
+        this.changeParams();
       },
     });
   },
@@ -336,7 +301,7 @@ export default {
             this.newParams.attributes[key].code
           ] = this.newParams.attributes[key].value;
         }
-        // console.log(this.attribute);
+        // this.changeParams();
       });
     },
 
@@ -389,13 +354,6 @@ export default {
       eventVue.$emit("myFun", this.attribute); //$emit这个方法会触发一个事件
     },
 
-    // 更改字体大小
-    handleFontSizeChange(value) {
-      this.params.fontSize = value;
-      console.log(`selected ${value}`);
-      this.changeParams();
-    },
-
     // 更换切换效果
     changeEffect() {
       console.log(this.transStyle);
@@ -412,12 +370,6 @@ export default {
       this.params.interval = value;
       console.log(`selected ${value}`);
       this.changeParams();
-    },
-
-    // 手动编辑文字
-    handleTextChange() {
-      console.log(this.changeText);
-      this.params.name = this.changeText;
     },
 
     // 是否静音输出

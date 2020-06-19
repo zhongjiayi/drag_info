@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts">
-import {Vue, Prop, Component} from 'vue-property-decorator'
-import BasicStyle from "./BasicStyle.vue"
-import commonElem from "../md-components/editer/commonElem.vue"
-import playbill from '../md-components/editer/playbill.vue'
-import program from '../md-components/editer/program.vue'
-import conponEdit from '../md-components/conponentEdit/conponentEdit'
+import { Vue, Prop, Component } from "vue-property-decorator";
+import BasicStyle from "./BasicStyle.vue";
+import commonElem from "../md-components/editer/commonElem.vue";
+import playbill from "../md-components/editer/playbill.vue";
+import program from "../md-components/editer/program.vue";
+import conponEdit from "../md-components/conponentEdit/conponentEdit.vue";
 
 @Component({
   components: {
@@ -29,16 +29,14 @@ import conponEdit from '../md-components/conponentEdit/conponentEdit'
     commonElem,
     playbill,
     program,
-    conponEdit
-  }
+    conponEdit,
+  },
 })
 export default class Editor extends Vue {
   @Prop() editArr!: object[];
-
   created() {
     console.log(this.editArr);
   }
-
 }
 </script>
 

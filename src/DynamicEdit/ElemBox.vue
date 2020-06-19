@@ -5,42 +5,96 @@
       v-for="(elem, index) of elemList"
       :key="elem.pIndex"
       :style="{
-        width: elem.elemComAttr.widthHeight.split('*')[0] + 'px',
-        height: elem.elemComAttr.widthHeight.split('*')[1] + 'px',
-        top: elem.elemComAttr.coordinate.split('*')[0] + 'px',
-        left: elem.elemComAttr.coordinate.split('*')[1] + 'px',
+        width: elem.elemComAttr.width + 'px',
+        height: elem.elemComAttr.height + 'px',
+        top: elem.elemComAttr.pointY + 'px',
+        left:
+          (elem.elemComAttr.pointX > 0
+            ? elem.elemComAttr.pointX
+            : '-' + Math.abs(elem.elemComAttr.pointX)) + 'px',
         zIndex: elemList.length - index,
+        transform: 'rotate(' + elem.elemComAttr.rotate + 'deg)',
       }"
     >
       <conponText :params="params"></conponText>
-      <!-- <conponImage></conponImage> -->
-      <!-- <conponRotate :params="params"></conponRotate> -->
-      <!-- <conponVideo></conponVideo> -->
-      <!-- <conponTime></conponTime>  -->
-      <!-- <div class="elemBox-elem-content">{{ elem }}</div> -->
+      <!--Ԫ��չʾ���-->
+      <div
+        class="elemBox-elem-content"
+        :style="{ opacity: elem.elemComAttr.opacity / 100 }"
+      >
+        <components
+          :is="elem.elemType"
+          :elemData="elem"
+          :isActive="isActive"
+        ></components>
+      </div>
       <div
         class="elemBox-elem-border"
         v-if="model === 'edit'"
-        v-show="!isEdit"
+        v-show="!(elemActive === elem.pIndex)"
       ></div>
       <div
         class="elemBox-elem-interPlat"
-        @mousedown.stop="changeElemActive(elem.pIndex)"
+        v-if="model === 'edit'"
+        :class="{ activePlat: !isActive && elemActive === elem.pIndex }"
+        @mousedown.stop="changeElemActive($event, elem)"
         @dblclick="changeIsEdit"
-      ></div>
+      >
+        <div
+          class="interPlat-resizer"
+          v-show="elemActive === elem.pIndex"
+          :style="{ fontSize: 14 / scale + 'px' }"
+        >
+          <div
+            class="rotate"
+            :style="{ fontSize: 18 / scale + 'px' }"
+            @mousedown.stop="rotateElem($event, elem)"
+          ></div>
+          <div
+            class="t resizable-handle"
+            @mousedown.stop="getStartPoint($event, 't', elem)"
+          ></div>
+          <div
+            class="b resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'b', elem)"
+          ></div>
+          <div
+            class="r resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'r', elem)"
+          ></div>
+          <div
+            class="l resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'l', elem)"
+          ></div>
+          <div
+            class="tr resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'tr', elem)"
+          ></div>
+          <div
+            class="tl resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'tl', elem)"
+          ></div>
+          <div
+            class="br resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'br', elem)"
+          ></div>
+          <div
+            class="bl resizable-handle"
+            @mousedown.stop="getStartPoint($event, 'bl', elem)"
+          ></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Prop, Watch, Component } from "vue-property-decorator";
-
 import conponText from "../md-components/commonComponents/compon_text"; //文本
 import conponImage from "../md-components/commonComponents/compon_image"; //图片
 import conponVideo from "../md-components/commonComponents/compon_video"; //视频
 import conponRotate from "../md-components/commonComponents/compon_rotate"; //轮播图
 import conponTime from "../md-components/commonComponents/compon_time"; //时间
-
 import eventVue from "../md-components/conponentEdit/eventBus";
 
 @Component({
@@ -56,8 +110,10 @@ export default class ElemBox extends Vue {
   @Prop() elemList!: Elem[];
   @Prop() model!: string;
   @Prop() elemActive!: number;
+  @Prop() scale!: number;
+  @Prop() resolution!: string;
 
-  private isEdit = false;
+  private isActive = false;
 
   private params = {
     name: "文本",
@@ -72,7 +128,7 @@ export default class ElemBox extends Vue {
         name: "名称",
         code: "name",
         type: "STRING",
-        value: "呵呵哒",
+        value: "",
       },
       {
         name: "颜色",
@@ -81,7 +137,7 @@ export default class ElemBox extends Vue {
         value: "red",
       },
       {
-        name: "背景颜色",
+        name: "背景",
         code: "backgroundColor",
         type: "COLOR",
         value: "red",
@@ -114,63 +170,191 @@ export default class ElemBox extends Vue {
     ],
   };
 
-  // fontColor: "black",
-  // fontSize: 14,
-  // name: "编辑文字",
-  // backgroundColor: "transparent",
-
-  // name: "bobob",
-  // // 自动播放
-  // autoplay: true,
-  // // 宽度
-  // width: "200px",
-  // // 高度（未生效）
-  // height: "150px",
-  // // 轮播时间间隔
-  // interval: 1000,
-  // // 是否显示面板指示点
-  // dots: true,
-  // // 面板指示点位置 top bottom left right
-  // dotPosition: "bottom",
-  // // 是否显示左右按钮
-  // HandleButton: true,
-  // // 切换特效
-  // effectStyle: "scrollx",
-  // // 图片资源
-  // imageSrc: [
-  //   {
-  //     img:
-  //       "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
-  //     id: 1,
-  //   },
-  //   {
-  //     img:
-  //       "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
-  //     id: 2,
-  //   },
-  // ],
-  // };
-
-  // 更新属性的方法
-  // transParams() {
-  //   eventVue.$emit("changeParams", this.params); //$emit这个方法会触发一个事件
-  // }
-
   @Watch("elemActive")
   resetIsEdit() {
-    if (this.isEdit === true) {
-      this.isEdit = false;
+    if (this.isActive === true) {
+      this.isActive = false;
     }
   }
 
-  changeElemActive(index: number) {
-    // @ts-ignore
-    this.$parent.$parent.activeElemIndex = index;
-    eventVue.$emit("changeParams", this.params);
+  changeIsEdit() {
+    this.isActive = true;
   }
 
-  changeIsEdit() {
-    this.isEdit = true;
+  // Ԫ���ƶ� && ѡ��
+  changeElemActive(e: any, elem: Elem) {
+    // @ts-ignore
+    this.$parent.$parent.activeElemIndex = elem.pIndex;
+    eventVue.$emit("changeParams", this.params);
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const pointX = elem.elemComAttr.pointX;
+    const pointY = elem.elemComAttr.pointY;
+    const scale = this.scale;
+    const maxX = Number(this.resolution.split("*")[0]) - elem.elemComAttr.width;
+    const maxY =
+      Number(this.resolution.split("*")[1]) - elem.elemComAttr.height;
+
+    function moveHandle(e: any) {
+      let subX = Math.round((e.clientX - startX) / scale);
+      let subY = Math.round((e.clientY - startY) / scale);
+      subX =
+        subX + pointX < 0
+          ? -pointX
+          : subX + pointX > maxX
+          ? maxX - pointX
+          : subX;
+      subY =
+        subY + pointY < 0
+          ? -pointY
+          : subY + pointY > maxY
+          ? maxY - pointY
+          : subY;
+      elem.elemComAttr.pointX = subX + pointX;
+      elem.elemComAttr.pointY = subY + pointY;
+    }
+
+    document.addEventListener("mousemove", moveHandle);
+    document.addEventListener("mouseup", function clickHandle() {
+      document.removeEventListener("mousemove", moveHandle);
+      document.removeEventListener("mouseup", clickHandle);
+    });
+  }
+
+  // ��תԪ��
+  rotateElem(e: any, elem: Elem) {
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startAngle = elem.elemComAttr.rotate;
+    const startCentreX =
+      e.target.parentNode.getBoundingClientRect().left +
+      (elem.elemComAttr.width / 2) * this.scale;
+    const startCentreY =
+      e.target.parentNode.getBoundingClientRect().top +
+      (elem.elemComAttr.height / 2) * this.scale;
+
+    function moveHandle(e: any) {
+      const l1 = Math.sqrt(
+        Math.pow(Math.abs(startX - startCentreX), 2) +
+          Math.pow(Math.abs(startY - startCentreY), 2)
+      );
+      const l2 = Math.sqrt(
+        Math.pow(Math.abs(e.clientX - startCentreX), 2) +
+          Math.pow(Math.abs(e.clientY - startCentreY), 2)
+      );
+      const l3 = Math.sqrt(
+        Math.pow(Math.abs(startX - e.clientX), 2) +
+          Math.pow(Math.abs(startY - e.clientY), 2)
+      );
+      let angle = Math.round(
+        (Math.acos(
+          (Math.pow(l2, 2) + Math.pow(l1, 2) - Math.pow(l3, 2)) / (2 * l2 * l1)
+        ) /
+          Math.PI) *
+          180
+      );
+
+      const l1Y = Math.sqrt(Math.abs(Math.pow(l1, 2) - Math.pow(startX, 2)));
+      const l1Angle =
+        (Math.pow(l1, 2) + Math.pow(startX, 2) - Math.pow(l1Y, 2)) /
+        (2 * l1 * startX);
+      const l2Y = Math.sqrt(Math.abs(Math.pow(l2, 2) - Math.pow(e.clientX, 2)));
+      const l2Angle =
+        (Math.pow(l2, 2) + Math.pow(e.clientX, 2) - Math.pow(l2Y, 2)) /
+        (2 * l2 * e.clientX);
+      console.log(l2Angle > l1Angle);
+      // if (e.clientX < startCentreX) {
+      //   angle = -angle
+      // }
+      // console.log(angle)
+      // console.log(startAngle)
+      elem.elemComAttr.rotate =
+        startAngle + angle > 360
+          ? startAngle + angle - 360
+          : startAngle + angle < 0
+          ? startAngle + angle + 360
+          : startAngle + angle;
+    }
+
+    document.addEventListener("mousemove", moveHandle);
+    document.addEventListener("mouseup", function clickHandle() {
+      document.removeEventListener("mousemove", moveHandle);
+      document.removeEventListener("mouseup", clickHandle);
+    });
+  }
+
+  // �޸�Ԫ�ش�С
+  getStartPoint(e: any, direction: string, elem: Elem) {
+    const width = elem.elemComAttr.width;
+    const pointX = elem.elemComAttr.pointX;
+    const startX = e.clientX;
+    const height = elem.elemComAttr.height;
+    const pointY = elem.elemComAttr.pointY;
+    const startY = e.clientY;
+    const min = 50;
+    const scale = this.scale;
+    const maxX = Number(this.resolution.split("*")[0]);
+    const maxY = Number(this.resolution.split("*")[1]);
+
+    function moveHandle(e: any) {
+      if (/(l|r)/.test(direction)) {
+        let sub = Math.round((e.clientX - startX) / scale);
+        sub = direction.indexOf("l") !== -1 ? -sub : sub;
+        const max =
+          direction.indexOf("l") !== -1 ? maxX - pointX + width : maxX - pointX;
+        sub =
+          sub + width < min
+            ? min - width
+            : sub + width > max
+            ? max - width
+            : sub;
+        if (direction.indexOf("l") !== -1) {
+          if (pointX - sub < 0) {
+            sub = pointX;
+          }
+          if (pointX - sub > maxX) {
+            sub = pointX - maxX;
+          }
+        }
+        elem.elemComAttr.width = sub + width;
+        if (direction.indexOf("l") !== -1) {
+          elem.elemComAttr.pointX = pointX - sub;
+        }
+      }
+      if (/(t|b)/.test(direction)) {
+        let sub = Math.round((e.clientY - startY) / scale);
+        sub = direction.indexOf("t") !== -1 ? -sub : sub;
+        const max =
+          direction.indexOf("t") !== -1
+            ? maxY - pointY + height
+            : maxY - pointY;
+        console.log(max);
+        sub =
+          height + sub < min
+            ? min - height
+            : height + sub > max
+            ? max - height
+            : sub;
+        if (direction.indexOf("t") !== -1) {
+          if (pointY - sub < 0) {
+            sub = pointY;
+          }
+          if (pointY - sub > maxY) {
+            sub = pointX - maxY;
+          }
+        }
+        elem.elemComAttr.height = sub + height;
+        if (direction.indexOf("t") !== -1) {
+          elem.elemComAttr.pointY = pointY - sub;
+        }
+      }
+    }
+
+    document.addEventListener("mousemove", moveHandle);
+    document.addEventListener("mouseup", function clickHandle() {
+      document.removeEventListener("mousemove", moveHandle);
+      document.removeEventListener("mouseup", clickHandle);
+    });
   }
 }
 </script>
@@ -184,12 +368,14 @@ $activeColor: rgb(25, 106, 212);
 
 .elemBox-elem-content,
 .elemBox-elem-interPlat,
-.elemBox-elem-border {
+.elemBox-elem-border,
+.interPlat-resizer {
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  box-sizing: border-box;
 }
 
 .elemBox-elem:hover {
@@ -198,5 +384,94 @@ $activeColor: rgb(25, 106, 212);
 
 .elemBox-elem:hover > .elemBox-elem-border {
   border: 3px solid $activeColor;
+}
+
+.activePlat {
+  border: 1px solid $activeColor;
+}
+
+.interPlat-resizer .rotate {
+  position: absolute;
+  left: 50%;
+  top: -1.44em;
+  width: 1em;
+  height: 1em;
+  margin-left: -0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: red;
+}
+
+.interPlat-resizer .t {
+  cursor: n-resize;
+  top: -0.5em;
+  left: 50%;
+  margin-left: -0.5em;
+}
+
+.interPlat-resizer .b {
+  cursor: s-resize;
+  bottom: -0.5em;
+  left: 50%;
+  margin-left: -0.5em;
+}
+
+.interPlat-resizer .r {
+  cursor: e-resize;
+  top: 50%;
+  right: -0.5em;
+  margin-top: -0.5em;
+}
+
+.interPlat-resizer .l {
+  cursor: w-resize;
+  top: 50%;
+  left: -0.5em;
+  margin-top: -0.5em;
+}
+
+.interPlat-resizer .tr {
+  cursor: ne-resize;
+  top: -0.5em;
+  right: -0.5em;
+}
+
+.interPlat-resizer .tl {
+  cursor: nw-resize;
+  left: -0.5em;
+  top: -0.5em;
+}
+
+.interPlat-resizer .br {
+  cursor: se-resize;
+  right: -0.5em;
+  bottom: -0.5em;
+}
+
+.interPlat-resizer .bl {
+  cursor: sw-resize;
+  left: -0.5em;
+  bottom: -0.5em;
+}
+
+.resizable-handle {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+}
+
+.resizable-handle:after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  background: white;
+  border: 1px solid $activeColor;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
 </style>
