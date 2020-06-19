@@ -60,7 +60,7 @@
 
   @Component({})
 
-  export default class ComponentsList extends Vue {
+  export default class commonElem extends Vue {
     @Prop() msgData!: {
       coordinate: string
       widthHeight: string
@@ -86,12 +86,12 @@
       this.msgData.widthHeight = this.width + '*' + newVal
     }
 
-    @Watch('width')
+    @Watch('offsetX')
     getOffsetX(newVal: number, oldVal: number) {
       this.msgData.coordinate = newVal + '*' + this.offsetY
     }
 
-    @Watch('height')
+    @Watch('offsetY')
     getOffsetY(newVal: number, oldVal: number) {
       this.msgData.coordinate = this.offsetX + '*' + newVal
     }
@@ -159,11 +159,13 @@
 <style lang="scss">
   $bgColor4: rgb(69, 70, 71);
   $activeColor: rgb(25, 106, 212);
+  $gbColor5: rgb(215, 221, 224);
   .sub-panel .el-input-number.is-controls-right .el-input__inner {
     padding-left: 21px !important;
     padding-right: 20px !important;
     background: transparent;
     border-color: transparent;
+    color: $gbColor5;
   }
 
   .sub-panel .el-input-number.is-controls-right .el-input__inner:hover {

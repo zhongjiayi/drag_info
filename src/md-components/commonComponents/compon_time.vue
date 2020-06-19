@@ -1,6 +1,8 @@
 <template>
   <div class="timeChange">
-    <span :style="{ 'font-size': fontsize + 'px' }">{{ NowTime }}</span>
+    <span :style="{ 'font-size': fontsize + 'px', color: fontColor }">{{
+      NowTime
+    }}</span>
   </div>
 </template>
 <script>
@@ -16,6 +18,10 @@ export default {
       hot: String,
       default: "YYYY-MM-DD HH:mm:ss", //YYYY-MM-DD 或者 HH:mm:ss
     },
+    fontColor: {
+      hot: String,
+      default: "gray",
+    },
   },
   data() {
     return {
@@ -24,18 +30,23 @@ export default {
       timer: null,
     };
   },
-  created() {
+  //   created() {
+  //     this.timer = setInterval(() => {
+  //       this.getTime();
+  //       console.log("创建");
+  //     }, 1000);
+  //   },
+  mounted() {
     this.timer = setInterval(() => {
       this.getTime();
       console.log("创建");
     }, 1000);
   },
+
   methods: {
     moment,
     getTime() {
-      //   this.NowTime = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
       this.NowTime = moment(new Date()).format(this.formatRule);
-      //   console.log(this.NowTime);
     },
   },
   beforeDestroy() {

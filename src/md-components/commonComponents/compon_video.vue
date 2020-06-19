@@ -11,12 +11,12 @@ export default {
     // 视频高度
     height: {
       hot: String,
-      default: "150px",
+      default: "400px",
     },
     // 视频宽度
     width: {
       hot: String,
-      default: "200px",
+      default: "400px",
     },
     // 视频资源名称
     src: {
@@ -24,8 +24,6 @@ export default {
       default:
         "https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm",
     },
-    // 循环
-    loop: {},
     // 静音输出
     muted: {
       hot: Boolean,
