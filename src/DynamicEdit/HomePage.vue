@@ -229,7 +229,7 @@ export default class HomePage extends Vue {
           name: "名称",
           code: "name",
           type: "STRING",
-          value: "文本组件的名称",
+          value: "",
         },
         {
           name: "颜色",

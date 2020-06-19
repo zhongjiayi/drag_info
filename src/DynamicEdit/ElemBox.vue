@@ -72,7 +72,7 @@ export default class ElemBox extends Vue {
         name: "名称",
         code: "name",
         type: "STRING",
-        value: "文本组件的名称",
+        value: "呵呵哒",
       },
       {
         name: "颜色",
@@ -109,7 +109,7 @@ export default class ElemBox extends Vue {
           },
         ],
         // 默认14
-        value: 14,
+        value: 28,
       },
     ],
   };

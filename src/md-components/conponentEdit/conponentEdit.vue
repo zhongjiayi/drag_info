@@ -234,38 +234,7 @@ export default {
     selectedFontColor: "",
     // 选中背景颜色
     selectedBackgroundColor: "",
-    // 更改的文字
-    changeText: "",
-    // 选中字号下拉
-    fontSizeGroup: [
-      {
-        fontSize: 12,
-      },
-      {
-        fontSize: 14,
-      },
-      {
-        fontSize: 16,
-      },
-      {
-        fontSize: 18,
-      },
-      {
-        fontSize: 20,
-      },
-      {
-        fontSize: 28,
-      },
-      {
-        fontSize: 36,
-      },
-      {
-        fontSize: 48,
-      },
-      {
-        fontSize: 72,
-      },
-    ],
+
     // 毫秒间隔
     intervalGroup: [
       {
@@ -290,58 +259,53 @@ export default {
     transStyle: "scrollx",
     position: "botton",
 
-    params: {
-      // color: "",
-      // backgroundColor: "",
-      // fontSize: "",
+    // params: {
+    //   // color: "",
+    //   // backgroundColor: "",
+    //   // fontSize: "",
 
-      name: "bobob",
-      // 自动播放
-      autoplay: true,
-      // 宽度
-      width: "200px",
-      // 高度（未生效）
-      height: "150px",
-      // 轮播时间间隔
-      interval: 1000,
-      // 是否显示面板指示点
-      dots: true,
-      // 面板指示点位置 top bottom left right
-      dotPosition: "bottom",
-      // 是否显示左右按钮
-      HandleButton: true,
-      // 切换特效
-      effectStyle: "scrollx",
-      // 图片资源
-      imageSrc: [
-        {
-          img:
-            "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
-          id: 1,
-        },
-        {
-          img:
-            "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
-          id: 2,
-        },
-      ],
-    },
+    //   name: "bobob",
+    //   // 自动播放
+    //   autoplay: true,
+    //   // 宽度
+    //   width: "200px",
+    //   // 高度（未生效）
+    //   height: "150px",
+    //   // 轮播时间间隔
+    //   interval: 1000,
+    //   // 是否显示面板指示点
+    //   dots: true,
+    //   // 面板指示点位置 top bottom left right
+    //   dotPosition: "bottom",
+    //   // 是否显示左右按钮
+    //   HandleButton: true,
+    //   // 切换特效
+    //   effectStyle: "scrollx",
+    //   // 图片资源
+    //   imageSrc: [
+    //     {
+    //       img:
+    //         "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
+    //       id: 1,
+    //     },
+    //     {
+    //       img:
+    //         "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
+    //       id: 2,
+    //     },
+    //   ],
+    // },
+    
     newParams: [],
     color: "#000",
     // 颜色选择器
     colorShow: false,
     // 背景选择器
     backColorShow: false,
-
     // 自定义渲染变量
     attribute: {},
   }),
-  // watch: {
-  //   attribute() {
-  //     console.log(this.attribute);
-  //     return this.attribute;
-  //   },
-  // },
+  
   components: {
     "sketch-picker": Sketch,
   },
@@ -351,6 +315,7 @@ export default {
       onValuesChange: (props, values) => {
         this.attribute = Object.assign({}, this.attribute, values);
         console.log(this.attribute);
+        this.changeParams()
       },
     });
   },
@@ -421,7 +386,7 @@ export default {
 
     // 更新属性的方法
     changeParams() {
-      eventVue.$emit("myFun", this.params); //$emit这个方法会触发一个事件
+      eventVue.$emit("myFun", this.attribute); //$emit这个方法会触发一个事件
     },
 
     // 更改字体大小

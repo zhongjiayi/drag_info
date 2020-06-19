@@ -62,7 +62,7 @@ export default {
       eventVue.$on("myFun", (message) => {
         //这里最好用箭头函数，不然this指向有问题
         this.newParams = message;
-        console.log(this.newParams);
+        console.log(message);
       });
     },
   },
