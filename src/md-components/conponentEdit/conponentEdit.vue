@@ -1,6 +1,6 @@
 <template>
   <div className="editForm">
-    <a-form id="conponentEdit" v-bind="formItemLayout">
+    <a-form id="conponentEdit" :form="form" v-bind="formItemLayout">
       <!-- 动态生成表单 -->
       <a-form-item
         selfUpdate
@@ -77,10 +77,10 @@
           </a-select>
         </div>
         <div v-if="formParams.type == 'STRING'">
-          {{ attribute[formParams.name] }}
+          {{ attribute[formParams.code] }}
           <a-input
             :placeholder="formParams.name"
-            v-model="attribute[formParams.name]"
+            v-model="attribute[formParams.code]"
           />
         </div>
       </a-form-item>
@@ -329,16 +329,23 @@ export default {
     // 自定义渲染变量
     attribute: {},
   }),
-  watch: {
-    attribute() {
-      console.log(this.attribute);
-      return this.attribute;
-    },
-  },
+  // watch: {
+  //   attribute() {
+  //     console.log(this.attribute);
+  //     return this.attribute;
+  //   },
+  // },
   components: {
     "sketch-picker": Sketch,
   },
-  beforeCreate() {},
+  beforeCreate() {
+    this.form = this.$form.createForm(this, {
+      name: "customized_form_controls",
+      onValuesChange: (props, values) => {
+        console.log(props, values);
+      },
+    });
+  },
   created() {
     this.getParams();
   },
