@@ -61,7 +61,15 @@
           </div>
         </div>
         <div v-if="formParams.type == 'MENU'">
-          <a-select style="width: 80px" v-decorator="[formParams.code]">
+          <a-select
+            style="width: 80px"
+            v-decorator="[
+              formParams.code,
+              {
+                initialValue: attribute[formParams.code],
+              },
+            ]"
+          >
             <a-select-option
               v-for="(item, index) of formParams.options"
               :key="index"
@@ -72,9 +80,13 @@
           </a-select>
         </div>
         <div v-if="formParams.type == 'STRING'">
-          {{ attribute[formParams.code] }}
           <a-input
-            v-decorator="[formParams.code]"
+            v-decorator="[
+              formParams.code,
+              {
+                initialValue: attribute[formParams.code],
+              },
+            ]"
             :placeholder="formParams.name"
           />
         </div>
@@ -341,7 +353,6 @@ export default {
         console.log(this.attribute);
       },
     });
-    this.form.setFieldsValue(this.attribute);
   },
   created() {
     this.getParams();
