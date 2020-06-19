@@ -161,7 +161,7 @@ export default class HomePage extends Vue {
    */
   private components = [
     {
-      name: "文本",
+      name: "编辑文本",
       type: "text",
       scope: "local",
       path: [

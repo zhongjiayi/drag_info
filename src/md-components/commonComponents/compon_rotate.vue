@@ -20,7 +20,6 @@
       >
         <a-icon type="left-circle" />
       </div>
-      <!-- slot-scope="props" -->
       <div
         v-if="newParams.HandleButton"
         slot="nextArrow"

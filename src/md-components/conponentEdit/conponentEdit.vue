@@ -60,9 +60,9 @@
             </span>
           </div>
         </div>
-        <div v-if="formParams.type == 'MENU'">
+        <div v-if="formParams.type == 'ENUM'">
           <a-select
-            style="width: 80px"
+            style="width: 120px"
             v-decorator="[
               formParams.code,
               {
@@ -301,7 +301,6 @@ export default {
             this.newParams.attributes[key].code
           ] = this.newParams.attributes[key].value;
         }
-        // this.changeParams();
       });
     },
 
@@ -355,11 +354,11 @@ export default {
     },
 
     // 更换切换效果
-    changeEffect() {
-      console.log(this.transStyle);
-      this.params.effectStyle = this.transStyle;
-      this.changeParams();
-    },
+    // changeEffect() {
+    //   console.log(this.transStyle);
+    //   this.params.effectStyle = this.transStyle;
+    //   this.changeParams();
+    // },
     changePosition() {
       console.log(this.position);
       this.params.dotPosition = this.position;

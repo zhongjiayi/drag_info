@@ -17,6 +17,7 @@
       }"
     >
       <conponText :params="params"></conponText>
+      <conponRotate :params="params"></conponRotate>
       <!--Ԫ��չʾ���-->
       <div
         class="elemBox-elem-content"
@@ -115,57 +116,132 @@ export default class ElemBox extends Vue {
 
   private isActive = false;
 
+  // private params = {
+  //   name: "编辑文本",
+  //   type: "text",
+  //   scope: "local",
+  //   path: [
+  //     "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+  //   ],
+  //   sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+  //   attributes: [
+  //     {
+  //       name: "名称",
+  //       code: "name",
+  //       type: "STRING",
+  //       value: "",
+  //     },
+  //     {
+  //       name: "颜色",
+  //       code: "fontColor",
+  //       type: "COLOR",
+  //       value: "red",
+  //     },
+  //     {
+  //       name: "背景",
+  //       code: "backgroundColor",
+  //       type: "COLOR",
+  //       value: "red",
+  //     },
+  //     {
+  //       name: "字体大小",
+  //       code: "fontSize",
+  //       type: "ENUM",
+  //       options: [
+  //         {
+  //           label: "12px",
+  //           value: "12",
+  //         },
+  //         {
+  //           label: "14px",
+  //           value: "14",
+  //         },
+  //         {
+  //           label: "28px",
+  //           value: "28",
+  //         },
+  //         {
+  //           label: "32px",
+  //           value: "32",
+  //         },
+  //       ],
+  //       // 默认14
+  //       value: 28,
+  //     },
+  //   ],
+  // };
   private params = {
-    name: "文本",
-    type: "text",
+    name: "轮播组",
+    type: "carousel",
     scope: "local",
     path: [
-      "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+      "M28.5 6.5v1.007l2-.01v10.035h-2v.968H31a.5.5 0 0 0 .5-.5V7a.5.5 0 0 0-.5-.5h-2.5zm-23 0H3a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h2.5v-.968h-2V7.498l2 .009V6.5z",
+      "M9 5v15h16V5H9zM8 3h18a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z",
+      "M14 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-2.253 7.664l-1.494-1.328 4.787-5.386L17 14.4l3.917-4.897 3.79 3.79-1.414 1.414-2.21-2.21L17 17.601l-2.04-2.55z",
     ],
-    sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+    sPath: [
+      "M1 8H0V2h1v6zm13 0h-1V2h1v6zM3 1v8h8V1H3zm-.167-1h8.334c.46 0 .833.373.833.833v8.334c0 .46-.373.833-.833.833H2.833A.833.833 0 0 1 2 9.167V.833C2 .373 2.373 0 2.833 0zM4 8V7l1.75-2L7 6.5 9 4l1 2v2H4zm0-6h2v2H4V2z",
+    ],
     attributes: [
       {
-        name: "名称",
-        code: "name",
-        type: "STRING",
-        value: "",
-      },
-      {
-        name: "颜色",
-        code: "fontColor",
-        type: "COLOR",
-        value: "red",
-      },
-      {
-        name: "背景",
-        code: "backgroundColor",
-        type: "COLOR",
-        value: "red",
-      },
-      {
-        name: "字体大小",
-        code: "fontSize",
-        type: "MENU",
+        name: "间隔",
+        code: "interval",
+        type: "ENUM",
         options: [
           {
-            label: "12px",
-            value: "12",
+            label: "1000ms",
+            value: "1000",
           },
           {
-            label: "14px",
-            value: "14",
+            label: "2000ms",
+            value: "2000",
           },
           {
-            label: "28px",
-            value: "28",
+            label: "3000ms",
+            value: "3000",
           },
           {
-            label: "32px",
-            value: "32",
+            label: "4000ms",
+            value: "4000",
+          },
+          {
+            label: "5000ms",
+            value: "5000",
           },
         ],
-        // 默认14
-        value: 28,
+        value: "1000",
+      },
+      {
+        name: "方向",
+        code: "dotPosition",
+        type: "ENUM",
+        options: [
+          {
+            label: "上下切换",
+            value: "right",
+          },
+          {
+            label: "左右切换",
+            value: "bottom",
+          },
+        ],
+        value: "bottom",
+      },
+      {
+        name: "特效",
+        code: "effectStyle",
+        type: "ENUM",
+        options: [
+          {
+            label: "线性滑动",
+            value: "scrollx",
+          },
+          {
+            label: "渐隐渐显",
+            value: "fade",
+          },
+        ],
+        value: "scrollx",
       },
     ],
   };

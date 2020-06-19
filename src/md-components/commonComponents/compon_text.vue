@@ -41,19 +41,8 @@ export default {
   },
   created() {
     if (this.params) {
-      for (const key in this.params) {
-        if (object.hasOwnProperty(key)) {
-          const element = object[key];
-          
-        }
-      }
-      this.newParams = {
-        name: this.params,
-        color: this.params,
-        fontSize: this.params,
-        backgroundColor: this.params,
-      };
       console.log(this.newParams);
+      this.newParams = this.params;
     }
     this.sumitData();
   },
