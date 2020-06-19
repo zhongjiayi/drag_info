@@ -61,12 +61,7 @@
           </div>
         </div>
         <div v-if="formParams.type == 'MENU'">
-          <a-select
-            :default-value="formParams.value"
-            style="width: 80px"
-            @change="handleFontSizeChange"
-            v-model="attribute[formParams.value]"
-          >
+          <a-select style="width: 80px" v-decorator="[formParams.code]">
             <a-select-option
               v-for="(item, index) of formParams.options"
               :key="index"
@@ -79,8 +74,8 @@
         <div v-if="formParams.type == 'STRING'">
           {{ attribute[formParams.code] }}
           <a-input
+            v-decorator="[formParams.code]"
             :placeholder="formParams.name"
-            v-model="attribute[formParams.code]"
           />
         </div>
       </a-form-item>
@@ -340,11 +335,13 @@ export default {
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, {
-      name: "customized_form_controls",
+      name: "dynamic_rule",
       onValuesChange: (props, values) => {
-        console.log(props, values);
+        this.attribute = Object.assign({}, this.attribute, values);
+        console.log(this.attribute);
       },
     });
+    this.form.setFieldsValue(this.attribute);
   },
   created() {
     this.getParams();
