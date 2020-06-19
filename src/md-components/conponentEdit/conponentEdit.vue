@@ -162,22 +162,6 @@
         />
       </a-form-item>
 
-      <a-form-item label="间隔">
-        <a-select
-          default-value="1000"
-          style="width: 80px"
-          @change="handleIntervalChange"
-        >
-          <a-select-option
-            v-for="(item, index) of intervalGroup"
-            :key="index"
-            :value="item.interval"
-          >
-            {{ item.interval }}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-
       <a-form-item label="切换">
         <a-radio-group
           v-decorator="['radio-group']"
@@ -224,25 +208,7 @@ export default {
     selectedFontColor: "",
     // 选中背景颜色
     selectedBackgroundColor: "",
-
-    // 毫秒间隔
-    intervalGroup: [
-      {
-        interval: 1000,
-      },
-      {
-        interval: 2000,
-      },
-      {
-        interval: 3000,
-      },
-      {
-        interval: 4000,
-      },
-      {
-        interval: 5000,
-      },
-    ],
+    
     // 是否静音输出视频
     isMuted: false,
 
@@ -363,12 +329,6 @@ export default {
     changePosition() {
       console.log(this.position);
       this.params.dotPosition = this.position;
-      this.changeParams();
-    },
-
-    handleIntervalChange(value) {
-      this.params.interval = value;
-      console.log(`selected ${value}`);
       this.changeParams();
     },
 

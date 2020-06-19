@@ -209,7 +209,7 @@ export default class ElemBox extends Vue {
             value: "5000",
           },
         ],
-        value: "1000",
+        value: 1000,
       },
       {
         name: "方向",
