@@ -260,6 +260,7 @@ export default {
     //         "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
     //       id: 2,
     //     },
+    // ]
 
     newParams: [],
     color: "#000",
