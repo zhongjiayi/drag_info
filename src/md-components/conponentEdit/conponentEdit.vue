@@ -104,6 +104,16 @@
             ]"
           />
         </div>
+        <div v-if="formParams.type == 'NUMBER'">
+          <a-input-number
+            v-decorator="[
+              formParams.code,
+              {
+                initialValue: attribute[formParams.code],
+              },
+            ]"
+          />
+        </div>
       </a-form-item>
 
       <!-- <a-form-item label="颜色">
@@ -208,7 +218,7 @@ export default {
     selectedFontColor: "",
     // 选中背景颜色
     selectedBackgroundColor: "",
-    
+
     // 是否静音输出视频
     isMuted: false,
 

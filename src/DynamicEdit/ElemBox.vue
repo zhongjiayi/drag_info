@@ -186,29 +186,7 @@ export default class ElemBox extends Vue {
       {
         name: "间隔",
         code: "interval",
-        type: "ENUM",
-        options: [
-          {
-            label: "1000ms",
-            value: "1000",
-          },
-          {
-            label: "2000ms",
-            value: "2000",
-          },
-          {
-            label: "3000ms",
-            value: "3000",
-          },
-          {
-            label: "4000ms",
-            value: "4000",
-          },
-          {
-            label: "5000ms",
-            value: "5000",
-          },
-        ],
+        type: "NUMBER",
         value: 1000,
       },
       {

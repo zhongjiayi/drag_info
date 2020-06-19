@@ -29,13 +29,25 @@
         <a-icon type="right-circle" />
       </div>
       <div>
-        <img src="http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658" alt="" srcset="" />
+        <img
+          src="http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658"
+          alt=""
+          srcset=""
+        />
       </div>
       <div>
-        <img src="http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658" alt="" srcset="" />
+        <img
+          src="http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658"
+          alt=""
+          srcset=""
+        />
       </div>
       <div>
-        <img src="http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658" alt="" srcset="" />
+        <img
+          src="http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658"
+          alt=""
+          srcset=""
+        />
       </div>
       <!-- <div v-for="imageUrl of newParams.imageSrc" :key="imageUrl.id">
         <img :src="imageUrl.img" alt="" srcset="" />
@@ -107,28 +119,7 @@ export default {
 
   data() {
     return {
-      newParams: {
-        name: "",
-        autoplay: null,
-        width: "",
-        height: "",
-        interval: 1000,
-        dotPosition: "",
-        HandleButton: null,
-        effectStyle: "",
-        imageSrc: [
-          {
-            img:
-              "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
-            id: 1,
-          },
-          {
-            img:
-              "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
-            id: 2,
-          },
-        ],
-      },
+      newParams: {},
     };
   },
   created() {
