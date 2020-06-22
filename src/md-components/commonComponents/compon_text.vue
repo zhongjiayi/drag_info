@@ -1,29 +1,32 @@
 <template>
-  <div class="conponText">
-    <div class="editBox" v-if="isActive" @dblclick="editText">
-      <textarea
+  <div class="componText">
+    <div class="editBox" v-if="isActive" style="width:'100%'">
+      <input
         :style="{
+          width:'100%',
         color: attribute.fontColor,
         fontSize: attribute.fontSize + 'px',
         backgroundColor: attribute.backgroundColor,
-        fontWeight:attribute.fontWeight
-      }"
+        fontWeight:attribute.fontWeight,
+        letterSpacing:attribute.fontSpacing+'px'}"
         name="editBox"
         id="editBox"
-        v-if="update"
         v-model="attribute.textContent"
-        v-text="attribute.textContent"
-      ></textarea>
+      />
     </div>
-    <div class="showBox" v-else>
-      <p
-        :style="{
+    <div
+      class="showBox"
+      v-else
+      :style="{
+      width:'100%',
         color: attribute.fontColor,
         fontSize: attribute.fontSize + 'px',
         backgroundColor: attribute.backgroundColor,
-        fontWeight:attribute.fontWeight
+        fontWeight:attribute.fontWeight,
+        letterSpacing:attribute.fontSpacing+'px'
       }"
-      >{{ attribute.textContent }}</p>
+    >
+      <span style="width: 100%;">{{ contents }}</span>
     </div>
   </div>
 </template>
@@ -36,7 +39,7 @@ export default {
       default: () => {
         return {
           name: "编辑文本",
-          type: "conponText",
+          type: "componText",
           attributes: [
             {
               code: "fontColor",
@@ -95,6 +98,52 @@ export default {
                 }
               ],
               value: "normal"
+            },
+            {
+              code: "direction",
+              name: "滚动方向",
+              type: "ENUM",
+              options: [
+                {
+                  label: "从左到右",
+                  value: "toRight"
+                },
+                {
+                  label: "从右到左",
+                  value: "toLeft"
+                }
+              ],
+              value: "toLeft"
+            },
+            {
+              code: "fontSpacing",
+              name: "字体间隔",
+              type: "SLIDER",
+              value: 1
+            },
+            {
+              name: "播放速率",
+              code: "fontSpeed",
+              type: "ENUM",
+              options: [
+                {
+                  label: "默认速度",
+                  value: 2000
+                },
+                {
+                  label: "1.2倍速",
+                  value: 1600
+                },
+                {
+                  label: "1.5倍速",
+                  value: 1000
+                },
+                {
+                  label: "2倍速",
+                  value: 500
+                }
+              ],
+              value: 2000
             }
           ]
         };
@@ -109,27 +158,49 @@ export default {
   data() {
     return {
       attribute: {},
-      update: false
+      update: false,
+      timer: null,
+      contents: ""
     };
   },
   watch: {
     isActive() {
-      this.update = false;
+      this.stop();
       this.$nextTick(() => {
-        this.update = true;
+        this.contents = this.attribute.textContent;
+        this.show();
       });
-      console.log(this.isActive);
     }
   },
 
   created() {
+    this.show();
     this.attribute = this.getAttribute(this.value.attributes);
-    // console.log("初始化", this.attribute);
+    console.log(this.attribute);
     this.sumitData();
+    this.contents = this.attribute.textContent;
   },
 
   mounted() {},
+
+  beforeDestroy() {
+    this.stop();
+  },
   methods: {
+    show() {
+      console.log("开始执行");
+      if (this.timer != null) return;
+      this.timer = setInterval(() => {
+        let start = this.contents.substring(0, 1);
+        let end = this.contents.substring(1);
+        this.contents = end + start;
+      }, this.attribute.fontSpeed);
+    },
+    stop() {
+      console.log("执行暂停");
+      clearInterval(this.timer);
+      this.timer = null;
+    },
     getAttribute(attributes) {
       const attribute = {};
       for (var key in attributes) {
@@ -142,10 +213,7 @@ export default {
         //这里最好用箭头函数，不然this指向有问题
         this.attribute = { ...message };
         // console.log(message);
-        // 移除组件
         this.update = false;
-        // 在组件移除后，重新渲染组件
-        // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
         this.$nextTick(() => {
           this.update = true;
         });
@@ -156,20 +224,75 @@ export default {
             value: this.attribute[v.code]
           }))
         };
-        // console.log(newData, message);
+        console.log(newData, message);
         this.$emit("input", newData);
       });
-    },
-    editText() {
-      console.log(this.update);
-      if (!this.update) {
-        this.update = true;
-      } else {
-        this.update = false;
-      }
     }
   }
 };
 </script>
 <style scoped lang="scss">
+div,
+ul,
+li,
+span,
+img {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.marquee {
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  color: #3a3a3a;
+  background-color: #b3effe;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.marquee_title {
+  padding: 0 20px;
+  height: 30px;
+  font-size: 14px;
+  border-right: 1px solid #d8d8d8;
+  align-items: center;
+}
+
+.marquee_box {
+  display: block;
+  position: relative;
+  width: 60%;
+  height: 30px;
+  overflow: hidden;
+}
+
+.marquee_list {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.marquee_top {
+  transition: all 0.5s;
+  margin-top: -30px;
+}
+
+.marquee_list li {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  padding-left: 20px;
+}
+
+.marquee_list li span {
+  padding: 0 2px;
+}
+
+.red {
+  color: #ff0101;
+}
 </style>

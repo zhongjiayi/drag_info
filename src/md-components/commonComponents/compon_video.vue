@@ -20,7 +20,7 @@ export default {
       default: () => {
         return {
           name: "视频",
-          type: "conponVideo",
+          type: "componVideo",
           attributes: [
             {
               name: "静音播放",

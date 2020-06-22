@@ -24,7 +24,7 @@ export default {
       default: () => {
         return {
           name: "编辑时间",
-          type: "conponTime",
+          type: "componTime",
           attributes: [
             {
               code: "TfontColor",
@@ -125,7 +125,7 @@ export default {
   mounted() {
     this.timer = setInterval(() => {
       this.getTime();
-      console.log("创建");
+      // console.log("创建");
     }, 1000);
   },
   methods: {
@@ -160,7 +160,7 @@ export default {
   beforeDestroy() {
     clearInterval(this.timer);
     this.timer = null;
-    console.log("销毁");
+    // console.log("销毁");
   }
 };
 </script>

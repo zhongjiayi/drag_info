@@ -63,20 +63,22 @@
 
 <script lang="ts">
 import { Vue, Prop, Watch, Component } from "vue-property-decorator";
-import conponText from "../md-components/commonComponents/compon_text"; //文本
-import conponImage from "../md-components/commonComponents/compon_image"; //图片
-import conponVideo from "../md-components/commonComponents/compon_video"; //视频
-import conponRotate from "../md-components/commonComponents/compon_rotate"; //轮播图
-import conponTime from "../md-components/commonComponents/compon_time"; //时间
+import componText from "../md-components/commonComponents/compon_text.vue"; //文本
+import conponImage from "../md-components/commonComponents/compon_image.vue"; //图片
+import componVideo from "../md-components/commonComponents/compon_video.vue"; //视频
+import componRotate from "../md-components/commonComponents/compon_rotate.vue"; //轮播图
+import componTime from "../md-components/commonComponents/compon_time.vue"; //时间
+import componWeek from "../md-components/commonComponents/compon_week.vue"; //时间
 import eventVue from "../md-components/conponentEdit/eventBus";
 
 @Component({
   components: {
-    conponText,
+    componText,
     conponImage,
-    conponVideo,
-    conponRotate,
-    conponTime
+    componVideo,
+    componRotate,
+    componTime,
+    componWeek
   }
 })
 export default class ElemBox extends Vue {

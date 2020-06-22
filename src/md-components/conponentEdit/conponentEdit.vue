@@ -76,6 +76,16 @@
             ]"
           />
         </div>
+        <div v-if="formParams.type == 'SLIDER'">
+          <a-slider
+            v-decorator="[
+              formParams.code,
+              {
+                initialValue: attribute[formParams.code],
+              },
+            ]"
+          />
+        </div>
       </a-form-item>
     </a-form>
   </div>
@@ -96,7 +106,8 @@ export default {
     // // 颜色选择器
     colorShow: false,
     // 自定义渲染变量
-    attribute: {}
+    attribute: {},
+    disabled: false
   }),
 
   components: {
@@ -144,7 +155,6 @@ export default {
         } else {
           this.colorShow = true;
         }
-        // console.log(this.colorShow);
       });
     },
 

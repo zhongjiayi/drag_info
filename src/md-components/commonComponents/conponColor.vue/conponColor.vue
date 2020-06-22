@@ -4,7 +4,7 @@
       <span class="color_con" :style="{ background: color.hex }"></span>
       <a-input placeholder="选择颜色" :style="{ color: color.hex,width:'75px' }" v-model="color.hex" />
     </div>
-    <div v-if="colorShow">
+    <div @click="handleClick" v-if="colorShow">
       <sketch-picker v-model="color" @input="triggerChange"></sketch-picker>
     </div>
   </div>
@@ -31,8 +31,21 @@ export default {
       colorShow: false
     };
   },
+    watch: {
+    colorShow(value){
+      if(value){
+        setTimeout(() => {
+          window.addEventListener("click", this.hide);
+        });
+      }else{
+        window.removeEventListener("click", this.hide);
+      }
+    }
+  },
 
-  created() {},
+  created() {
+    this.hide = this.hide.bind(this);
+  },
 
   methods: {
     triggerChange(color) {
@@ -44,7 +57,17 @@ export default {
         this.colorShow = false;
       } else {
         this.colorShow = true;
+        setTimeout(() => {
+        console.log(this.$refs) 
+      });
       }
+    },
+    hide(event){
+      this.colorShow = false;
+    },
+    handleClick(event){
+      console.log('禁止冒泡');
+      event.stopPropagation();
     }
   }
 };

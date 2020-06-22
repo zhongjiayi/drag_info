@@ -158,7 +158,7 @@ export default class HomePage extends Vue {
   private components = [
     {
       name: "编辑文本",
-      type: "conponText",
+      type: "componText",
       scope: "local",
       path: [
         "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
@@ -179,7 +179,7 @@ export default class HomePage extends Vue {
     {
       scope: "local",
       name: "视频",
-      type: "conponVideo",
+      type: "componVideo",
       path: [
         "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
       ],
@@ -196,7 +196,7 @@ export default class HomePage extends Vue {
     },
     {
       name: "轮播组",
-      type: "conponRotate",
+      type: "componRotate",
       scope: "local",
       path: [
         "M28.5 6.5v1.007l2-.01v10.035h-2v.968H31a.5.5 0 0 0 .5-.5V7a.5.5 0 0 0-.5-.5h-2.5zm-23 0H3a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h2.5v-.968h-2V7.498l2 .009V6.5z",
@@ -209,7 +209,7 @@ export default class HomePage extends Vue {
     },
     {
       name: "日期",
-      type: "conponTime",
+      type: "componTime",
       scope: "global",
       path: [
         "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
@@ -218,7 +218,7 @@ export default class HomePage extends Vue {
     },
     {
       name: "星期",
-      type: "week",
+      type: "componWeek",
       scope: "global",
       path: [
         "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
@@ -243,7 +243,7 @@ export default class HomePage extends Vue {
       {
         pIndex: 1,
         elemName: "轮播图",
-        elemType: "conponRotate",
+        elemType: "componRotate",
         content: "",
         elemComAttr: {
           pointX: 700,
@@ -315,7 +315,7 @@ export default class HomePage extends Vue {
       {
         pIndex: 2,
         elemName: "编辑文本",
-        elemType: "conponText",
+        elemType: "componText",
         content: "",
         elemComAttr: {
           pointX: 700,
@@ -389,6 +389,50 @@ export default class HomePage extends Vue {
               }
             ],
             value: "normal"
+          },
+          {
+            name: "滚动方向",
+            code: "direction",
+            type: "ENUM",
+            options: [
+              {
+                label: "从左到右",
+                value: "toRight"
+              },
+              {
+                label: "从右到左",
+                value: "toLeft"
+              }
+            ],
+            value: "toLeft"
+          },
+          {
+            name: "字体间隔",
+            code: "fontSpacing",
+            type: "SLIDER",
+            value: 1
+          },
+          {
+            name: "播放速率",
+            code: "fontSpeed",
+            type: "ENUM",
+            options: [
+              {
+                label: "默认速度",
+                value: 2000
+              },
+              {
+                label: "1.2倍速",
+                value: 1600
+              },{
+                label: "1.5倍速",
+                value: 1000
+              },{
+                label: "2倍速",
+                value: 500
+              }
+            ],
+            value: 2000
           }
         ]
       },
@@ -423,7 +467,7 @@ export default class HomePage extends Vue {
       {
         pIndex: 4,
         elemName: "视频",
-        elemType: "conponVideo",
+        elemType: "componVideo",
         content: "xxx/xxx/xxx.mp4",
         elemComAttr: {
           pointX: 200,
@@ -447,7 +491,7 @@ export default class HomePage extends Vue {
       {
         pIndex: 5,
         elemName: "时间",
-        elemType: "conponTime",
+        elemType: "componTime",
         content: "xxx/xxx/xxx.mp4",
         elemComAttr: {
           pIndex: 1,
@@ -532,6 +576,77 @@ export default class HomePage extends Vue {
               }
             ],
             value: "YYYY-MM-DD HH:mm:ss"
+          }
+        ]
+      },
+      {
+        pIndex: 6,
+        elemName: "星期",
+        elemType: "componWeek",
+        content: "xxx/xxx/xxx.mp4",
+        elemComAttr: {
+          pIndex: 1,
+          pointX: 666,
+          pointY: 999,
+          width: 100,
+          height: 100,
+          rotate: 0,
+          opacity: 100,
+          elemTime: 1, // number
+          duration: "00:00:30"
+        },
+        attributes: [
+          {
+            name: "星期颜色",
+            code: "WfontColor",
+            type: "COLOR",
+            value: "white"
+          },
+          {
+            name: "星期背景",
+            code: "WbackgroundColor",
+            type: "COLOR",
+            value: "red"
+          },
+          {
+            name: "星期字体大小",
+            code: "WfontSize",
+            type: "ENUM",
+            options: [
+              {
+                label: "12",
+                value: "12"
+              },
+              {
+                label: "14",
+                value: "14"
+              },
+              {
+                label: "28",
+                value: "28"
+              },
+              {
+                label: "32",
+                value: "32"
+              }
+            ],
+            value: 28
+          },
+          {
+            name: "星期字体粗细",
+            code: "WfontWeight",
+            type: "ENUM",
+            options: [
+              {
+                label: "标准",
+                value: "normal"
+              },
+              {
+                label: "粗体",
+                value: "bold"
+              }
+            ],
+            value: "normal"
           }
         ]
       }

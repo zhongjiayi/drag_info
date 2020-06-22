@@ -12,13 +12,6 @@
       :arrows="isActive"
       :effect="attribute.effect"
     >
-      <!-- 添加左右按钮 -->
-      <!-- <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
-        <a-icon type="left-circle" />
-      </div>
-      <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
-        <a-icon type="right-circle" />
-      </div> -->
       <div v-for="imageUrl of imageSrc" :key="imageUrl.id">
         <img :src="imageUrl.img" alt srcset />
       </div>
@@ -120,9 +113,9 @@ export default {
   },
   created() {
     this.attribute = this.getAttribute(this.value.attributes);
-    console.log("初始化", this.attribute);
+    // console.log("初始化", this.attribute);
     this.sumitData();
-    console.log(this.isActive);
+    // console.log(this.isActive);
   },
   methods: {
     getAttribute(attributes) {
@@ -151,7 +144,7 @@ export default {
             value: this.attribute[v.code]
           }))
         };
-        console.log(newData, message);
+        // console.log(newData, message);
         this.$emit("input", newData);
       });
     }
