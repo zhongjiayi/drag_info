@@ -92,21 +92,9 @@ export default {
       labelAlign: "left",
       wrapperCol: { span: 12 }
     },
-    // 选中颜色
-    selectedFontColor: "",
-
-    // 是否静音输出视频
-    isMuted: false,
-
-    transStyle: "scrollx",
-    position: "botton",
-
     newParams: [],
-    color: "#000",
     // // 颜色选择器
     colorShow: false,
-    // 背景选择器
-    backColorShow: false,
     // 自定义渲染变量
     attribute: {}
   }),
@@ -151,7 +139,6 @@ export default {
       window.addEventListener("click", e => {
         event.stopPropagation();
         var colorBox = document.querySelector(".vc-sketch");
-        // console.log(e.target);
         if (e.target !== colorBox) {
           this.colorShow = false;
         } else {

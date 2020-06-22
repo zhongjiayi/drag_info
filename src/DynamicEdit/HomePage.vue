@@ -240,26 +240,6 @@ export default class HomePage extends Vue {
     playbillBg: "white",
     resolution: "1980*1080",
     elemList: [
-      // {
-      //   pIndex: 1,
-      //   elemName: "日期1",
-      //   elemType: "time",
-      //   content: "",
-      //   elemComAttr: {
-      //     pointX: 300,
-      //     pointY: 500,
-      //     width: 400,
-      //     height: 300,
-      //     rotate: 0,
-      //     opacity: 100,
-      //     elemTime: 1,
-      //     duration: "00:00:30",
-      //   },
-      //   elemSupAttr: {
-      //     displayType: "HH:mm:ss",
-      //     fontSize: "12.5px",
-      //   },
-      // },
       {
         pIndex: 1,
         elemName: "轮播图",
@@ -482,20 +462,20 @@ export default class HomePage extends Vue {
         },
         attributes: [
           {
-            name: "颜色",
-            code: "fontColor",
+            name: "时间颜色",
+            code: "TfontColor",
             type: "COLOR",
             value: "white"
           },
           {
-            name: "背景",
-            code: "backgroundColor",
+            name: "时间背景",
+            code: "TbackgroundColor",
             type: "COLOR",
             value: "red"
           },
           {
-            name: "字体大小",
-            code: "fontSize",
+            name: "时间字体大小",
+            code: "TfontSize",
             type: "ENUM",
             options: [
               {
@@ -518,8 +498,8 @@ export default class HomePage extends Vue {
             value: 28
           },
           {
-            name: "字体粗细",
-            code: "fontWeight",
+            name: "时间字体粗细",
+            code: "TfontWeight",
             type: "ENUM",
             options: [
               {
@@ -534,8 +514,8 @@ export default class HomePage extends Vue {
             value: "normal"
           },
           {
-            name: "展示格式",
-            code: "showContent",
+            name: "时间展示格式",
+            code: "TshowContent",
             type: "ENUM",
             options: [
               {

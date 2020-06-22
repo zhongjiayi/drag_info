@@ -2,10 +2,10 @@
   <div class="timeChange">
     <span
       :style="{
-        color: attribute.fontColor,
-        fontSize: attribute.fontSize + 'px',
-        backgroundColor: attribute.backgroundColor,
-        fontWeight:attribute.fontWeight
+        color: attribute.TfontColor,
+        fontSize: attribute.TfontSize + 'px',
+        backgroundColor: attribute.TbackgroundColor,
+        fontWeight:attribute.TfontWeight
       }"
     >
       {{
@@ -23,24 +23,24 @@ export default {
       hot: Object,
       default: () => {
         return {
-          name: "编辑文本",
-          type: "conponText",
+          name: "编辑时间",
+          type: "conponTime",
           attributes: [
             {
-              code: "fontColor",
-              name: "字体颜色",
+              code: "TfontColor",
+              name: "时间字体颜色",
               type: "COLOR",
               value: "white"
             },
             {
-              code: "backgroundColor",
-              name: "背景颜色",
+              code: "TbackgroundColor",
+              name: "时间背景颜色",
               type: "COLOR",
               value: "blue"
             },
             {
-              code: "fontSize",
-              name: "字号",
+              code: "TfontSize",
+              name: "时间字号",
               type: "ENUM",
               options: [
                 {
@@ -63,14 +63,8 @@ export default {
               value: 28
             },
             {
-              code: "textContent",
-              name: "文本内容",
-              type: "STRING",
-              value: "请编辑文字"
-            },
-            {
-              code: "fontWeight",
-              name: "字体粗细",
+              code: "TfontWeight",
+              name: "时间字体粗细",
               type: "ENUM",
               options: [
                 {
@@ -83,6 +77,26 @@ export default {
                 }
               ],
               value: "normal"
+            },
+            {
+              name: "时间展示格式",
+              code: "TshowContent",
+              type: "ENUM",
+              options: [
+                {
+                  label: "显示日期",
+                  value: "YYYY-MM-DD"
+                },
+                {
+                  label: "显示时间",
+                  value: "HH:mm:ss"
+                },
+                {
+                  label: "日期时间",
+                  value: "YYYY-MM-DD HH:mm:ss"
+                }
+              ],
+              value: "YYYY-MM-DD HH:mm:ss"
             }
           ]
         };

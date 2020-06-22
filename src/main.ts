@@ -7,8 +7,8 @@ import App from "./App.vue";
 import store from "./store";
 
 import "ant-design-vue/dist/antd.css";
-import vcolorpicker from "vcolorpicker";
-Vue.use(vcolorpicker);
+// import vcolorpicker from "vcolorpicker";
+// Vue.use(vcolorpicker);
 import './md-components/conponCss/conponCss.scss'
 // import axios from 'axios'
 // import './common/common.ts'
