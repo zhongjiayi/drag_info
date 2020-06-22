@@ -47,7 +47,7 @@
               @click.left.stop="changeActive(elem)" @dblclick.stop="startEdit(elem)">
             <div class="screen-item">
               <svg class="svg-icon" aria-hidden="true">
-                <path v-for="item of componentsList[elem.elemType].sPath" :d="item"></path>
+                <path v-for="(item, i) of componentsList[elem.elemType].sPath" :d="item" :key="i"></path>
               </svg>
               <input v-if="isEdit && elem.pIndex === elemActive" class="hzInput" type="text"
                      v-model="editName"
@@ -81,9 +81,9 @@
     }
   })
   export default class PageList extends Vue {
-    @Prop() elemList!: Elem[]
+    @Prop() elemList!: any[]
     @Prop() elemActive!: number
-    @Prop() components!: IComponent[]
+    @Prop() components!: any[]
 
     private isEdit = false // 是否处于编辑模式
 
@@ -99,7 +99,7 @@
       return this.components.reduce((o: { [x: string]: any }, cur: { type: string | number }) => (o[cur.type] = cur) && o, {})
     }
 
-    changeActive(elem: Elem): void {
+    changeActive(elem: any): void {
       if (!this.isEdit) {
         if (this.elemActive === elem.pIndex) {
           this.$emit('changeActiveIndex', 'elem', -1)
@@ -121,7 +121,7 @@
      *  文本编辑
      */
     // 开始编辑
-    startEdit(elem: Elem): void {
+    startEdit(elem: any): void {
       this.$emit('changeActiveIndex', 'elem', elem.pIndex)
       this.isEdit = true
       this.editName = elem.elemName
@@ -132,7 +132,7 @@
     }
 
     // 结束编辑
-    endEdit(elem: Elem): void {
+    endEdit(elem: any): void {
       if (this.editName !== '') {
         this.isEdit = false
         const res = this.checkString(this.editName) || (this.editName === elem.elemName ? '' : this.checkDupName(this.editName, this.elemList))

@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import eventVue from "../conponentEdit/eventBus";
+import eventVue from "../componentEdit/eventBus";
 export default {
   props: {
     value: {
@@ -174,11 +174,11 @@ export default {
   },
 
   created() {
-    this.show();
     this.attribute = this.getAttribute(this.value.attributes);
-    console.log(this.attribute);
     this.sumitData();
     this.contents = this.attribute.textContent;
+
+    this.show();
   },
 
   mounted() {},
@@ -188,7 +188,6 @@ export default {
   },
   methods: {
     show() {
-      console.log("开始执行");
       if (this.timer != null) return;
       this.timer = setInterval(() => {
         let start = this.contents.substring(0, 1);

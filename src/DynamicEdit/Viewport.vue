@@ -1,79 +1,102 @@
 <template>
-  <div class="screen-viewport"
-       :style="{width:width + 'px',height:height + 'px',minWidth:width + 'px',minHeight:height + 'px',transform:'matrix(1,0,0,1,' + (offsetX * width / 100)  + ',' + (offsetY * height / 100) + ')'}"
-       @mousedown="changElemActive"
+  <div
+    class="screen-viewport"
+    :style="{width:width + 'px',height:height + 'px',minWidth:width + 'px',minHeight:height + 'px',transform:'matrix(1,0,0,1,' + (offsetX * width / 100)  + ',' + (offsetY * height / 100) + ')'}"
+    @mousedown="changElemActive"
   >
-    <div class="no-zoom-area"
-         :style="{top:computeScale / 2 + '%',left:computeScale / 2 + '%',width:(100 - computeScale) + '%',height:(100 - computeScale) + '%'}"></div>
-    <div class="playbill-area zoom-area" :style="{transform: 'scale(' + scale + ')',background:playbillBg}">
-      <ElemBox :elemList="playbillElemList" :model="model" :elemActive="elemActive" :scale="scale" :resolution="resolution"></ElemBox>
+    <div
+      class="no-zoom-area"
+      :style="{top:computeScale / 2 + '%',left:computeScale / 2 + '%',width:(100 - computeScale) + '%',height:(100 - computeScale) + '%'}"
+    ></div>
+    <div
+      class="playbill-area zoom-area"
+      :style="{transform: 'scale(' + scale + ')',background:playbillBg}"
+    >
+      <ElemBox
+        :elemList="playbillElemList"
+        :model="model"
+        :elemActive="elemActive"
+        :editIndex="editIndex"
+        :scale="scale"
+        :resolution="resolution"
+      ></ElemBox>
     </div>
-    <div v-if="program" class="program-area zoom-area"
-         :style="{transform: 'scale(' + scale + ')',background: program.progBg}">
-      <ElemBox :elemList="program.elemList" :model="model" :elemActive="elemActive" :scale="scale" :resolution="resolution"></ElemBox>
+    <div
+      v-if="program"
+      class="program-area zoom-area"
+      :style="{transform: 'scale(' + scale + ')',background: program.progBg}"
+    >
+      <ElemBox
+        :elemList="program.elemList"
+        :model="model"
+        :elemActive="elemActive"
+        :scale="scale"
+        :resolution="resolution"
+      ></ElemBox>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import {Vue, Prop, Component} from 'vue-property-decorator'
-  import ElemBox from './ElemBox.vue'
+import { Vue, Prop, Component } from "vue-property-decorator";
+import ElemBox from "./ElemBox.vue";
 
-  @Component({
-    components: {
-      ElemBox
-    }
-  })
-
-  export default class Viewport extends Vue {
-    @Prop() resolution!: string // ·Ö±æÂÊ
-    @Prop() offsetX!: string // xÖá²àÒÆÁ¿
-    @Prop() offsetY!: string // yÖá²àÒÆÁ¿
-    @Prop() scale!: number // ±ÈÀý
-    @Prop() playbillBg!: string // ½ÚÄ¿µ¥±³¾°Í¼°¸
-    @Prop() program!: Program // ½ÚÄ¿
-    @Prop() playbillElemList!: Elem // ½ÚÄ¿µ¥µÄÔªËØÁÐ±í
-    @Prop() elemActive!: number // ¼¤»îµÄÔªËØÎ»ÖÃ
-
-    private model = 'edit'  // µ±Ç°Ä£Ê½  ·Ö play he model
-
-    get width() {
-      return this.resolution.split('*')[0]
-    }
-
-    get height() {
-      return this.resolution.split('*')[1]
-    }
-
-    get computeScale() {
-      return Math.round((1 - this.scale) * 100)
-    }
-
-    changElemActive(){
-      // @ts-ignore
-      this.$parent.activeElemIndex = -1
-    }
+@Component({
+  components: {
+    ElemBox
   }
+})
+export default class Viewport extends Vue {
+  @Prop() resolution!: string; // ï¿½Ö±ï¿½ï¿½ï¿½
+  @Prop() offsetX!: string; // xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  @Prop() offsetY!: string; // yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  @Prop() scale!: number; // ï¿½ï¿½ï¿½ï¿½
+  @Prop() playbillBg!: string; // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+  @Prop() program!: any; // ï¿½ï¿½Ä¿
+  @Prop() playbillElemList!: any; // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½Ð±ï¿½
+  @Prop() elemActive!: number; // ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Î»ï¿½ï¿½
+  @Prop() editIndex!: number;
+
+  private model = "edit"; // ï¿½ï¿½Ç°Ä£Ê½  ï¿½ï¿½ play he model
+
+  get width() {
+    return this.resolution.split("*")[0];
+  }
+
+  get height() {
+    return this.resolution.split("*")[1];
+  }
+
+  get computeScale() {
+    return Math.round((1 - this.scale) * 100);
+  }
+
+  changElemActive() {
+    // @ts-ignore
+    this.$parent.activeElemIndex = -1;
+    // @ts-ignore
+    this.$parent.editIndex = -1;
+  }
+}
 </script>
 
 <style scoped>
-  .screen-viewport {
-    position: relative;
+.screen-viewport {
+  position: relative;
+}
 
-  }
+.no-zoom-area {
+  position: absolute;
+  pointer-events: none;
+  background: transparent;
+}
 
-  .no-zoom-area {
-    position: absolute;
-    pointer-events: none;
-    background: transparent;
-  }
-
-  .zoom-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform-origin: center center;
-  }
+.zoom-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+}
 </style>

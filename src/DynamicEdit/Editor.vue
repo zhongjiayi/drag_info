@@ -10,7 +10,7 @@
           <component :is="item.model" :msgData="item.data"></component>
         </li>
       </ul>
-      <conponEdit></conponEdit>
+      <componEdit></componEdit>
     </template>
   </basicStyle>
 </template>
@@ -21,7 +21,8 @@ import BasicStyle from "./BasicStyle.vue";
 import commonElem from "../md-components/editer/commonElem.vue";
 import playbill from "../md-components/editer/playbill.vue";
 import program from "../md-components/editer/program.vue";
-import conponEdit from "../md-components/conponentEdit/conponentEdit.vue";
+
+import componEdit from "../md-components/componentEdit/componentEdit.vue";
 
 @Component({
   components: {
@@ -29,7 +30,7 @@ import conponEdit from "../md-components/conponentEdit/conponentEdit.vue";
     commonElem,
     playbill,
     program,
-    conponEdit
+    componEdit,
   }
 })
 export default class Editor extends Vue {

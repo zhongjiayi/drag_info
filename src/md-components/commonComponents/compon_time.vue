@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import eventVue from "../conponentEdit/eventBus";
+import eventVue from "../componentEdit/eventBus";
 import moment from "moment";
 export default {
   props: {
@@ -117,9 +117,9 @@ export default {
   },
 
   created() {
-    this.attribute = this.getAttribute(this.value.attributes);
-    // console.log("初始化", this.attribute);
     this.sumitData();
+    this.attribute = this.getAttribute(this.value.attributes);
+    console.log("初始化", this.attribute);
   },
 
   mounted() {
@@ -131,7 +131,8 @@ export default {
   methods: {
     moment,
     getTime() {
-      this.NowTime = moment(new Date()).format(this.attribute.showContent);
+      console.log(this.attribute.TshowContent)
+      this.NowTime = moment(new Date()).format(this.attribute.TshowContent);
     },
     getAttribute(attributes) {
       const attribute = {};

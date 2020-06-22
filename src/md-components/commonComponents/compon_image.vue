@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import eventVue from "../conponentEdit/eventBus";
+import eventVue from "../componentEdit/eventBus";
 export default {
   props: {
     value: {
@@ -19,7 +19,7 @@ export default {
       default: () => {
         return {
           name: "图片",
-          type: "conponImage",
+          type: "componImage",
           attributes: [],
           imageSrc: {
             img:

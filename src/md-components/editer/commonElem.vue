@@ -61,7 +61,7 @@
   @Component({})
 
   export default class commonElem extends Vue {
-    @Prop() msgData!: Elem
+    @Prop() msgData!: any
 
     // private width: number = 0
     // private height: number = 0

@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import eventVue from "../conponentEdit/eventBus";
+import eventVue from "../componentEdit/eventBus";
 export default {
   props: {
     value: {

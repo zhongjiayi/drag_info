@@ -20,6 +20,7 @@
           :offsetY="offsetY"
           :playbillElemList="playbillData.elemList"
           :elemActive="activeElemIndex"
+          :editIndex="editIndex"
         />
       </div>
       <div class="widget"></div>
@@ -157,7 +158,7 @@ export default class HomePage extends Vue {
    */
   private components = [
     {
-      name: "编辑文本",
+      name: "字幕",
       type: "componText",
       scope: "local",
       path: [
@@ -166,8 +167,17 @@ export default class HomePage extends Vue {
       sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
     },
     {
+      name: "文本",
+      type: "componEditText",
+      scope: "local",
+      path: [
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
+      ],
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
+    },
+    {
       name: "图片",
-      type: "conponImage",
+      type: "componImage",
       scope: "local",
       path: [
         "M26.86 18.433a.995.995 0 0 0 .14-.51V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v12.923a1 1 0 0 0 .038.272l3.625-3.099 2.931 2.255L19.7 11.09l7.16 7.344zM7 2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6.25 9.77c-1.243 0-2.25-1.034-2.25-2.308 0-1.275 1.007-2.308 2.25-2.308s2.25 1.033 2.25 2.308c0 1.274-1.007 2.307-2.25 2.307z"
@@ -314,7 +324,7 @@ export default class HomePage extends Vue {
       },
       {
         pIndex: 2,
-        elemName: "编辑文本",
+        elemName: "滚动字幕",
         elemType: "componText",
         content: "",
         elemComAttr: {
@@ -424,10 +434,12 @@ export default class HomePage extends Vue {
               {
                 label: "1.2倍速",
                 value: 1600
-              },{
+              },
+              {
                 label: "1.5倍速",
                 value: 1000
-              },{
+              },
+              {
                 label: "2倍速",
                 value: 500
               }
@@ -439,7 +451,7 @@ export default class HomePage extends Vue {
       {
         pIndex: 3,
         elemName: "图片",
-        elemType: "conponImage",
+        elemType: "componImage",
         content: "",
         elemComAttr: {
           pointX: 800,
@@ -649,6 +661,108 @@ export default class HomePage extends Vue {
             value: "normal"
           }
         ]
+      },
+      {
+        pIndex: 7,
+        elemName: "文字编辑",
+        elemType: "componEditText",
+        content: "",
+        elemComAttr: {
+          pointX: 300,
+          pointY: 900,
+          width: 300,
+          height: 200,
+          rotate: 0,
+          opacity: 100,
+          elemTime: 1,
+          duration: "00:00:30"
+        },
+        elemSupAttr: {
+          displayType: "HH:mm:ss",
+          fontSize: "12.5px"
+        },
+        attributes: [
+          {
+            name: "颜色",
+            code: "fontColor",
+            type: "COLOR",
+            value: "white"
+          },
+          {
+            name: "背景",
+            code: "backgroundColor",
+            type: "COLOR",
+            value: "red"
+          },
+          {
+            name: "文本内容",
+            code: "textContent",
+            type: "STRING",
+            value: "请编辑文字"
+          },
+          {
+            name: "字体大小",
+            code: "fontSize",
+            type: "ENUM",
+            options: [
+              {
+                label: "12",
+                value: "12"
+              },
+              {
+                label: "14",
+                value: "14"
+              },
+              {
+                label: "28",
+                value: "28"
+              },
+              {
+                label: "32",
+                value: "32"
+              }
+            ],
+            value: 28
+          },
+          {
+            name: "字体粗细",
+            code: "fontWeight",
+            type: "ENUM",
+            options: [
+              {
+                label: "标准",
+                value: "normal"
+              },
+              {
+                label: "粗体",
+                value: "bold"
+              }
+            ],
+            value: "normal"
+          },
+          {
+            name: "滚动方向",
+            code: "direction",
+            type: "ENUM",
+            options: [
+              {
+                label: "从左到右",
+                value: "toRight"
+              },
+              {
+                label: "从右到左",
+                value: "toLeft"
+              }
+            ],
+            value: "toLeft"
+          },
+          {
+            name: "字体间隔",
+            code: "fontSpacing",
+            type: "SLIDER",
+            value: 1
+          },
+        ]
       }
     ],
     progList: [
@@ -724,11 +838,12 @@ export default class HomePage extends Vue {
   // 节目单源数据
   private activeProgramIndex = -1; // 激活的节目编号
   private activeElemIndex = -1; // 激活的元素编号
+  public editIndex = -1; // 编辑中的元素位置
 
   get programsListObj() {
     // @ts-ignore
     return this.playbillData.progList.reduce(
-      (o, cur) => (o[cur.pIndex] = cur) && o,
+      (o: any, cur) => (o[cur.pIndex] = cur) && o,
       {}
     );
   } // 节目列表对象
@@ -879,8 +994,8 @@ export default class HomePage extends Vue {
     // @ts-ignore
     const length =
       type === "X"
-        ? this.$refs.trackX.offsetWidth
-        : this.$refs.trackY.offsetHeight;
+        ? (this.$refs.trackX as any).offsetWidth
+        : (this.$refs.trackY as any).offsetHeight;
     const that = this;
 
     function moveHandle(e: any) {

@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import eventVue from "../conponentEdit/eventBus";
+import eventVue from "../componentEdit/eventBus";
 export default {
   props: {
     value: {
@@ -81,15 +81,13 @@ export default {
     isActive() {
       // 移除组件
       this.update = false;
-      // 在组件移除后，重新渲染组件
-      // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
       this.$nextTick(() => {
         this.update = true;
       });
-    }
-    // data() {
-    //   this.attributes = this.getAttribute(this.data.attributes);
-    // }
+    },
+    // 监听资源类型判断间隔时间
+
+
   },
 
   data() {

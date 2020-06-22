@@ -17,12 +17,16 @@
       }"
     >
       <!--组件插入-->
-      <div class="elemBox-elem-content" :style="{ opacity: elem.elemComAttr.opacity / 100 }">
+      <div
+        class="elemBox-elem-content"
+        :style="{ opacity: elem.elemComAttr.opacity / 100 }"
+      >
         <components
           v-model="elemList[index]"
           :is="elem.elemType"
           :elemData="elem"
           :isActive="isActive"
+          :isEditing="editIndex === (index + 1) && elemActive === (index + 1)"
         ></components>
       </div>
       <div
@@ -35,7 +39,7 @@
         v-if="model === 'edit'"
         :class="{ activePlat: !isActive && elemActive === elem.pIndex }"
         @mousedown.stop="changeElemActive($event, elem)"
-        @dblclick="changeIsEdit"
+        @dblclick="setEditIndex(elem.pIndex)"
       >
         <div
           class="interPlat-resizer"
@@ -64,31 +68,36 @@
 <script lang="ts">
 import { Vue, Prop, Watch, Component } from "vue-property-decorator";
 import componText from "../md-components/commonComponents/compon_text.vue"; //文本
-import conponImage from "../md-components/commonComponents/compon_image.vue"; //图片
+import componImage from "../md-components/commonComponents/compon_image.vue"; //图片
 import componVideo from "../md-components/commonComponents/compon_video.vue"; //视频
 import componRotate from "../md-components/commonComponents/compon_rotate.vue"; //轮播图
 import componTime from "../md-components/commonComponents/compon_time.vue"; //时间
 import componWeek from "../md-components/commonComponents/compon_week.vue"; //时间
-import eventVue from "../md-components/conponentEdit/eventBus";
+import componEditText from "../md-components/commonComponents/componSpecial/componEditText.vue";
+import eventVue from "../md-components/componentEdit/eventBus.vue";
+import HomePage from "./HomePage.vue";
 
 @Component({
   components: {
     componText,
-    conponImage,
+    componImage,
     componVideo,
     componRotate,
     componTime,
-    componWeek
+    componWeek,
+    componEditText
   }
 })
 export default class ElemBox extends Vue {
-  @Prop() elemList!: Elem[];
+  @Prop() elemList!: any[];
   @Prop() model!: string;
   @Prop() elemActive!: number;
+  @Prop() editIndex!: number;
   @Prop() scale!: number;
   @Prop() resolution!: string;
 
   private isActive = false;
+  private isEditing = false;
 
   private params = {
     name: "轮播组",
@@ -158,18 +167,24 @@ export default class ElemBox extends Vue {
 
   @Watch("elemActive")
   resetIsEdit() {
+    console.log(this.elemActive);
     this.isActive = this.elemActive > -1;
   }
 
-  changeIsEdit() {
-    this.isActive = true;
+  @Watch("editIndex")
+  setEdit() {
+    this.isEditing = this.editIndex > -1;
+  }
+
+  setEditIndex(index: number) {
+    (this.$parent.$parent as HomePage).editIndex = index;
   }
 
   // Ԫ���ƶ� && ѡ��
-  changeElemActive(e: any, elem: Elem) {
+  changeElemActive(e: any, elem: any) {
     // @ts-ignore
     this.$parent.$parent.activeElemIndex = elem.pIndex;
-    eventVue.$emit("changeParams", elem);
+    (eventVue as any).$emit("changeParams", elem);
     const startX = e.clientX;
     const startY = e.clientY;
     const pointX = elem.elemComAttr.pointX;
@@ -206,7 +221,7 @@ export default class ElemBox extends Vue {
   }
 
   // ��תԪ��
-  rotateElem(e: any, elem: Elem) {
+  rotateElem(e: any, elem: any) {
     const startX = e.clientX;
     const startY = e.clientY;
     const startAngle = elem.elemComAttr.rotate;
@@ -268,7 +283,7 @@ export default class ElemBox extends Vue {
   }
 
   // �޸�Ԫ�ش�С
-  getStartPoint(e: any, direction: string, elem: Elem) {
+  getStartPoint(e: any, direction: string, elem: any) {
     const width = elem.elemComAttr.width;
     const pointX = elem.elemComAttr.pointX;
     const startX = e.clientX;

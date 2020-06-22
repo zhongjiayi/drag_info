@@ -7,11 +7,11 @@
         backgroundColor: attribute.WbackgroundColor,
         fontWeight:attribute.WfontWeight
       }"
-    >{{week}}</span>
+    >{{weekFormat}}</span>
   </div>
 </template>
-<script>
-import eventVue from "../conponentEdit/eventBus";
+<script lang="js">
+import eventVue from "../componentEdit/eventBus";
 import moment from "moment";
 export default {
   props: {
@@ -105,26 +105,24 @@ export default {
     }, 1000);
   },
   computed: {
-    // week() {
-    //   console.log(this.week);
-    //   switch (this.week) {
-    //     case 1:
-    //       return "星期一";
-    //     case 2:
-    //       return "星期二";
-    //     case 3:
-    //       return "星期三";
-    //     case 4:
-    //       return "星期四";
-    //     case 5:
-    //       return "星期五";
-    //     case 6:
-    //       return "星期六";
-    //     case 0:
-    //       return "星期天";
-    //   }
-    //   console.log(this.week);
-    // }
+    weekFormat() {
+      switch (this.week) {
+        case 1:
+          return "星期一";
+        case 2:
+          return "星期二";
+        case 3:
+          return "星期三";
+        case 4:
+          return "星期四";
+        case 5:
+          return "星期五";
+        case 6:
+          return "星期六";
+        case 0:
+          return "星期天";
+      }
+    }
   },
   watch:{
     if (condition) {
