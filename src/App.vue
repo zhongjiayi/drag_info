@@ -10,7 +10,7 @@
 
   @Component({
     components: {
-      HomePage
+      HomePage  
     }
   })
   export default class App extends Vue {

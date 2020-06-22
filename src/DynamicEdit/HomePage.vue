@@ -62,7 +62,7 @@
                 <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
                   <path
                     d="M6 6.82l2.494-2.555a.867.867 0 0 1 1.248 0 .919.919 0 0 1 0 1.277L6.624 8.735a.867.867 0 0 1-1.248 0L2.258 5.542a.919.919 0 0 1 0-1.277.867.867 0 0 1 1.248 0L6 6.819z"
-                  ></path>
+                  />
                 </svg>
               </div>
             </template>
@@ -93,18 +93,14 @@
           </div>
         </div>
       </div>
-      <div class=" ht-pane rightPane">
+      <div class="ht-pane rightPane">
         <div
           v-for="(item, index) of rightPane"
           :key="index"
           :class="index === 0 ? 'firstNode' : 'otherNode'"
           :style="{ height: item.height + 'px' }"
         >
-          <component
-            :is="item.component"
-            :components="components"
-            :editArr="editArr"
-          >
+          <component :is="item.component" :components="components" :editArr="editArr">
             <!--拖动条-->
             <template #operateHor>
               <div
@@ -126,7 +122,7 @@
                 <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
                   <path
                     d="M6 6.82l2.494-2.555a.867.867 0 0 1 1.248 0 .919.919 0 0 1 0 1.277L6.624 8.735a.867.867 0 0 1-1.248 0L2.258 5.542a.919.919 0 0 1 0-1.277.867.867 0 0 1 1.248 0L6 6.819z"
-                  ></path>
+                  />
                 </svg>
               </div>
             </template>
@@ -152,8 +148,8 @@ import Viewport from "./Viewport.vue"; // 背景页
     PageList,
     Editor,
     ElementList,
-    Viewport,
-  },
+    Viewport
+  }
 })
 export default class HomePage extends Vue {
   /**
@@ -162,75 +158,30 @@ export default class HomePage extends Vue {
   private components = [
     {
       name: "编辑文本",
-      type: "text",
+      type: "conponText",
       scope: "local",
       path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
       ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
-      attributes: [
-        {
-          name: "名称",
-          code: "name",
-          type: "STRING",
-          value: "",
-        },
-        {
-          name: "颜色",
-          code: "fontColor",
-          type: "COLOR",
-          value: "red",
-        },
-        {
-          name: "背景",
-          code: "backgroundColor",
-          type: "COLOR",
-          value: "red",
-        },
-        {
-          name: "字体大小",
-          code: "fontSize",
-          type: "MENU",
-          options: [
-            {
-              label: "12px",
-              value: "12",
-            },
-            {
-              label: "14px",
-              value: "14",
-            },
-            {
-              label: "28px",
-              value: "28",
-            },
-            {
-              label: "32px",
-              value: "32",
-            },
-          ],
-          // 默认14
-          value: 28,
-        },
-      ],
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
     },
     {
       name: "图片",
-      type: "picture",
+      type: "conponImage",
       scope: "local",
       path: [
-        "M26.86 18.433a.995.995 0 0 0 .14-.51V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v12.923a1 1 0 0 0 .038.272l3.625-3.099 2.931 2.255L19.7 11.09l7.16 7.344zM7 2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6.25 9.77c-1.243 0-2.25-1.034-2.25-2.308 0-1.275 1.007-2.308 2.25-2.308s2.25 1.033 2.25 2.308c0 1.274-1.007 2.307-2.25 2.307z",
+        "M26.86 18.433a.995.995 0 0 0 .14-.51V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v12.923a1 1 0 0 0 .038.272l3.625-3.099 2.931 2.255L19.7 11.09l7.16 7.344zM7 2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6.25 9.77c-1.243 0-2.25-1.034-2.25-2.308 0-1.275 1.007-2.308 2.25-2.308s2.25 1.033 2.25 2.308c0 1.274-1.007 2.307-2.25 2.307z"
       ],
       sPath: [
-        "M0 0h12v12H0V0zm1 1v10h10V1H1zm2 2h2v2H3V3zm-1 7V9l1.778-2 1.778 1.5L8.222 5 10 8v2H2z",
-      ],
+        "M0 0h12v12H0V0zm1 1v10h10V1H1zm2 2h2v2H3V3zm-1 7V9l1.778-2 1.778 1.5L8.222 5 10 8v2H2z"
+      ]
     },
     {
       scope: "local",
       name: "视频",
-      type: "video",
+      type: "conponVideo",
       path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
       ],
       sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
       attributes: [
@@ -239,138 +190,371 @@ export default class HomePage extends Vue {
           code: "muted",
           type: "BOOLEAN",
           // 默认14
-          value: false,
-        },
-      ],
+          value: false
+        }
+      ]
     },
     {
       name: "轮播组",
-      type: "carousel",
+      type: "conponRotate",
       scope: "local",
       path: [
         "M28.5 6.5v1.007l2-.01v10.035h-2v.968H31a.5.5 0 0 0 .5-.5V7a.5.5 0 0 0-.5-.5h-2.5zm-23 0H3a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h2.5v-.968h-2V7.498l2 .009V6.5z",
         "M9 5v15h16V5H9zM8 3h18a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z",
-        "M14 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-2.253 7.664l-1.494-1.328 4.787-5.386L17 14.4l3.917-4.897 3.79 3.79-1.414 1.414-2.21-2.21L17 17.601l-2.04-2.55z",
+        "M14 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-2.253 7.664l-1.494-1.328 4.787-5.386L17 14.4l3.917-4.897 3.79 3.79-1.414 1.414-2.21-2.21L17 17.601l-2.04-2.55z"
       ],
       sPath: [
-        "M1 8H0V2h1v6zm13 0h-1V2h1v6zM3 1v8h8V1H3zm-.167-1h8.334c.46 0 .833.373.833.833v8.334c0 .46-.373.833-.833.833H2.833A.833.833 0 0 1 2 9.167V.833C2 .373 2.373 0 2.833 0zM4 8V7l1.75-2L7 6.5 9 4l1 2v2H4zm0-6h2v2H4V2z",
-      ],
-      attributes: [
-        {
-          name: "间隔",
-          code: "interval",
-          type: "ENUM",
-          options: [
-            {
-              label: "1000ms",
-              value: "1000",
-            },
-            {
-              label: "2000ms",
-              value: "2000",
-            },
-            {
-              label: "3000ms",
-              value: "3000",
-            },
-            {
-              label: "4000ms",
-              value: "4000",
-            },
-            {
-              label: "5000ms",
-              value: "5000",
-            },
-          ],
-          value: "1000",
-        },
-        {
-          name: "方向",
-          code: "dotPosition",
-          type: "ENUM",
-          options: [
-            {
-              label: "上下切换",
-              value: "right",
-            },
-            {
-              label: "左右切换",
-              value: "bottom",
-            },
-          ],
-          value: "bottom",
-        },
-        {
-          name: "特效",
-          code: "effectStyle",
-          type: "ENUM",
-          options: [
-            {
-              label: "线性滑动",
-              value: "scrollx",
-            },
-            {
-              label: "渐隐渐显",
-              value: "fade",
-            },
-          ],
-          value: "scrollx",
-        },
-      ],
+        "M1 8H0V2h1v6zm13 0h-1V2h1v6zM3 1v8h8V1H3zm-.167-1h8.334c.46 0 .833.373.833.833v8.334c0 .46-.373.833-.833.833H2.833A.833.833 0 0 1 2 9.167V.833C2 .373 2.373 0 2.833 0zM4 8V7l1.75-2L7 6.5 9 4l1 2v2H4zm0-6h2v2H4V2z"
+      ]
     },
     {
       name: "日期",
-      type: "date",
+      type: "conponTime",
       scope: "global",
       path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
       ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
     },
     {
       name: "星期",
       type: "week",
       scope: "global",
       path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
       ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
     },
     {
       name: "时间",
       type: "time",
       scope: "global",
       path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z",
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
       ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
-    },
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
+    }
   ]; // 组件
   private playbillData = {
     playbillName: "节目单1",
     playbillBg: "white",
     resolution: "1980*1080",
     elemList: [
+      // {
+      //   pIndex: 1,
+      //   elemName: "日期1",
+      //   elemType: "time",
+      //   content: "",
+      //   elemComAttr: {
+      //     pointX: 300,
+      //     pointY: 500,
+      //     width: 400,
+      //     height: 300,
+      //     rotate: 0,
+      //     opacity: 100,
+      //     elemTime: 1,
+      //     duration: "00:00:30",
+      //   },
+      //   elemSupAttr: {
+      //     displayType: "HH:mm:ss",
+      //     fontSize: "12.5px",
+      //   },
+      // },
       {
         pIndex: 1,
-        elemName: "日期1",
-        elemType: "time",
+        elemName: "轮播图",
+        elemType: "conponRotate",
         content: "",
         elemComAttr: {
-          pointX: 300,
+          pointX: 700,
           pointY: 500,
           width: 400,
           height: 300,
           rotate: 0,
           opacity: 100,
           elemTime: 1,
-          duration: "00:00:30",
+          duration: "00:00:30"
         },
         elemSupAttr: {
           displayType: "HH:mm:ss",
-          fontSize: "12.5px",
+          fontSize: "12.5px"
         },
+        attributes: [
+          {
+            name: "间隔",
+            code: "interval",
+            type: "NUMBER",
+            value: 1000
+          },
+          {
+            name: "方向",
+            code: "dotPosition",
+            type: "ENUM",
+            options: [
+              {
+                label: "上下切换",
+                value: "right"
+              },
+              {
+                label: "左右切换",
+                value: "bottom"
+              }
+            ],
+            value: "bottom"
+          },
+          {
+            name: "特效",
+            code: "effect",
+            type: "ENUM",
+            options: [
+              {
+                label: "线性滑动",
+                value: "scrollx"
+              },
+              {
+                label: "渐隐渐显",
+                value: "fade"
+              }
+            ],
+            value: "scrollx"
+          }
+        ],
+        imageSrc: [
+          {
+            img:
+              "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
+            id: 1
+          },
+          {
+            img:
+              "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
+            id: 2
+          }
+        ]
       },
+      {
+        pIndex: 2,
+        elemName: "编辑文本",
+        elemType: "conponText",
+        content: "",
+        elemComAttr: {
+          pointX: 700,
+          pointY: 300,
+          width: 300,
+          height: 200,
+          rotate: 0,
+          opacity: 100,
+          elemTime: 1,
+          duration: "00:00:30"
+        },
+        elemSupAttr: {
+          displayType: "HH:mm:ss",
+          fontSize: "12.5px"
+        },
+        attributes: [
+          {
+            name: "颜色",
+            code: "fontColor",
+            type: "COLOR",
+            value: "white"
+          },
+          {
+            name: "背景",
+            code: "backgroundColor",
+            type: "COLOR",
+            value: "red"
+          },
+          {
+            name: "文本内容",
+            code: "textContent",
+            type: "STRING",
+            value: "请编辑文字"
+          },
+          {
+            name: "字体大小",
+            code: "fontSize",
+            type: "ENUM",
+            options: [
+              {
+                label: "12",
+                value: "12"
+              },
+              {
+                label: "14",
+                value: "14"
+              },
+              {
+                label: "28",
+                value: "28"
+              },
+              {
+                label: "32",
+                value: "32"
+              }
+            ],
+            value: 28
+          },
+          {
+            name: "字体粗细",
+            code: "fontWeight",
+            type: "ENUM",
+            options: [
+              {
+                label: "标准",
+                value: "normal"
+              },
+              {
+                label: "粗体",
+                value: "bold"
+              }
+            ],
+            value: "normal"
+          }
+        ]
+      },
+      {
+        pIndex: 3,
+        elemName: "图片",
+        elemType: "conponImage",
+        content: "",
+        elemComAttr: {
+          pointX: 800,
+          pointY: 800,
+          width: 200,
+          height: 200,
+          rotate: 0,
+          opacity: 100,
+          elemTime: 1,
+          duration: "00:00:30"
+        },
+        elemSupAttr: {
+          displayType: "HH:mm:ss",
+          fontSize: "12.5px"
+        },
+        attributes: [],
+        imageSrc: [
+          {
+            img:
+              "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
+            id: 1
+          }
+        ]
+      },
+      {
+        pIndex: 4,
+        elemName: "视频",
+        elemType: "conponVideo",
+        content: "xxx/xxx/xxx.mp4",
+        elemComAttr: {
+          pointX: 200,
+          pointY: 100,
+          width: 400,
+          height: 300,
+          rotate: 0,
+          opacity: 100,
+          elemTime: 1, // number
+          duration: "00:00:30"
+        },
+        attributes: [
+          {
+            name: "静音播放",
+            code: "muted",
+            type: "BOOLEAN",
+            value: false
+          }
+        ]
+      },
+      {
+        pIndex: 5,
+        elemName: "时间",
+        elemType: "conponTime",
+        content: "xxx/xxx/xxx.mp4",
+        elemComAttr: {
+          pIndex: 1,
+          pointX: 300,
+          pointY: 500,
+          width: 400,
+          height: 300,
+          rotate: 0,
+          opacity: 100,
+          elemTime: 1, // number
+          duration: "00:00:30"
+        },
+        attributes: [
+          {
+            name: "颜色",
+            code: "fontColor",
+            type: "COLOR",
+            value: "white"
+          },
+          {
+            name: "背景",
+            code: "backgroundColor",
+            type: "COLOR",
+            value: "red"
+          },
+          {
+            name: "字体大小",
+            code: "fontSize",
+            type: "ENUM",
+            options: [
+              {
+                label: "12",
+                value: "12"
+              },
+              {
+                label: "14",
+                value: "14"
+              },
+              {
+                label: "28",
+                value: "28"
+              },
+              {
+                label: "32",
+                value: "32"
+              }
+            ],
+            value: 28
+          },
+          {
+            name: "字体粗细",
+            code: "fontWeight",
+            type: "ENUM",
+            options: [
+              {
+                label: "标准",
+                value: "normal"
+              },
+              {
+                label: "粗体",
+                value: "bold"
+              }
+            ],
+            value: "normal"
+          },
+          {
+            name: "展示格式",
+            code: "showContent",
+            type: "ENUM",
+            options: [
+              {
+                label: "显示日期",
+                value: "YYYY-MM-DD"
+              },
+              {
+                label: "显示时间",
+                value: "HH:mm:ss"
+              },
+              {
+                label: "日期时间",
+                value: "YYYY-MM-DD HH:mm:ss"
+              }
+            ],
+            value: "YYYY-MM-DD HH:mm:ss"
+          }
+        ]
+      }
     ],
     progList: [
       {
@@ -393,8 +577,8 @@ export default class HomePage extends Vue {
               rotate: 0,
               opacity: 100,
               elemTime: 1, // number
-              duration: "00:00:30",
-            },
+              duration: "00:00:30"
+            }
           },
           {
             pIndex: 2,
@@ -410,10 +594,10 @@ export default class HomePage extends Vue {
               rotate: 0,
               opacity: 100,
               elemTime: 1, // number
-              duration: "00:00:30",
-            },
-          },
-        ],
+              duration: "00:00:30"
+            }
+          }
+        ]
       },
       {
         pIndex: 2,
@@ -421,7 +605,7 @@ export default class HomePage extends Vue {
         progDuration: "00:00:30",
         playTime: 1,
         progBg: "red",
-        elemList: [],
+        elemList: []
       },
       {
         pIndex: 3,
@@ -429,7 +613,7 @@ export default class HomePage extends Vue {
         progDuration: "00:00:30",
         playTime: 1,
         progBg: "blue",
-        elemList: [],
+        elemList: []
       },
       {
         pIndex: 4,
@@ -437,10 +621,12 @@ export default class HomePage extends Vue {
         progDuration: "00:00:30",
         playTime: 1,
         progBg: "yellow",
-        elemList: [],
-      },
-    ],
-  }; // 节目单源数据
+        elemList: []
+      }
+    ]
+  };
+
+  // 节目单源数据
   private activeProgramIndex = -1; // 激活的节目编号
   private activeElemIndex = -1; // 激活的元素编号
 
@@ -457,13 +643,13 @@ export default class HomePage extends Vue {
     if (this.activeProgramIndex === -1 && this.activeElemIndex === -1) {
       arr.push({
         model: "playbill",
-        data: this.playbillData,
+        data: this.playbillData
       });
     } else if (this.activeProgramIndex !== -1 && this.activeElemIndex === -1) {
       arr.push({
         model: "program",
         // @ts-ignore
-        data: this.programsListObj[this.activeProgramIndex],
+        data: this.programsListObj[this.activeProgramIndex]
       });
     } else {
       // @ts-ignore
@@ -480,12 +666,12 @@ export default class HomePage extends Vue {
       }
       arr.push({
         model: "commonElem",
-        data: elem.elemComAttr,
+        data: elem.elemComAttr
       });
-      arr.push({
-        model: elem.elemType,
-        data: elem.elemSupAttr,
-      });
+      // arr.push({
+      //   model: elem.elemType,
+      //   data: elem.elemSupAttr
+      // });
     }
     return arr;
   }
@@ -505,11 +691,11 @@ export default class HomePage extends Vue {
    */
   private leftPane = [
     { component: "PageList" },
-    { component: "ElementList", height: 400 },
+    { component: "ElementList", height: 400 }
   ];
   private rightPane = [
     { component: "Editor" },
-    { component: "ComponentsList", height: 400 },
+    { component: "ComponentsList", height: 400 }
   ];
   private min = 36;
   private max = 500;

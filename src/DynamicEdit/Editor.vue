@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Prop, Component } from "vue-property-decorator";
+import { Vue, Prop, Component, Watch } from "vue-property-decorator";
 import BasicStyle from "./BasicStyle.vue";
 import commonElem from "../md-components/editer/commonElem.vue";
 import playbill from "../md-components/editer/playbill.vue";
@@ -29,14 +29,17 @@ import conponEdit from "../md-components/conponentEdit/conponentEdit.vue";
     commonElem,
     playbill,
     program,
-    conponEdit,
-  },
+    conponEdit
+  }
 })
 export default class Editor extends Vue {
   @Prop() editArr!: object[];
-  created() {
-    console.log(this.editArr);
+
+  @Watch("editArr") editArrWatch() {
+    console.log("editArr", this.editArr);
   }
+
+  created() {}
 }
 </script>
 
