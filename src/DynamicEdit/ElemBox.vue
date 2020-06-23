@@ -70,7 +70,7 @@ import { Vue, Prop, Watch, Component } from "vue-property-decorator";
 import componText from "../md-components/commonComponents/compon_text.vue"; //文本
 import componImage from "../md-components/commonComponents/compon_image.vue"; //图片
 import componVideo from "../md-components/commonComponents/compon_video.vue"; //视频
-import componRotate from "../md-components/commonComponents/compon_rotate.vue"; //轮播图
+import componRotate from "../md-components/commonComponents/compon_rotation.vue"; //轮播图
 import componTime from "../md-components/commonComponents/compon_time.vue"; //时间
 import componWeek from "../md-components/commonComponents/compon_week.vue"; //时间
 import componEditText from "../md-components/commonComponents/componSpecial/componEditText.vue";

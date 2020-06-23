@@ -3,6 +3,7 @@
     <div @click="elemOnClick" class="editBox" v-if="isEditing" style="width:'100%'">
       <textarea
         autofocus
+        ref="focusTextarea"
         :style="{
           width:'100%',
         color: attribute.fontColor,
@@ -164,7 +165,9 @@ export default {
     this.contents = this.attribute.textContent;
   },
 
-  mounted() {},
+  // mounted() {
+  //   this.$refs.focusTextarea.focus();
+  // },
 
   methods: {
     onBlur(){

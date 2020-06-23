@@ -134,7 +134,6 @@ export default {
     moment,
     getWeek() {
       this.week = moment(new Date()).day();
-      // console.log(this.week);
     },
     getAttribute(attributes) {
       const attribute = {};

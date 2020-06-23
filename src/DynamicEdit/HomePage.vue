@@ -668,8 +668,8 @@ export default class HomePage extends Vue {
         elemType: "componEditText",
         content: "",
         elemComAttr: {
-          pointX: 300,
-          pointY: 900,
+          pointX: 1300,
+          pointY: 600,
           width: 300,
           height: 200,
           rotate: 0,
@@ -692,7 +692,7 @@ export default class HomePage extends Vue {
             name: "背景",
             code: "backgroundColor",
             type: "COLOR",
-            value: "red"
+            value: "#8B6A6A"
           },
           {
             name: "文本内容",
