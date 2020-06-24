@@ -1,11 +1,11 @@
 <template>
   <div class="chooseColor">
     <div @click="handleShowColor" class="colorBox">
-      <span class="color_con" :style="{ background: color.hex ||'#43437e'}"></span>
-      <a-input placeholder="选择颜色" :style="{ color: color.hex,width:'75px' }" v-model="color.hex"/>
+      <span class="color_con" :style="{ background: color}"></span>
+      <a-input placeholder="选择颜色" :style="{ color: color,width:'75px' }" v-model="color"/>
     </div>
     <div @click="handleClick" v-if="colorShow">
-      <sketch-picker v-model="color" @input="triggerChange"></sketch-picker>
+      <sketch-picker :value="color" @input="triggerChange"></sketch-picker>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
 
   data() {
     return {
-      color: this.value || {},
+      color: this.value || '#43437e',
       colorShow: false
     };
   },
@@ -49,6 +49,7 @@ export default {
 
   methods: {
     triggerChange(color) {
+      this.color = color.hex;
       this.$emit("change", color.hex);
     },
     // 更改字体颜色
