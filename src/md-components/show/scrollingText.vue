@@ -61,12 +61,16 @@ export default {
   mounted() {},
 
   watch: {
-    attribute() {
-      this.stop();
-      this.$nextTick(() => {
-        this.contents = this.attribute.textContent;
-        this.show();
-      });
+    attribute: {
+      handler: function() {
+        this.stop();
+        this.$nextTick(() => {
+          this.contents = this.attribute.textContent;
+          this.show();
+        });
+      },
+      deep: true
+      
     }
   },
 
