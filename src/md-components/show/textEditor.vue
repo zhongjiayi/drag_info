@@ -33,7 +33,22 @@
         letterSpacing:attribute.fontSpacing+'px'
       }"
     >
-      <p v-for="(text,index) of contents.split('\u000A')" :key="index">{{text}}</p>
+      <textarea
+        :style="{
+          width:'100%',
+        color: attribute.fontColor,
+        fontSize: attribute.fontSize + 'px',
+        backgroundColor: attribute.backgroundColor,
+        fontWeight:attribute.fontWeight,
+        letterSpacing:attribute.fontSpacing+'px',
+        position: 'relative',
+        'z-index': 100
+        }"
+        readonly
+        :value="attribute.textContent"
+        cols="30"
+        rows="10"
+      ></textarea>
     </div>
   </div>
 </template>
