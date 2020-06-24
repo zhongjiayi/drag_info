@@ -36,13 +36,11 @@
       <textarea
         :style="{
           width:'100%',
-        color: attribute.fontColor,
-        fontSize: attribute.fontSize + 'px',
-        backgroundColor: attribute.backgroundColor,
-        fontWeight:attribute.fontWeight,
-        letterSpacing:attribute.fontSpacing+'px',
-        position: 'relative',
-        'z-index': 100
+          color: attribute.fontColor,
+          fontSize: attribute.fontSize + 'px',
+          backgroundColor: attribute.backgroundColor,
+          fontWeight:attribute.fontWeight,
+          letterSpacing:attribute.fontSpacing+'px',
         }"
         readonly
         :value="attribute.textContent"
