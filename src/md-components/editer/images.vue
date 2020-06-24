@@ -142,7 +142,7 @@ $font-size: 10px;
 /deep/ .ant-input {
   font-size: $font-size;
   height: 30px;
-  
+
 }
 
 /deep/ .ant-form-item label {

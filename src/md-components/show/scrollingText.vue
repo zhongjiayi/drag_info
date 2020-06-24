@@ -1,17 +1,6 @@
 ﻿<template>
   <div class="sub-panel">
-    <div v-if="model === 'edit'">
-      <span
-        :style="{
-          width:'100%',
-        color: attribute.fontColor,
-        fontSize: attribute.fontSize + 'px',
-        backgroundColor: attribute.backgroundColor,
-        fontWeight:attribute.fontWeight,
-        letterSpacing:attribute.fontSpacing+'px'}"
-      >{{attribute.textContent}}</span>
-    </div>
-    <div v-if="model === 'play'">
+    <div v-if="(model == 'play')||(model == 'edit' && !isEdit)">
       <span
         :style="{
           width:'100%',
@@ -21,6 +10,18 @@
         fontWeight:attribute.fontWeight,
         letterSpacing:attribute.fontSpacing+'px'}"
       >{{contents}}</span>
+    </div>
+
+    <div v-if="model == 'edit' && isEdit">
+      <span
+        :style="{
+          width:'100%',
+        color: attribute.fontColor,
+        fontSize: attribute.fontSize + 'px',
+        backgroundColor: attribute.backgroundColor,
+        fontWeight:attribute.fontWeight,
+        letterSpacing:attribute.fontSpacing+'px'}"
+      >{{attribute.textContent}}</span>
     </div>
   </div>
 </template>
@@ -49,33 +50,31 @@ export default {
       contents: ""
     };
   },
-  watch: {
-    // model() {
-    //   if (this.model == "edit") {
-    //     this.stop();
-    //   } else {
-    //     this.$nextTick(() => {
-    //       this.contents = this.attribute.textContent;
-    //       this.show();
-    //     });
-    //   }
-    // }
-  },
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
     this.contents = this.attribute.textContent;
+    console.log(this.attribute);
+    console.log(this.contents);
     this.show();
   },
 
   mounted() {},
+
+  watch: {
+    attribute() {
+      this.stop();
+      this.$nextTick(() => {
+        this.contents = this.attribute.textContent;
+        this.show();
+      });
+    }
+  },
 
   beforeDestroy() {
     this.stop();
   },
   methods: {
     show() {
-      debugger
-      console.log(this.attribute.fontSpeed)
       if (this.timer != null) return;
       this.timer = setInterval(() => {
         let start = this.contents.substring(0, 1);

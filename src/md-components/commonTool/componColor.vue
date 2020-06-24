@@ -2,7 +2,7 @@
   <div class="chooseColor">
     <div @click="handleShowColor" class="colorBox">
       <span class="color_con" :style="{ background: color.hex ||'#43437e'}"></span>
-      <a-input placeholder="选择颜色" :style="{ color: color.hex,width:'75px' }" v-model="color.hex"/>
+      <a-input placeholder="选择颜色" :style="{ color: color.hex,width:'75px' }" v-model="color.hex" />
     </div>
     <div @click="handleClick" v-if="colorShow">
       <sketch-picker v-model="color" @input="triggerChange"></sketch-picker>
@@ -18,7 +18,7 @@ export default {
     value: {
       hot: String,
       default: null
-    }
+    },
   },
 
   components: {
@@ -31,13 +31,13 @@ export default {
       colorShow: false
     };
   },
-    watch: {
-    colorShow(value){
-      if(value){
+  watch: {
+    colorShow(value) {
+      if (value) {
         setTimeout(() => {
           window.addEventListener("click", this.hide);
         });
-      }else{
+      } else {
         window.removeEventListener("click", this.hide);
       }
     }
@@ -58,15 +58,15 @@ export default {
       } else {
         this.colorShow = true;
         setTimeout(() => {
-        console.log(this.$refs) 
-      });
+          console.log(this.$refs);
+        });
       }
     },
-    hide(event){
+    hide(event) {
       this.colorShow = false;
     },
-    handleClick(event){
-      console.log('禁止冒泡');
+    handleClick(event) {
+      console.log("禁止冒泡");
       event.stopPropagation();
     }
   }
