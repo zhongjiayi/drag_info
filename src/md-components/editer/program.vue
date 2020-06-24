@@ -3,7 +3,7 @@
     <header class="single">
       <p>节目</p>
     </header>
-    <div>{{msgData}}</div>
+    <div>{{elemData}}</div>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
   @Component({})
 
   export default class ComponentsList extends Vue {
-    @Prop() msgData!: {
+    @Prop() elemData!: {
 
     }
   }

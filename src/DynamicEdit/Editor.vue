@@ -7,22 +7,25 @@
     <template #main>
       <ul class="editList">
         <li v-for="item of editArr" class="editBox">
-          <component :is="item.model" :msgData="item.data"></component>
+          <component :is="item.model" :elemData="item.data"></component>
         </li>
       </ul>
-      <!-- <componEdit></componEdit> -->
     </template>
   </basicStyle>
 </template>
 
 <script lang="ts">
-import { Vue, Prop, Component, Watch } from "vue-property-decorator";
+import { Vue, Prop, Component } from "vue-property-decorator";
 import BasicStyle from "./BasicStyle.vue";
 import commonElem from "../md-components/editer/commonElem.vue";
 import playbill from "../md-components/editer/playbill.vue";
 import program from "../md-components/editer/program.vue";
-import test from "../md-components/editer/test.vue"
-// import componEdit from "../md-components/componentEdit/componentEdit.vue";
+import scrollingText from "../md-components/editer/scrollingText.vue"; //滚动字幕
+import images from "../md-components/editer/images.vue"; //图片
+import week from "../md-components/editer/week.vue"; //星期
+import dateTime from "../md-components/editer/dateTime.vue"; //日期时间
+import videos from "../md-components/editer/videos.vue"; //视频
+import rotationGroup from "../md-components/editer/rotationGroup.vue"; //轮播组
 
 @Component({
   components: {
@@ -30,18 +33,15 @@ import test from "../md-components/editer/test.vue"
     commonElem,
     playbill,
     program,
-    // componEdit,
-    test
+    images,
+    week,
+    dateTime,
+    videos,
+    rotationGroup
   }
 })
 export default class Editor extends Vue {
   @Prop() editArr!: object[];
-
-  @Watch("editArr") editArrWatch() {
-    console.log("editArr", this.editArr);
-  }
-
-  created() {}
 }
 </script>
 

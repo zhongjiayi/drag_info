@@ -12,42 +12,42 @@
         <div class="panel-horizon">
           <!--              <div>-->
           <!--                <div>次数</div>-->
-          <!--                <input type="text" v-model="msgData.elemTime">-->
+          <!--                <input type="text" v-model="elemData.elemTime">-->
           <!--              </div>-->
           <!--              <div>时间</div>-->
-          <!--              <input type="text" v-model="msgData.duration">-->
+          <!--              <input type="text" v-model="elemData.duration">-->
         </div>
         <div class="panel-horizon">
           <div class="insideInputBox">
-            <el-input-number v-model="msgData.width" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="elemData.width" controls-position="right" :min="1" :max="9999" size="mini"/>
             <div class="title">W</div>
           </div>
           <div class="insideInputBox">
-            <el-input-number v-model="msgData.height" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="elemData.height" controls-position="right" :min="1" :max="9999" size="mini"/>
             <div class="title">H</div>
           </div>
           <div class="insideInputBox">
-            <div class="title">
-              <svg class="svg-icon">
-                <circle cx="6" cy="6" r="6" style="fill:rgb(200,205,208)"></circle>
-                <circle cx="6" cy="3" r="2" style="fill:rgb(41,141,248)"></circle>
-              </svg>
-            </div>
-            <el-input-number v-model="msgData.rotate" controls-position="right" :min="0" :max="360" size="mini"/>
+<!--            <div class="title">-->
+<!--              <svg class="svg-icon">-->
+<!--                <circle cx="6" cy="6" r="6" style="fill:rgb(200,205,208)"></circle>-->
+<!--                <circle cx="6" cy="3" r="2" style="fill:rgb(41,141,248)"></circle>-->
+<!--              </svg>-->
+<!--            </div>-->
+<!--            <el-input-number v-model="elemData.rotate" controls-position="right" :min="0" :max="360" size="mini"/>-->
           </div>
         </div>
         <div class="panel-horizon">
           <div class="insideInputBox">
             <div class="title">X</div>
-            <el-input-number v-model="msgData.pointX" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="elemData.pointX" controls-position="right" :min="1" :max="9999" size="mini"/>
           </div>
           <div class="insideInputBox">
             <div class="title">Y</div>
-            <el-input-number v-model="msgData.pointY" controls-position="right" :min="1" :max="9999" size="mini"/>
+            <el-input-number v-model="elemData.pointY" controls-position="right" :min="1" :max="9999" size="mini"/>
           </div>
           <div class="insideInputBox">
             <div class="title">透明度</div>
-            <el-input-number v-model="msgData.opacity" controls-position="right" :min="0" :max="100" size="mini"/>
+            <el-input-number v-model="elemData.opacity" controls-position="right" :min="0" :max="100" size="mini"/>
           </div>
         </div>
       </div>
@@ -56,45 +56,12 @@
 </template>
 
 <script lang="ts">
-  import {Vue, Component, Prop, Watch} from 'vue-property-decorator'
+  import {Vue, Component, Prop} from 'vue-property-decorator'
 
   @Component({})
 
   export default class commonElem extends Vue {
-    @Prop() msgData!: any
-
-    // private width: number = 0
-    // private height: number = 0
-    //
-    // private offsetX: number = 0
-    // private offsetY: number = 0
-
-    // @Watch('width')
-    // getWidth(newVal: number, oldVal: number) {
-    //   this.msgData.widthHeight = newVal + '*' + this.height
-    // }
-    //
-    // @Watch('height')
-    // getHeight(newVal: number, oldVal: number) {
-    //   this.msgData.widthHeight = this.width + '*' + newVal
-    // }
-    //
-    // @Watch('offsetX')
-    // getOffsetX(newVal: number, oldVal: number) {
-    //   this.msgData.coordinate = newVal + '*' + this.offsetY
-    // }
-    //
-    // @Watch('offsetY')
-    // getOffsetY(newVal: number, oldVal: number) {
-    //   this.msgData.coordinate = this.offsetX + '*' + newVal
-    // }
-
-    created(): void {
-      // this.width = Number(this.msgData.widthHeight.split('*')[0])
-      // this.height = Number(this.msgData.widthHeight.split('*')[1])
-      // this.offsetX = Number(this.msgData.coordinate.split('*')[0])
-      // this.offsetY = Number(this.msgData.coordinate.split('*')[1])
-    }
+    @Prop() elemData!: Elem
 
     private stretch = true
 
@@ -108,7 +75,7 @@
   $fontColor3: rgb(153, 153, 153);
   .sub-panel-body {
     transition: height 0.3s;
-    overflow: hidden;
+    // overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;

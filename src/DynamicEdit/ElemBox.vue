@@ -2,32 +2,14 @@
   <div class="elemBox">
     <div
       class="elemBox-elem"
-      v-for="(elem, index) of elemList"
+      v-for="(elem,index) of elemList"
       :key="elem.pIndex"
-      :style="{
-        width: elem.elemComAttr.width + 'px',
-        height: elem.elemComAttr.height + 'px',
-        top: elem.elemComAttr.pointY + 'px',
-        left:
-          (elem.elemComAttr.pointX > 0
-            ? elem.elemComAttr.pointX
-            : '-' + Math.abs(elem.elemComAttr.pointX)) + 'px',
-        zIndex: elemList.length - index,
-        transform: 'rotate(' + elem.elemComAttr.rotate + 'deg)',
-      }"
+      :style="{width:elem.elemComAttr.width + 'px',height:elem.elemComAttr.height + 'px',top:elem.elemComAttr.pointY + 'px',left:(elem.elemComAttr.pointX > 0 ? elem.elemComAttr.pointX : '-' + Math.abs(elem.elemComAttr.pointX)) + 'px',
+         zIndex:elemList.length-index}"
     >
-      <!--组件插入-->
-      <div
-        class="elemBox-elem-content"
-        :style="{ opacity: elem.elemComAttr.opacity / 100 }"
-      >
-        <components
-          v-model="elemList[index]"
-          :is="elem.elemType"
-          :elemData="elem"
-          :isActive="isActive"
-          :isEditing="editIndex === (index + 1) && elemActive === (index + 1)"
-        ></components>
+      <!--Ԫ��չʾ���-->
+      <div class="elemBox-elem-content" :style="{opacity:elem.elemComAttr.opacity / 100}">
+        <components :is="elem.elemType" :elemData="elem" :model="model"></components>
       </div>
       <div
         class="elemBox-elem-border"
@@ -37,28 +19,23 @@
       <div
         class="elemBox-elem-interPlat"
         v-if="model === 'edit'"
-        :class="{ activePlat: !isActive && elemActive === elem.pIndex }"
-        @mousedown.stop="changeElemActive($event, elem)"
-        @dblclick="setEditIndex(elem.pIndex)"
+        :class="{activePlat:(!isActive && elemActive === elem.pIndex)}"
+        @mousedown.stop="changeElemActive($event,elem)"
+        @dblclick="changeIsEdit"
       >
         <div
           class="interPlat-resizer"
-          v-show="elemActive === elem.pIndex"
-          :style="{ fontSize: 14 / scale + 'px' }"
+          v-show="!isActive && elemActive === elem.pIndex"
+          :style="{fontSize: (14 / scale) + 'px'}"
         >
-          <div
-            class="rotate"
-            :style="{ fontSize: 18 / scale + 'px' }"
-            @mousedown.stop="rotateElem($event, elem)"
-          ></div>
-          <div class="t resizable-handle" @mousedown.stop="getStartPoint($event, 't', elem)"></div>
-          <div class="b resizable-handle" @mousedown.stop="getStartPoint($event, 'b', elem)"></div>
-          <div class="r resizable-handle" @mousedown.stop="getStartPoint($event, 'r', elem)"></div>
-          <div class="l resizable-handle" @mousedown.stop="getStartPoint($event, 'l', elem)"></div>
-          <div class="tr resizable-handle" @mousedown.stop="getStartPoint($event, 'tr', elem)"></div>
-          <div class="tl resizable-handle" @mousedown.stop="getStartPoint($event, 'tl', elem)"></div>
-          <div class="br resizable-handle" @mousedown.stop="getStartPoint($event, 'br', elem)"></div>
-          <div class="bl resizable-handle" @mousedown.stop="getStartPoint($event, 'bl', elem)"></div>
+          <div class="t resizable-handle" @mousedown.stop="getStartPoint($event,'t',elem)"></div>
+          <div class="b resizable-handle" @mousedown.stop="getStartPoint($event,'b',elem)"></div>
+          <div class="r resizable-handle" @mousedown.stop="getStartPoint($event,'r',elem)"></div>
+          <div class="l resizable-handle" @mousedown.stop="getStartPoint($event,'l',elem)"></div>
+          <div class="tr resizable-handle" @mousedown.stop="getStartPoint($event,'tr',elem)"></div>
+          <div class="tl resizable-handle" @mousedown.stop="getStartPoint($event,'tl',elem)"></div>
+          <div class="br resizable-handle" @mousedown.stop="getStartPoint($event,'br',elem)"></div>
+          <div class="bl resizable-handle" @mousedown.stop="getStartPoint($event,'bl',elem)"></div>
         </div>
       </div>
     </div>
@@ -67,124 +44,63 @@
 
 <script lang="ts">
 import { Vue, Prop, Watch, Component } from "vue-property-decorator";
-import componText from "../md-components/commonComponents/compon_text.vue"; //文本
-import componImage from "../md-components/commonComponents/compon_image.vue"; //图片
-import componVideo from "../md-components/commonComponents/compon_video.vue"; //视频
-import componRotate from "../md-components/commonComponents/compon_rotation.vue"; //轮播图
-import componTime from "../md-components/commonComponents/compon_time.vue"; //时间
-import componWeek from "../md-components/commonComponents/compon_week.vue"; //时间
-import componEditText from "../md-components/commonComponents/componSpecial/componEditText.vue";
-import eventVue from "../md-components/componentEdit/eventBus.vue";
-import HomePage from "./HomePage.vue";
+import scrollingText from "../md-components/show/scrollingText.vue";
+import images from "../md-components/show/images.vue";
+import week from "../md-components/show/week.vue";
+import dateTime from "../md-components/show/dateTime.vue";
+import videos from "../md-components/show/videos.vue";
+import rotationGroup from "../md-components/show/rotationGroup.vue";
 
 @Component({
   components: {
-    componText,
-    componImage,
-    componVideo,
-    componRotate,
-    componTime,
-    componWeek,
-    componEditText
+    scrollingText,
+    images,
+    week,
+    dateTime,
+    videos,
+    rotationGroup
   }
 })
 export default class ElemBox extends Vue {
-  @Prop() elemList!: any[];
+  @Prop() elemList!: Elem[];
   @Prop() model!: string;
   @Prop() elemActive!: number;
-  @Prop() editIndex!: number;
   @Prop() scale!: number;
   @Prop() resolution!: string;
 
   private isActive = false;
-  private isEditing = false;
-
-  private params = {
-    name: "轮播组",
-    type: "carousel",
-    scope: "local",
-    path: [
-      "M28.5 6.5v1.007l2-.01v10.035h-2v.968H31a.5.5 0 0 0 .5-.5V7a.5.5 0 0 0-.5-.5h-2.5zm-23 0H3a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h2.5v-.968h-2V7.498l2 .009V6.5z",
-      "M9 5v15h16V5H9zM8 3h18a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z",
-      "M14 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-2.253 7.664l-1.494-1.328 4.787-5.386L17 14.4l3.917-4.897 3.79 3.79-1.414 1.414-2.21-2.21L17 17.601l-2.04-2.55z"
-    ],
-    sPath: [
-      "M1 8H0V2h1v6zm13 0h-1V2h1v6zM3 1v8h8V1H3zm-.167-1h8.334c.46 0 .833.373.833.833v8.334c0 .46-.373.833-.833.833H2.833A.833.833 0 0 1 2 9.167V.833C2 .373 2.373 0 2.833 0zM4 8V7l1.75-2L7 6.5 9 4l1 2v2H4zm0-6h2v2H4V2z"
-    ],
-    attributes: [
-      {
-        name: "间隔",
-        code: "interval",
-        type: "NUMBER",
-        value: 1000
-      },
-      {
-        name: "方向",
-        code: "dotPosition",
-        type: "ENUM",
-        options: [
-          {
-            label: "上下切换",
-            value: "right"
-          },
-          {
-            label: "左右切换",
-            value: "bottom"
-          }
-        ],
-        value: "bottom"
-      },
-      {
-        name: "特效",
-        code: "effect",
-        type: "ENUM",
-        options: [
-          {
-            label: "线性滑动",
-            value: "scrollx"
-          },
-          {
-            label: "渐隐渐显",
-            value: "fade"
-          }
-        ],
-        value: "scrollx"
-      }
-    ],
-    imageSrc: [
-      {
-        img:
-          "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
-        id: 1
-      },
-      {
-        img:
-          "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
-        id: 2
-      }
-    ]
-  };
 
   @Watch("elemActive")
   resetIsEdit() {
-    console.log(this.elemActive);
-    this.isActive = this.elemActive > -1;
+    if (this.isActive === true) {
+      this.isActive = false;
+      // @ts-ignore
+      if (
+        this.$children[0] !== undefined &&
+        this.$children[0].isEdit !== undefined
+      ) {
+        // @ts-ignore
+        this.$children[0].isEdit = false;
+      }
+    }
   }
 
-  @Watch("editIndex")
-  setEdit() {
-    this.isEditing = this.editIndex > -1;
-  }
-
-  setEditIndex(index: number) {
-    (this.$parent.$parent as HomePage).editIndex = index;
+  changeIsEdit() {
+    // @ts-ignore
+    if (
+      this.$children[0] !== undefined &&
+      this.$children[0].isEdit !== undefined
+    ) {
+      // @ts-ignore
+      this.$children[0].isEdit = true;
+      this.isActive = true;
+    }
   }
 
   // Ԫ���ƶ� && ѡ��
-  changeElemActive(e: any, elem: any) {
+  changeElemActive(e: any, elem: Elem) {
     // @ts-ignore
     this.$parent.$parent.activeElemIndex = elem.pIndex;
-    (eventVue as any).$emit("changeParams", elem);
     const startX = e.clientX;
     const startY = e.clientY;
     const pointX = elem.elemComAttr.pointX;
@@ -220,70 +136,8 @@ export default class ElemBox extends Vue {
     });
   }
 
-  // ��תԪ��
-  rotateElem(e: any, elem: any) {
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const startAngle = elem.elemComAttr.rotate;
-    const startCentreX =
-      e.target.parentNode.getBoundingClientRect().left +
-      (elem.elemComAttr.width / 2) * this.scale;
-    const startCentreY =
-      e.target.parentNode.getBoundingClientRect().top +
-      (elem.elemComAttr.height / 2) * this.scale;
-
-    function moveHandle(e: any) {
-      const l1 = Math.sqrt(
-        Math.pow(Math.abs(startX - startCentreX), 2) +
-          Math.pow(Math.abs(startY - startCentreY), 2)
-      );
-      const l2 = Math.sqrt(
-        Math.pow(Math.abs(e.clientX - startCentreX), 2) +
-          Math.pow(Math.abs(e.clientY - startCentreY), 2)
-      );
-      const l3 = Math.sqrt(
-        Math.pow(Math.abs(startX - e.clientX), 2) +
-          Math.pow(Math.abs(startY - e.clientY), 2)
-      );
-      let angle = Math.round(
-        (Math.acos(
-          (Math.pow(l2, 2) + Math.pow(l1, 2) - Math.pow(l3, 2)) / (2 * l2 * l1)
-        ) /
-          Math.PI) *
-          180
-      );
-
-      const l1Y = Math.sqrt(Math.abs(Math.pow(l1, 2) - Math.pow(startX, 2)));
-      const l1Angle =
-        (Math.pow(l1, 2) + Math.pow(startX, 2) - Math.pow(l1Y, 2)) /
-        (2 * l1 * startX);
-      const l2Y = Math.sqrt(Math.abs(Math.pow(l2, 2) - Math.pow(e.clientX, 2)));
-      const l2Angle =
-        (Math.pow(l2, 2) + Math.pow(e.clientX, 2) - Math.pow(l2Y, 2)) /
-        (2 * l2 * e.clientX);
-      console.log(l2Angle > l1Angle);
-      // if (e.clientX < startCentreX) {
-      //   angle = -angle
-      // }
-      // console.log(angle)
-      // console.log(startAngle)
-      elem.elemComAttr.rotate =
-        startAngle + angle > 360
-          ? startAngle + angle - 360
-          : startAngle + angle < 0
-          ? startAngle + angle + 360
-          : startAngle + angle;
-    }
-
-    document.addEventListener("mousemove", moveHandle);
-    document.addEventListener("mouseup", function clickHandle() {
-      document.removeEventListener("mousemove", moveHandle);
-      document.removeEventListener("mouseup", clickHandle);
-    });
-  }
-
   // �޸�Ԫ�ش�С
-  getStartPoint(e: any, direction: string, elem: any) {
+  getStartPoint(e: any, direction: string, elem: Elem) {
     const width = elem.elemComAttr.width;
     const pointX = elem.elemComAttr.pointX;
     const startX = e.clientX;
@@ -300,7 +154,7 @@ export default class ElemBox extends Vue {
         let sub = Math.round((e.clientX - startX) / scale);
         sub = direction.indexOf("l") !== -1 ? -sub : sub;
         const max =
-          direction.indexOf("l") !== -1 ? maxX - pointX + width : maxX - pointX;
+          direction.indexOf("l") !== -1 ? pointX + width : maxX - pointX;
         sub =
           sub + width < min
             ? min - width
@@ -324,10 +178,7 @@ export default class ElemBox extends Vue {
         let sub = Math.round((e.clientY - startY) / scale);
         sub = direction.indexOf("t") !== -1 ? -sub : sub;
         const max =
-          direction.indexOf("t") !== -1
-            ? maxY - pointY + height
-            : maxY - pointY;
-        console.log(max);
+          direction.indexOf("t") !== -1 ? pointY + height : maxY - pointY;
         sub =
           height + sub < min
             ? min - height
@@ -372,6 +223,7 @@ $activeColor: rgb(25, 106, 212);
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   top: 0;
   left: 0;
   box-sizing: border-box;
@@ -387,20 +239,6 @@ $activeColor: rgb(25, 106, 212);
 
 .activePlat {
   border: 1px solid $activeColor;
-}
-
-.interPlat-resizer .rotate {
-  position: absolute;
-  left: 50%;
-  top: -1.44em;
-  width: 1em;
-  height: 1em;
-  margin-left: -0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  background: red;
 }
 
 .interPlat-resizer .t {

@@ -37,7 +37,8 @@
     <template #main>
       <div class="layer-sortable-list">
         <ul class="components-list">
-          <li class="component" v-for="component of componentsList" :key="component.type">
+          <li class="component" v-for="component of componentsList" :key="component.type"
+              @click.stop="addElem($event,component)">
             <div class="component-icon-wrapper">
               <svg class="svg-icon">
                 <path v-for="item of component.path" :d="item"></path>
@@ -64,14 +65,13 @@
   })
   export default class ComponentsList extends Vue {
     @Prop() components!: { scope: string, name: string }[]
+    @Prop() model!: string
+    @Prop() resolution!: string
 
     private filterKey = ''
 
-    private isModel = 'local'
-
-
     get componentsList() {
-      return this.components.filter((item) => item.scope.indexOf(this.isModel) !== -1 && item.name.indexOf(this.filterKey) !== -1)
+      return this.components.filter((item) => item.scope.indexOf(this.model) !== -1 && item.name.indexOf(this.filterKey) !== -1)
     }
 
     // 搜索模式切换
@@ -80,6 +80,67 @@
     changeSearchMode(): void {
       this.isSearchMode = !this.isSearchMode
       this.filterKey = ''
+    }
+
+    addElem(e: any, component: IComponent) {
+      const data = this.$parent
+      let elemArr: Elem[]
+      if (this.model === 'global') {
+        // @ts-ignore
+        elemArr = data.playbillData.elemList
+      } else {
+        // @ts-ignore
+        elemArr = data.playbillData.progList[data.activeProgramIndex - 1].elemList
+      }
+
+      let elemNameIndex: number[] = []
+      let lackNameIndex = 1
+      let maxIndex = 1
+      elemArr.forEach((item) => {
+        const arr = item.elemName.split(' ')
+        if (arr.length === 2 && arr[0] === component.name && /^\d+$/.test(arr[1])) {
+          elemNameIndex.push(Number(arr[1]))
+        }
+        if (item.pIndex > maxIndex) {
+          maxIndex = item.pIndex
+        }
+      })
+
+      elemNameIndex.sort((index1, index2) => {
+        return index1 - index2
+      })
+
+      if (elemNameIndex[elemNameIndex.length - 1] === elemNameIndex.length) {
+        lackNameIndex = elemNameIndex.length + 1
+      } else {
+        for (let i = 1, len = elemNameIndex.length; i < len; i++) {
+          if (i !== elemNameIndex[i]) {
+            lackNameIndex = i + 1
+          }
+        }
+      }
+
+      const initCom = component.initCom ? component.initCom : {}
+
+      const totalWidth = Number(this.resolution.split('*')[0])
+      const totalHeight = Number(this.resolution.split('*')[1])
+      const newElem = {
+        pIndex: maxIndex + 1,
+        elemName: component.name + ' ' + lackNameIndex,
+        elemType: component.type,
+        content: "",
+        elemComAttr: {
+          pointX: initCom.pointX ? (typeof initCom.pointX === "number" ? initCom.pointX : Number(initCom.pointX) * totalWidth) : 0,
+          pointY: initCom.pointY ? (typeof initCom.pointY === "number" ? initCom.pointY : Number(initCom.pointY) * totalHeight) : 0,
+          width: initCom.width ? (typeof initCom.width === "number" ? initCom.width : Number(initCom.width) * totalWidth) : totalWidth * 0.3,
+          height: initCom.height ? (typeof initCom.height === "number" ? initCom.height : Number(initCom.height) * totalHeight) : totalHeight * 0.3,
+          opacity: initCom.opacity ? initCom.opacity : 100,
+          elemTime: initCom.elemTime ? initCom.elemTime : 1,
+          duration: "00:00:00",
+        },
+        elemSupAttr: component.initData
+      }
+      elemArr.push(newElem)
     }
   }
 </script>

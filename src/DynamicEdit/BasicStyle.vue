@@ -2,35 +2,31 @@
   <div class="ht-layer-panel">
     <div class="layer-header">
       <div class="header-left">
-        <!--Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-->
+        <!--Í·²¿×ó²à²å²Û-->
         <slot name="headerLeft"></slot>
       </div>
       <div class="header-right">
-        <!--Í·ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½-->
+        <!--Í·²¿ÓÒ²à²å²Û-->
         <slot name="headerRight"></slot>
       </div>
     </div>
     <div class="layer-scroll-list">
-      <!--ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½-->
+      <!--Ö÷ÄÚÈÝ²å²Û-->
       <slot name="main"></slot>
     </div>
-    <!--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-->
+    <!--ÏßÌõ²å²Û-->
     <slot></slot>
   </div>
 </template>
-<script>
-export default {
-  
-}
-</script>
+
 <style lang="scss">
   $fontColor2: rgb(184, 188, 191);
   $fontColor3: rgb(153, 153, 153);
   $bgColor1: rgb(53, 55, 56);
   $bgColor2: rgb(21, 21, 21);
   $activeColor: rgb(25, 106, 212);
-  // Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  // ï¿½Ð±ï¿½
+  // Í¨ÓÃÉèÖÃ
+  // ÁÐ±í
   .currentList-list:hover .handleButton {
     display: block;
   }
@@ -48,7 +44,7 @@ export default {
     background-color: $activeColor;
   }
 
-  // Í·ï¿½ï¿½
+  // Í·²¿
 
   .screen-title {
     height: 100%;

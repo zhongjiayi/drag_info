@@ -27,7 +27,7 @@ export default {
 
   data() {
     return {
-      color: this.value,
+      color: this.value || {},
       colorShow: false
     };
   },

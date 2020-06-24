@@ -40,14 +40,14 @@
     <template #main>
       <div class="layer-sortable-list">
         <ul class="currentLists">
-          <li v-for="(elem) of showElemList" :key="elem.Name" class="currentList-list"
+          <li v-for="(elem,index) of showElemList" :key="elem.pIndex" class="currentList-list"
               :class="{active: elem.pIndex === elemActive}"
               :draggable="filterKey === '' && !isEdit && !extend" @dragstart="dragstart(index)"
               @dragover="allowDrop" @drop="dropHandle(index)"
               @click.left.stop="changeActive(elem)" @dblclick.stop="startEdit(elem)">
             <div class="screen-item">
               <svg class="svg-icon" aria-hidden="true">
-                <path v-for="(item, i) of componentsList[elem.elemType].sPath" :d="item" :key="i"></path>
+                <path v-for="item of componentsList[elem.elemType].sPath" :d="item"></path>
               </svg>
               <input v-if="isEdit && elem.pIndex === elemActive" class="hzInput" type="text"
                      v-model="editName"
@@ -81,9 +81,9 @@
     }
   })
   export default class PageList extends Vue {
-    @Prop() elemList!: any[]
+    @Prop() elemList!: Elem[]
     @Prop() elemActive!: number
-    @Prop() components!: any[]
+    @Prop() components!: IComponent[]
 
     private isEdit = false // 是否处于编辑模式
 
@@ -99,7 +99,7 @@
       return this.components.reduce((o: { [x: string]: any }, cur: { type: string | number }) => (o[cur.type] = cur) && o, {})
     }
 
-    changeActive(elem: any): void {
+    changeActive(elem: Elem): void {
       if (!this.isEdit) {
         if (this.elemActive === elem.pIndex) {
           this.$emit('changeActiveIndex', 'elem', -1)
@@ -121,7 +121,7 @@
      *  文本编辑
      */
     // 开始编辑
-    startEdit(elem: any): void {
+    startEdit(elem: Elem): void {
       this.$emit('changeActiveIndex', 'elem', elem.pIndex)
       this.isEdit = true
       this.editName = elem.elemName
@@ -132,7 +132,7 @@
     }
 
     // 结束编辑
-    endEdit(elem: any): void {
+    endEdit(elem: Elem): void {
       if (this.editName !== '') {
         this.isEdit = false
         const res = this.checkString(this.editName) || (this.editName === elem.elemName ? '' : this.checkDupName(this.editName, this.elemList))
@@ -155,8 +155,8 @@
         return '文本不能为空'
       }
       // 正则
-      let Reg = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/
-      let msg = '文本只能由汉字、数字、字母、下划线组成'
+      let Reg = /^[a-zA-Z0-9_ \u4e00-\u9fa5]+$/
+      let msg = '文本只能由汉字、数字、字母、空格、下划线组成'
       if (type === 'number') {
         Reg = /^\d+(\.\d+)?$/
         msg = '文本只能由数字组成'
