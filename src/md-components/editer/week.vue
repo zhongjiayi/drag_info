@@ -1,7 +1,7 @@
 <template>
   <div class="sub-panel">
     <header @click="changExtend">
-      <p>星期</p>
+      <p>星期编辑</p>
       <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
         <path
           d="M6 6.82l2.494-2.555a.867.867 0 0 1 1.248 0 .919.919 0 0 1 0 1.277L6.624 8.735a.867.867 0 0 1-1.248 0L2.258 5.542a.919.919 0 0 1 0-1.277.867.867 0 0 1 1.248 0L6 6.819z"
@@ -47,6 +47,7 @@
               </a-form-item>
               <a-form-item :label="'字号'">
                 <a-select
+                style="width:'100px'"
                   v-decorator="[
                   'fontSize',
                     {
@@ -63,6 +64,7 @@
               </a-form-item>
               <a-form-item :label="'字体粗细'">
                 <a-select
+                style="width:'100px'"
                   v-decorator="[
                   'fontWeight',
                     {
@@ -107,7 +109,7 @@ export default class week extends Vue {
   formItemLayout = {
     labelCol: { span: 8 },
     labelAlign: "left",
-    wrapperCol: { span: 12 }
+    wrapperCol: { span: 16 }
   };
 
   fontWeightOptions = [
@@ -116,8 +118,8 @@ export default class week extends Vue {
       value: "normal"
     },
     {
-      label: "blod",
-      value: "blod"
+      label: "bold",
+      value: "bold"
     }
   ];
   fontSizeOptions = [
@@ -220,7 +222,6 @@ $font-size: 10px;
 /deep/ .ant-input {
   font-size: $font-size;
   height: 30px;
-  width: 100px;
 }
 
 /deep/ .ant-form-item label {

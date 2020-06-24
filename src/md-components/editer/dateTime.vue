@@ -48,6 +48,7 @@
               </a-form-item>
               <a-form-item :label="'字号'">
                 <a-select
+                  style="width: 100px;"
                   v-decorator="[
                   'fontSize',
                     {
@@ -64,6 +65,7 @@
               </a-form-item>
               <a-form-item :label="'展示格式'">
                 <a-select
+                style="width: 100px;"
                   v-decorator="[
                   'showContent',
                     {
@@ -80,6 +82,7 @@
               </a-form-item>
               <a-form-item :label="'字体粗细'">
                 <a-select
+                style="width: 100px;"
                   v-decorator="[
                   'fontWeight',
                     {
@@ -125,7 +128,7 @@ export default class dateTime extends Vue {
   formItemLayout = {
     labelCol: { span: 8 },
     labelAlign: "left",
-    wrapperCol: { span: 12 }
+    wrapperCol: { span: 16 }
   };
 
   fontWeightOptions = [
@@ -134,8 +137,8 @@ export default class dateTime extends Vue {
       value: "normal"
     },
     {
-      label: "blod",
-      value: "blod"
+      label: "bold",
+      value: "bold"
     }
   ];
   fontSizeOptions = [
@@ -252,7 +255,6 @@ $font-size: 10px;
 /deep/ .ant-input {
   font-size: $font-size;
   height: 30px;
-  width: 100px;
 }
 
 /deep/ .ant-form-item label {

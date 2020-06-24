@@ -1,13 +1,20 @@
 <template>
   <div class="sub-panel">
     <div v-if="model == 'play'">
-      <video controls :style="{ width: '100%', height: '100%' }" autoplay :muted="attribute.muted">
-        <source :src="attribute.source" type="video/webm" />
+      <video :style="{ width: '100%', height: '100%' }" autoplay loop :muted="attribute.muted">
+        <source :src="attribute.videoSource" type="video/webm" />
       </video>
     </div>
-    <div v-if="model == 'edit'">
-      <video controls :style="{ width: '100%', height: '100%' }" autoplay :muted="attribute.muted">
-        <source :src="attribute.source" type="video/webm" />
+
+    <div v-if="model == 'edit' && isEdit">
+      <video controls :style="{ width: '100%', height: '100%' }" :muted="attribute.muted">
+        <source :src="attribute.videoSource" type="video/webm" />
+      </video>
+    </div>
+    
+    <div v-if="model == 'edit' && !isEdit">
+      <video :style="{ width: '100%', height: '100%' }" :muted="attribute.muted">
+        <source :src="attribute.videoSource" type="video/webm" />
       </video>
     </div>
   </div>
@@ -34,13 +41,20 @@ export default {
     return {
       attribute: {},
       week: null,
-      timer: null
+      timer: null,
+      isEdit: false
     };
   },
   computed: {},
+  watch: {
+    model(value) {
+      console.log(value);
+    }
+  },
 
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
+    console.log(this.model);
   },
 
   mounted() {},

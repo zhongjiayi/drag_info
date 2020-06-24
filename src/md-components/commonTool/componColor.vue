@@ -1,8 +1,8 @@
 <template>
   <div class="chooseColor">
     <div @click="handleShowColor" class="colorBox">
-      <span class="color_con" :style="{ background: color.hex }"></span>
-      <a-input placeholder="选择颜色" :style="{ color: color.hex,width:'75px' }" v-model="color.hex" />
+      <span class="color_con" :style="{ background: color.hex ||'#43437e'}"></span>
+      <a-input placeholder="选择颜色" :style="{ color: color.hex,width:'75px' }" v-model="color.hex"/>
     </div>
     <div @click="handleClick" v-if="colorShow">
       <sketch-picker v-model="color" @input="triggerChange"></sketch-picker>

@@ -3,6 +3,8 @@
     <div class="timeChange">
       <span
         :style="{
+        padding: '0 10px',
+        borderRadius:'4px',
         color: attribute.fontColor,
         fontSize: attribute.fontSize + 'px',
         backgroundColor: attribute.backgroundColor,

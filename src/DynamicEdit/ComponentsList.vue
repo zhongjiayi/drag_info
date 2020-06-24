@@ -141,6 +141,8 @@
         elemSupAttr: component.initData
       }
       elemArr.push(newElem)
+      // @ts-ignore
+      this.$parent.activeElemIndex =  maxIndex + 1
     }
   }
 </script>

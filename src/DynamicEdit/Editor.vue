@@ -26,6 +26,7 @@ import week from "../md-components/editer/week.vue"; //星期
 import dateTime from "../md-components/editer/dateTime.vue"; //日期时间
 import videos from "../md-components/editer/videos.vue"; //视频
 import rotationGroup from "../md-components/editer/rotationGroup.vue"; //轮播组
+import textEditor from "../md-components/editer/textEditor.vue"; //文本编辑器
 
 @Component({
   components: {
@@ -37,7 +38,9 @@ import rotationGroup from "../md-components/editer/rotationGroup.vue"; //轮播�
     week,
     dateTime,
     videos,
-    rotationGroup
+    rotationGroup,
+    textEditor,
+    scrollingText
   }
 })
 export default class Editor extends Vue {

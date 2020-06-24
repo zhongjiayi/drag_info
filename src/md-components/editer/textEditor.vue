@@ -1,7 +1,7 @@
 <template>
   <div class="sub-panel">
     <header @click="changExtend">
-      <p>滚动字幕编辑</p>
+      <p>文本编辑器</p>
       <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
         <path
           d="M6 6.82l2.494-2.555a.867.867 0 0 1 1.248 0 .919.919 0 0 1 0 1.277L6.624 8.735a.867.867 0 0 1-1.248 0L2.258 5.542a.919.919 0 0 1 0-1.277.867.867 0 0 1 1.248 0L6 6.819z"
@@ -15,58 +15,90 @@
           <!--一横行数据-->
           <div class="editForm">
             <a-form id="componentEdit" :form="form" v-bind="formItemLayout">
-              <a-form-item :label="'播放间隔'">
+              <!-- 动态生成表单 -->
+              <a-form-item :label="'字体颜色'">
+                <div class="fontChooseBox">
+                  <section class="colorBox">
+                    <componColor
+                      ref="color"
+                      v-decorator="[
+                        'fontColor',
+                        {
+                          initialValue: attribute.fontColor,
+                        },
+                      ]"
+                    ></componColor>
+                  </section>
+                </div>
+              </a-form-item>
+              <a-form-item :label="'背景颜色'">
+                <div class="fontChooseBox">
+                  <section class="colorBox">
+                    <componColor
+                      ref="color"
+                      v-decorator="[
+                        'backgroundColor',
+                        {
+                          initialValue: attribute.backgroundColor,
+                        },
+                      ]"
+                    ></componColor>
+                  </section>
+                </div>
+              </a-form-item>
+              <a-form-item :label="'字号'">
                 <a-select
-                  style="width:'100px'"
+                  style="width: 100px"
                   v-decorator="[
-                  'interval',
+                  'fontSize',
                     {
-                      initialValue: attribute.interval,
+                      initialValue: attribute.fontSize,
                     },
                   ]"
                 >
                   <a-select-option
-                    v-for="(item, index) of intervalOptions"
+                    v-for="(item, index) of fontSizeOptions"
                     :key="index"
                     :value="item.value"
                   >{{ item.label }}</a-select-option>
                 </a-select>
               </a-form-item>
-
-              <a-form-item :label="'切换方向'">
-                <a-select
-                  style="width:'100px'"
+              <a-form-item :label="'文本'">
+                <a-input
                   v-decorator="[
-                  'dotPosition',
+                    'textContent',
                     {
-                      initialValue: attribute.dotPosition,
+                      initialValue: attribute.textContent,
+                    },
+                  ]"
+                />
+              </a-form-item>
+              <a-form-item :label="'字体粗细'">
+                <a-select
+                  style="width: 100px"
+                  v-decorator="[
+                  'fontWeight',
+                    {
+                      initialValue: attribute.fontWeight,
                     },
                   ]"
                 >
                   <a-select-option
-                    v-for="(item, index) of dotPositionOptions"
+                    v-for="(item, index) of fontWeightOptions"
                     :key="index"
                     :value="item.value"
                   >{{ item.label }}</a-select-option>
                 </a-select>
               </a-form-item>
-
-              <a-form-item :label="'切换特效'">
-                <a-select
-                  style="width:'100px'"
+              <a-form-item :label="'字体间隔'">
+                <a-slider
                   v-decorator="[
-                    'effect',
+                    'fontSpacing',
                     {
-                      initialValue: attribute.effect,
-                    },
+                      initialValue: attribute.fontSpacing,
+                    }
                   ]"
-                >
-                  <a-select-option
-                    v-for="(item, index) of effectOptions"
-                    :key="index"
-                    :value="item.value"
-                  >{{ item.label }}</a-select-option>
-                </a-select>
+                />
               </a-form-item>
             </a-form>
           </div>
@@ -85,7 +117,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
     componColor
   }
 })
-export default class rotationGroup extends Vue {
+export default class textEditor extends Vue {
   @Prop() elemData!: Elem; // 元素数据
 
   private stretch = true; // 加载时是折叠还是不折叠
@@ -101,48 +133,81 @@ export default class rotationGroup extends Vue {
     wrapperCol: { span: 16 }
   };
 
-  effectOptions = [
+  fontWeightOptions = [
     {
-      label: "线性滑动",
-      value: "scrollx"
+      label: "normal",
+      value: "normal"
     },
     {
-      label: "渐隐渐显",
-      value: "fade"
+      label: "blod",
+      value: "blod"
+    }
+  ];
+  fontSizeOptions = [
+    {
+      label: "12",
+      value: "12"
+    },
+    {
+      label: "14",
+      value: "14"
+    },
+    {
+      label: "16",
+      value: "16"
+    },
+    {
+      label: "18",
+      value: "18"
+    },
+    {
+      label: "20",
+      value: "20"
+    },
+    {
+      label: "24",
+      value: "24"
+    },
+    {
+      label: "28",
+      value: "28"
+    },
+    {
+      label: "32",
+      value: "32"
+    },
+    {
+      label: "64",
+      value: "64"
     }
   ];
 
-  intervalOptions = [
+  directionOptions = [
     {
-      label: "500",
-      value: 500
+      label: "从右往左",
+      value: "toLeft"
     },
     {
-      label: "1000",
-      value: 1000
-    },
+      label: "从左往右",
+      value: "toRight"
+    }
+  ];
+  fontSpeedOptions = [
     {
-      label: "2000",
+      label: "默认速度",
       value: 2000
     },
     {
-      label: "3000",
-      value: 3000
+      label: "1.2倍速",
+      value: 1600
     },
     {
-      label: "4000",
-      value: 4000
-    }
-  ];
-
-  dotPositionOptions = [
-    {
-      label: "左右切换",
-      value: "bottom"
+      label: "1.5倍速",
+      value: 1000
     },
     {
-      label: "上下切换",
-      value: "right"
+      label: "2倍速",
+      value: 500
     }
   ];
 

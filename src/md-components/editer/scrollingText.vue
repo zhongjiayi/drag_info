@@ -12,10 +12,8 @@
     <div class="sub-panel-body" :style="{height: stretch ? height + 'px': '0'}">
       <div v-if="stretch">
         <div class="panel-horizon">
-          <!--一横行数据-->
           <div class="editForm">
             <a-form id="componentEdit" :form="form" v-bind="formItemLayout">
-              <!-- 动态生成表单 -->
               <a-form-item :label="'字体颜色'">
                 <div class="fontChooseBox">
                   <section class="colorBox">
@@ -48,6 +46,7 @@
               </a-form-item>
               <a-form-item :label="'字号'">
                 <a-select
+                  style="width:'100px'"
                   v-decorator="[
                   'fontSize',
                     {
@@ -64,6 +63,7 @@
               </a-form-item>
               <a-form-item :label="'文本'">
                 <a-input
+                  autocomplete="off"
                   v-decorator="[
                     'textContent',
                     {
@@ -72,8 +72,9 @@
                   ]"
                 />
               </a-form-item>
-              <a-form-item :label="'滚动方向'">
+              <!-- <a-form-item :label="'滚动方向'">
                 <a-select
+                 style="width:'100px'"
                   v-decorator="[
                   'direction',
                     {
@@ -87,9 +88,10 @@
                     :value="item.value"
                   >{{ item.label }}</a-select-option>
                 </a-select>
-              </a-form-item>
+              </a-form-item>-->
               <a-form-item :label="'字体粗细'">
                 <a-select
+                  style="width:'100px'"
                   v-decorator="[
                   'fontWeight',
                     {
@@ -116,6 +118,7 @@
               </a-form-item>
               <a-form-item :label="'滚动速度'">
                 <a-select
+                  style="width:'100px'"
                   v-decorator="[
                     'fontSpeed',
                     {
@@ -160,7 +163,7 @@ export default class scrollingText extends Vue {
   formItemLayout = {
     labelCol: { span: 8 },
     labelAlign: "left",
-    wrapperCol: { span: 12 }
+    wrapperCol: { span: 16 }
   };
 
   fontWeightOptions = [
@@ -169,8 +172,8 @@ export default class scrollingText extends Vue {
       value: "normal"
     },
     {
-      label: "blod",
-      value: "blod"
+      label: "bold",
+      value: "bold"
     }
   ];
   fontSizeOptions = [
@@ -301,7 +304,6 @@ $font-size: 10px;
 /deep/ .ant-input {
   font-size: $font-size;
   height: 30px;
-  width: 100px;
 }
 
 /deep/ .ant-form-item label {

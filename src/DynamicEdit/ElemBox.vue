@@ -5,10 +5,14 @@
       v-for="(elem,index) of elemList"
       :key="elem.pIndex"
       :style="{width:elem.elemComAttr.width + 'px',height:elem.elemComAttr.height + 'px',top:elem.elemComAttr.pointY + 'px',left:(elem.elemComAttr.pointX > 0 ? elem.elemComAttr.pointX : '-' + Math.abs(elem.elemComAttr.pointX)) + 'px',
-         zIndex:elemList.length-index}"
+         zIndex:elemActive === elem.pIndex ? '8888888' : elemList.length-index}"
     >
       <!--Ԫ��չʾ���-->
-      <div class="elemBox-elem-content" :style="{opacity:elem.elemComAttr.opacity / 100}">
+      <div
+        class="elemBox-elem-content"
+        :style="{opacity:elem.elemComAttr.opacity / 100}"
+        @mousedown.stop
+      >
         <components :is="elem.elemType" :elemData="elem" :model="model"></components>
       </div>
       <div
@@ -18,7 +22,7 @@
       ></div>
       <div
         class="elemBox-elem-interPlat"
-        v-if="model === 'edit'"
+        v-if="model === 'edit' && !isActive"
         :class="{activePlat:(!isActive && elemActive === elem.pIndex)}"
         @mousedown.stop="changeElemActive($event,elem)"
         @dblclick="changeIsEdit"
@@ -50,6 +54,7 @@ import week from "../md-components/show/week.vue";
 import dateTime from "../md-components/show/dateTime.vue";
 import videos from "../md-components/show/videos.vue";
 import rotationGroup from "../md-components/show/rotationGroup.vue";
+import textEditor from "../md-components/show/textEditor.vue";
 
 @Component({
   components: {
@@ -58,7 +63,8 @@ import rotationGroup from "../md-components/show/rotationGroup.vue";
     week,
     dateTime,
     videos,
-    rotationGroup
+    rotationGroup,
+    textEditor
   }
 })
 export default class ElemBox extends Vue {
@@ -223,7 +229,6 @@ $activeColor: rgb(25, 106, 212);
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   top: 0;
   left: 0;
   box-sizing: border-box;

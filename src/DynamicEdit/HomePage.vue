@@ -1,8 +1,145 @@
 ﻿<template>
-  <div class="homePage" @wheel.ctrl.exact.prevent>
+  <div class="homePage" @wheel.ctrl.exact.prevent @keyup.enter="deleteElem">
     <div class="ht-toolbar">
       <div class="toolbar-left"></div>
-      <div class="toolbar-center"></div>
+      <div class="toolbar-center">
+        <div class="toolbar-center-l">
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width:18px;height: 16px"
+                viewBox="0 0 18 16"
+                aria-hidden="true"
+              >
+                <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zm0-2A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+                <path style="color: red" d="M6.4 11.2V4.8L11.2 8z" />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">预览</p>
+          </div>
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon cloud"
+                style="width:18px;height: 16px"
+                viewBox="0 0 18 16"
+                aria-hidden="true"
+              >
+                <path
+                  class="cloud-arrow"
+                  d="M8.4 10.5C8.5 10.3 8.8 10.2 9 10.2 9.2 10.2 9.5 10.3 9.6 10.5L12.2 13.2C12.3 13.4 12.4 13.6 12.4 13.8 12.4 13.8 12.4 13.8 12.4 14 12.4 14.3 12 14.6 11.7 14.6 11.7 14.6 11.1 14.6 9.9 14.6L9.9 19.1C9.9 19.6 9.5 20 9 20L9 20C8.5 20 8.1 19.6 8.1 19.1L8.1 14.6C6.9 14.6 6.3 14.6 6.3 14.6 6.1 14.6 5.6 14.3 5.6 14 5.6 13.9 5.6 13.8 5.6 13.8 5.6 13.5 5.7 13.4 5.8 13.2 5.8 13.2 6.7 12.3 8.4 10.5Z"
+                />
+                <path
+                  class="cloud-arrow"
+                  d="M8.4 20.5C8.5 20.3 8.8 20.2 9 20.2 9.2 20.2 9.5 20.3 9.6 20.5L12.2 23.2C12.3 23.4 12.4 23.6 12.4 23.8 12.4 23.8 12.4 23.8 12.4 24 12.4 24.3 12 24.6 11.7 24.6 11.7 24.6 11.1 24.6 9.9 24.6L9.9 29.1C9.9 29.6 9.5 30 9 30L9 30C8.5 30 8.1 29.6 8.1 29.1L8.1 24.6C6.9 24.6 6.3 24.6 6.3 24.6 6.1 24.6 5.6 24.3 5.6 24 5.6 23.9 5.6 23.8 5.6 23.8 5.6 23.5 5.7 23.4 5.8 23.2 5.8 23.2 6.7 22.3 8.4 20.5Z"
+                />
+                <path
+                  d="M12.9 11.2C12.9 10.8 13.3 10.4 13.8 10.4 15.2 10.4 16.2 9.3 16.2 7.9 16.2 7.2 16 6.6 15.5 6.1 15.4 6.1 15.3 6 15.3 6 15.2 5.9 15.2 5.9 15.1 5.9 15 5.8 15 5.8 14.9 5.7 14.9 5.7 14.9 5.7 14.9 5.7 14.8 5.7 14.8 5.7 14.7 5.7 14.7 5.6 14.7 5.6 14.6 5.6 14.6 5.6 14.5 5.6 14.5 5.6 14.5 5.6 14.4 5.6 14.4 5.6 14.4 5.5 14.3 5.5 14.3 5.5 14.2 5.5 14.2 5.5 14.1 5.5 14.1 5.5 14.1 5.5 14 5.5 13.9 5.5 13.9 5.5 13.8 5.5 13.8 5.5 13.7 5.5 13.7 5.5 13.7 5.3 13.6 5.2 13.6 5.1 13.6 5 13.6 5 13.6 5 13.5 4.9 13.5 4.8 13.5 4.7 13.5 4.6 13.4 4.6 13.4 4.6 13.4 4.5 13.3 4.4 13.3 4.3 13.3 4.3 13.3 4.2 13.3 4.2 13.2 4.1 13.2 4 13.1 3.9 12.3 2.6 10.7 1.8 9 1.8 7.3 1.8 5.7 2.6 4.9 3.9 4.8 4 4.8 4.1 4.7 4.2 4.7 4.2 4.7 4.3 4.7 4.3 4.7 4.4 4.6 4.5 4.6 4.6 4.6 4.6 4.5 4.6 4.5 4.7 4.5 4.8 4.5 4.9 4.4 5 4.4 5 4.4 5 4.4 5.1 4.4 5.2 4.3 5.3 4.3 5.5 4.3 5.5 4.2 5.5 4.2 5.5 4.1 5.5 4.1 5.5 4 5.5 3.9 5.5 3.9 5.5 3.9 5.5 3.8 5.5 3.8 5.5 3.7 5.5 3.7 5.5 3.6 5.5 3.6 5.6 3.6 5.6 3.5 5.6 3.5 5.6 3.5 5.6 3.4 5.6 3.4 5.6 3.3 5.6 3.3 5.6 3.3 5.7 3.2 5.7 3.2 5.7 3.1 5.7 3.1 5.7 3.1 5.7 3.1 5.7 3 5.8 3 5.8 2.9 5.8 2.8 5.9 2.8 5.9 2.7 6 2.7 6 2.6 6.1 2.5 6.1 2 6.6 1.8 7.2 1.8 7.9 1.8 9.3 2.8 10.4 4.2 10.4 4.7 10.4 5.1 10.8 5.1 11.2 5.1 11.7 4.7 12 4.2 12 1.9 12 0 10.2 0 7.9 0 6.1 1.3 4.5 3 4 3.9 1.7 6.3 0 9 0 11.7 0 14.1 1.7 15 4 16.7 4.5 18 6.1 18 7.9 18 10.2 16.1 12 13.8 12 13.3 12 12.9 11.7 12.9 11.2Z"
+                />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">保存</p>
+          </div>
+        </div>
+        <div class="toolbar-center-c">
+          <div class="scaleBox">
+            <div class="toolbar-box scale-icon" @click="changeScale({deltaY: 1})">
+              <div class="toolbar-box-icon">
+                <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M2 7h8a1 1 0 0 0 0-2H2a1 1 0 1 0 0 2z" />
+                </svg>
+              </div>
+            </div>
+            <div class="toolbar-box">
+              <div>{{Math.round(scale * 100)}}%</div>
+              <p class="toolbar-box-text">缩放</p>
+            </div>
+            <div class="toolbar-box scale-icon" @click="changeScale({deltaY: -1})">
+              <div class="toolbar-box-icon">
+                <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
+                  <path
+                    d="M5 5V2a1 1 0 1 1 2 0v3h3a1 1 0 0 1 0 2H7v3a1 1 0 0 1-2 0V7H2a1 1 0 1 1 0-2h3z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path d="M4 9h11v4H4V9zm0-6h6v4H4V3zM2 0h1v16H2V0z" />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">对齐</p>
+          </div>
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path d="M15 2H5v1H4V1h12v12h-2v-1h1V2zM1 4h12v12H1V4zm2 2v8h8V6H3z" />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">图层</p>
+          </div>
+        </div>
+        <div class="toolbar-center-r">
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path
+                  d="M0 3C0 2.5 0.5 2 1 2L14 2C14 2 14 2 14 2 14.6 2 15 2.4 15 3L15 13C15 13.6 14.6 14 14 14L1 14C1 14 1 14 1 14 0.4 14 0 13.6 0 13L0 3ZM10 7L13 11.6 13 4 2 4 2 12 4.6 9.3 5.9 11.6 10 7ZM4.5 8C3.7 8 3 7.3 3 6.5 3 5.7 3.7 5 4.5 5 5.3 5 6 5.7 6 6.5 6 7.3 5.3 8 4.5 8ZM3 16L3 15 12 15 12 16 3 16ZM3 1L3 0 12 0 12 1 3 1Z"
+                />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">素材库</p>
+          </div>
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path
+                  d="M0 3C0 2.5 0.5 2 1 2L14 2C14 2 14 2 14 2 14.6 2 15 2.4 15 3L15 13C15 13.6 14.6 14 14 14L1 14C1 14 1 14 1 14 0.4 14 0 13.6 0 13L0 3ZM10 7L13 11.6 13 4 2 4 2 12 4.6 9.3 5.9 11.6 10 7ZM4.5 8C3.7 8 3 7.3 3 6.5 3 5.7 3.7 5 4.5 5 5.3 5 6 5.7 6 6.5 6 7.3 5.3 8 4.5 8ZM3 16L3 15 12 15 12 16 3 16ZM3 1L3 0 12 0 12 1 3 1Z"
+                />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">组件库</p>
+          </div>
+          <div class="toolbar-box">
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path
+                  d="M0 3C0 2.5 0.5 2 1 2L14 2C14 2 14 2 14 2 14.6 2 15 2.4 15 3L15 13C15 13.6 14.6 14 14 14L1 14C1 14 1 14 1 14 0.4 14 0 13.6 0 13L0 3ZM10 7L13 11.6 13 4 2 4 2 12 4.6 9.3 5.9 11.6 10 7ZM4.5 8C3.7 8 3 7.3 3 6.5 3 5.7 3.7 5 4.5 5 5.3 5 6 5.7 6 6.5 6 7.3 5.3 8 4.5 8ZM3 16L3 15 12 15 12 16 3 16ZM3 1L3 0 12 0 12 1 3 1Z"
+                />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">节目库</p>
+          </div>
+        </div>
+      </div>
       <div class="toolbar-right"></div>
     </div>
     <div class="main-content">
@@ -158,15 +295,6 @@ export default class HomePage extends Vue {
    */
   private components = [
     {
-      name: "文本",
-      type: "text",
-      scope: "local",
-      path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
-      ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
-    },
-    {
       name: "图片",
       type: "images",
       scope: "global",
@@ -181,6 +309,10 @@ export default class HomePage extends Vue {
         height: 300
       },
       initData: {
+        brightness: 1, //亮度
+        contrast: 100, //对比度 单位%
+        dropShadow: "", //阴影
+        invert: 100, //反转色 %
         imageSrc:
           "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658"
       }
@@ -198,7 +330,7 @@ export default class HomePage extends Vue {
         height: 300
       },
       initData: {
-        muted: false, //静音播放
+        muted: true, //静音播放
         videoSource: "https://www.w3school.com.cn/i/movie.ogg"
       }
     },
@@ -250,8 +382,8 @@ export default class HomePage extends Vue {
       },
       initData: {
         fontColor: "white", //字体颜色
-        backgroundColor: "blue", //背景颜色
-        fontSize: 28, //字号
+        backgroundColor: "#43437e", //背景颜色
+        fontSize: 12, //字号
         fontWeight: "normal", //字体粗细
         showContent: "YYYY-MM-DD HH:mm:ss" //时间格式
       }
@@ -265,24 +397,40 @@ export default class HomePage extends Vue {
       ],
       sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
       initCom: {
-        width: "0.5", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
+        width: "0.2", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
+        height: 100
+      },
+      initData: {
+        fontColor: "white", //字体颜色
+        backgroundColor: "#43437e", //背景颜色
+        fontSize: 18, //字号
+        fontWeight: "normal" //字体粗细
+      }
+    },
+    {
+      name: "文本编辑器",
+      type: "textEditor",
+      scope: "global",
+      path: [
+        "M26.86 18.433a.995.995 0 0 0 .14-.51V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v12.923a1 1 0 0 0 .038.272l3.625-3.099 2.931 2.255L19.7 11.09l7.16 7.344zM7 2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6.25 9.77c-1.243 0-2.25-1.034-2.25-2.308 0-1.275 1.007-2.308 2.25-2.308s2.25 1.033 2.25 2.308c0 1.274-1.007 2.307-2.25 2.307z"
+      ],
+      sPath: [
+        "M0 0h12v12H0V0zm1 1v10h10V1H1zm2 2h2v2H3V3zm-1 7V9l1.778-2 1.778 1.5L8.222 5 10 8v2H2z"
+      ],
+      initCom: {
+        width: "0.8", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
         height: 300
       },
       initData: {
         fontColor: "white", //字体颜色
         backgroundColor: "blue", //背景颜色
         fontSize: 28, //字号
-        fontWeight: "normal" //字体粗细
+        textContent: "请编辑文字2", //文本内容
+        fontWeight: "normal", //字体粗细
+        direction: "toLeft", //滚动方向
+        fontSpacing: 1, //字体间隔
+        fontSpeed: 2000 //默认速度
       }
-    },
-    {
-      name: "时间",
-      type: "time",
-      scope: "global",
-      path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
-      ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"]
     },
     {
       name: "滚动字幕",
@@ -313,25 +461,25 @@ export default class HomePage extends Vue {
     playbillBg: "white",
     resolution: "1980*1080",
     elemList: [
-      // {
-      //   pIndex: 1,
-      //   elemName: "日期1",
-      //   elemType: "time",
-      //   content: "",
-      //   elemComAttr: {
-      //     pointX: 300,
-      //     pointY: 500,
-      //     width: 400,
-      //     height: 300,
-      //     opacity: 100,
-      //     elemTime: 1,
-      //     duration: "00:00:30"
-      //   },
-      //   elemSupAttr: {
-      //     displayType: "HH:mm:ss",
-      //     fontSize: "12.5px"
-      //   }
-      // }
+      {
+        pIndex: 1,
+        elemName: "日期1",
+        elemType: "time",
+        content: "",
+        elemComAttr: {
+          pointX: 300,
+          pointY: 500,
+          width: 400,
+          height: 300,
+          opacity: 100,
+          elemTime: 1,
+          duration: "00:00:30"
+        },
+        elemSupAttr: {
+          displayType: "HH:mm:ss",
+          fontSize: "12.5px"
+        }
+      }
     ],
     progList: [
       {
@@ -341,6 +489,31 @@ export default class HomePage extends Vue {
         playTime: 1,
         progBg: "black",
         elemList: [
+          {
+            pIndex: 1,
+            elemName: "文本编辑器",
+            elemType: "textEditor",
+            content: "",
+            elemComAttr: {
+              pointX: 300,
+              pointY: 500,
+              width: 400,
+              height: 300,
+              opacity: 100,
+              elemTime: 1, // number
+              duration: "00:00:30"
+            },
+            elemSupAttr: {
+              fontColor: "white", //字体颜色
+              backgroundColor: "blue", //背景颜色
+              fontSize: 28, //字号
+              textContent: "请编辑文字2", //文本内容
+              fontWeight: "normal", //字体粗细
+              direction: "toLeft", //滚动方向
+              fontSpacing: 1, //字体间隔
+              fontSpeed: 2000 //默认速度
+            }
+          },
           {
             pIndex: 1,
             elemName: "视频",
@@ -356,7 +529,7 @@ export default class HomePage extends Vue {
               duration: "00:00:30"
             },
             elemSupAttr: {
-              muted: false, //静音播放
+              muted: true, //静音播放
               videoSource: "https://www.w3school.com.cn/i/movie.ogg"
             }
           },
@@ -366,17 +539,17 @@ export default class HomePage extends Vue {
             elemType: "dateTime",
             content: "",
             elemComAttr: {
-              pointX: 300,
-              pointY: 500,
-              width: 400,
-              height: 300,
+              pointX: 500,
+              pointY: 300,
+              width: 200,
+              height: 100,
               opacity: 100,
               elemTime: 1, // number
               duration: "00:00:30"
             },
             elemSupAttr: {
               fontColor: "white", //字体颜色
-              backgroundColor: "blue", //背景颜色
+              backgroundColor: "#43437e", //背景颜色
               fontSize: 28, //字号
               fontWeight: "normal", //字体粗细
               showContent: "YYYY-MM-DD HH:mm:ss" //时间格式
@@ -388,10 +561,10 @@ export default class HomePage extends Vue {
             elemType: "week",
             content: "",
             elemComAttr: {
-              pointX: 300,
-              pointY: 500,
-              width: 400,
-              height: 300,
+              pointX: 700,
+              pointY: 700,
+              width: 200,
+              height: 100,
               opacity: 100,
               elemTime: 1, // number
               duration: "00:00:30"
@@ -418,6 +591,10 @@ export default class HomePage extends Vue {
               duration: "00:00:30"
             },
             elemSupAttr: {
+              brightness: 1, //亮度
+              contrast: 100, //对比度 单位%
+              dropShadow: "", //阴影
+              invert: 100, //反转色 %
               imageSrc:
                 "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658"
             }
@@ -509,6 +686,10 @@ export default class HomePage extends Vue {
   }; // 节目单源数据
   private activeProgramIndex = -1; // 激活的节目编号
   private activeElemIndex = -1; // 激活的元素编号
+
+  deleteElem() {
+    console.log(321);
+  }
 
   get programsListObj() {
     // @ts-ignore
@@ -664,8 +845,8 @@ export default class HomePage extends Vue {
     // @ts-ignore
     const length =
       type === "X"
-        ? (this.$refs.trackX as any).offsetWidth
-        : (this.$refs.trackY as any).offsetHeight;
+        ? this.$refs.trackX.offsetWidth
+        : this.$refs.trackY.offsetHeight;
     const that = this;
 
     function moveHandle(e: any) {
@@ -686,10 +867,11 @@ export default class HomePage extends Vue {
 
   changeScale(e: { deltaY: number }) {
     if (e.deltaY < 0 && this.scale < 1) {
-      this.scale += 0.05;
+      this.scale = Number((this.scale + 0.05).toFixed(2));
     } else if (e.deltaY >= 0 && this.scale > 0.2) {
-      this.scale -= 0.05;
+      this.scale = Number((this.scale - 0.05).toFixed(2));
     }
+    console.log(this.scale);
   }
 }
 </script>
@@ -792,6 +974,10 @@ $bgColor3: rgb(37, 38, 38);
 $bgColor4: rgb(69, 70, 71);
 $gbColor5: rgb(215, 221, 224);
 $gbColor5: rgb(89, 90, 92);
+$activeColor: rgb(25, 106, 212);
+$toolbarNormalColor: rgb(217, 217, 217);
+$toolbarActiveColor: rgb(242, 244, 245);
+$toolbarActiveBg: rgb(23, 38, 38);
 
 .homePage {
   // 初始化css
@@ -1017,5 +1203,66 @@ $gbColor5: rgb(89, 90, 92);
 
 .expanded.pane-stretchButton > svg {
   transform: rotate(0deg);
+}
+
+.toolbar-box {
+  position: relative;
+  height: 100%;
+  width: 44px;
+  color: $toolbarNormalColor;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid transparent;
+  cursor: pointer;
+}
+
+.toolbar-box:hover {
+  color: $toolbarActiveColor;
+  background: $toolbarActiveBg;
+}
+
+.toolbar-center > div,
+.toolbar-box-icon {
+  display: flex;
+}
+
+.toolbar-box-text {
+  margin-top: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  /*color: rgb();*/
+}
+
+.scaleBox {
+  flex-direction: row;
+  display: flex;
+}
+
+.scale-icon {
+  width: 22px;
+}
+
+.scaleBox > .toolbar-box > div {
+  font-weight: 600;
+}
+
+.cloud-arrow {
+  transform: translateY(-5px);
+}
+
+.toolbar-box:hover .cloud-arrow {
+  color: $activeColor;
+  animation: cloud-arrow-run 2s infinite;
+}
+
+@keyframes cloud-arrow-run {
+  0% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(-17px);
+  }
 }
 </style>
