@@ -245,7 +245,7 @@ export default class HomePage extends Vue {
       },
       initData: {
         fontColor: "white", //字体颜色
-        backgroundColor: "#43437e", //背景颜色
+        backgroundColor: "#3390ff", //背景颜色
         fontSize: 12, //字号
         fontWeight: "normal", //字体粗细
         showContent: "YYYY-MM-DD HH:mm:ss" //时间格式
@@ -265,7 +265,7 @@ export default class HomePage extends Vue {
       },
       initData: {
         fontColor: "white", //字体颜色
-        backgroundColor: "#43437e", //背景颜色
+        backgroundColor: "#3390ff", //背景颜色
         fontSize: 18, //字号
         fontWeight: "normal" //字体粗细
       }
@@ -284,7 +284,7 @@ export default class HomePage extends Vue {
       },
       initData: {
         fontColor: "white", //字体颜色
-        backgroundColor: "blue", //背景颜色
+        backgroundColor: "#3390ff", //背景颜色
         fontSize: 28, //字号
         textContent: "请编辑文字2", //文本内容
         fontWeight: "normal", //字体粗细
@@ -307,7 +307,7 @@ export default class HomePage extends Vue {
       },
       initData: {
         fontColor: "white", //字体颜色
-        backgroundColor: "blue", //背景颜色
+        backgroundColor: "#3390ff", //背景颜色
         fontSize: 28, //字号
         textContent: "请编辑文字1", //文本内容
         fontWeight: "normal", //字体粗细
@@ -366,7 +366,7 @@ export default class HomePage extends Vue {
             },
             elemSupAttr: {
               fontColor: "white", //字体颜色
-              backgroundColor: "blue", //背景颜色
+              backgroundColor: "#3390ff", //背景颜色
               fontSize: 28, //字号
               textContent: "请编辑文字2", //文本内容
               fontWeight: "normal", //字体粗细
@@ -410,7 +410,7 @@ export default class HomePage extends Vue {
             },
             elemSupAttr: {
               fontColor: "white", //字体颜色
-              backgroundColor: "#43437e", //背景颜色
+              backgroundColor: "#3390ff", //背景颜色
               fontSize: 28, //字号
               fontWeight: "normal", //字体粗细
               showContent: "YYYY-MM-DD HH:mm:ss" //时间格式
@@ -432,7 +432,7 @@ export default class HomePage extends Vue {
             },
             elemSupAttr: {
               fontColor: "white", //字体颜色
-              backgroundColor: "blue", //背景颜色
+              backgroundColor: "#3390ff", //背景颜色
               fontSize: 14, //字号
               fontWeight: "normal" //字体粗细
             }
@@ -476,7 +476,7 @@ export default class HomePage extends Vue {
             },
             elemSupAttr: {
               fontColor: "white", //字体颜色
-              backgroundColor: "blue", //背景颜色
+              backgroundColor: "#3390ff", //背景颜色
               fontSize: 28, //字号
               textContent: "请编辑文字2", //文本内容
               fontWeight: "normal", //字体粗细

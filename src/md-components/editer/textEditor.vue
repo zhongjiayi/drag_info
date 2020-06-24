@@ -65,6 +65,7 @@
               </a-form-item>
               <a-form-item :label="'文本'">
                 <a-input
+                  autocomplete="off"
                   v-decorator="[
                     'textContent',
                     {

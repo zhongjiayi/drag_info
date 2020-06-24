@@ -1,6 +1,7 @@
 <template>
   <div class="sub-panel">
     <div @click="elemOnClick" class="editBox" v-if="model == 'edit' && isEdit" style="width:'100%'">
+      
       <textarea
         autofocus
         ref="focusTextarea"
@@ -8,7 +9,6 @@
           width:'100%',
         color: attribute.fontColor,
         fontSize: attribute.fontSize + 'px',
-        backgroundColor: attribute.backgroundColor,
         fontWeight:attribute.fontWeight,
         letterSpacing:attribute.fontSpacing+'px',
         position: 'relative',
