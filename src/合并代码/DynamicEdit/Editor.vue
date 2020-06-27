@@ -39,7 +39,8 @@ import textEditor from "../md-components/editer/textEditor.vue"; //文本编辑�
     dateTime,
     videos,
     rotationGroup,
-    textEditor
+    textEditor,
+    scrollingText
   }
 })
 export default class Editor extends Vue {

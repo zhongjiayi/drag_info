@@ -27,6 +27,7 @@ import dateTime from "../md-components/editer/dateTime.vue"; //日期时间
 import videos from "../md-components/editer/videos.vue"; //视频
 import rotationGroup from "../md-components/editer/rotationGroup.vue"; //轮播组
 import textEditor from "../md-components/editer/textEditor.vue"; //文本编辑器
+import richEditor from "../md-components/editer/richEditor.vue"; //文本编辑器
 
 @Component({
   components: {
@@ -40,7 +41,8 @@ import textEditor from "../md-components/editer/textEditor.vue"; //文本编辑�
     videos,
     rotationGroup,
     textEditor,
-    scrollingText
+    scrollingText,
+    richEditor
   }
 })
 export default class Editor extends Vue {

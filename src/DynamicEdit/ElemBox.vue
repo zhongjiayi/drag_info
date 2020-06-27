@@ -55,6 +55,7 @@ import dateTime from "../md-components/show/dateTime.vue";
 import videos from "../md-components/show/videos.vue";
 import rotationGroup from "../md-components/show/rotationGroup.vue";
 import textEditor from "../md-components/show/textEditor.vue";
+import richEditor from "../md-components/show/richEditor.vue";
 
 @Component({
   components: {
@@ -64,7 +65,8 @@ import textEditor from "../md-components/show/textEditor.vue";
     dateTime,
     videos,
     rotationGroup,
-    textEditor
+    textEditor,
+    richEditor
   }
 })
 export default class ElemBox extends Vue {

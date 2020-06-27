@@ -454,6 +454,20 @@ export default class HomePage extends Vue {
         fontSpacing: 1, //字体间隔
         fontSpeed: 2000 //默认速度
       }
+    },
+    {
+      name: "富文本编辑器",
+      type: "richEditor",
+      scope: "global",
+      path: [
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
+      ],
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+      initCom: {
+        width: "0.5", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
+        height: 500
+      },
+      initData: {}
     }
   ]; // 组件
   private playbillData = {
@@ -580,7 +594,8 @@ export default class HomePage extends Vue {
             pIndex: 5,
             elemName: "图片",
             elemType: "images",
-            content: "",
+            content:
+              "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658",
             elemComAttr: {
               pointX: 300,
               pointY: 500,
@@ -594,9 +609,7 @@ export default class HomePage extends Vue {
               brightness: 1, //亮度
               contrast: 100, //对比度 单位%
               dropShadow: "", //阴影
-              invert: 100, //反转色 %
-              imageSrc:
-                "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658"
+              invert: 100 //反转色 %
             }
           },
           {
@@ -649,12 +662,29 @@ export default class HomePage extends Vue {
                   id: 1
                 },
                 {
+                  /*  */
                   img:
                     "http://img.hb.aicdn.com/adeed7d28df6e776c2fa6032579c697381d1a82b7fe00-fwRqgn_fw658",
                   id: 2
                 }
               ]
             }
+          },
+          {
+            pIndex: 1,
+            elemName: "富文本编辑器",
+            elemType: "richEditor",
+            content: "",
+            elemComAttr: {
+              pointX: 600,
+              pointY: 600,
+              width: 400,
+              height: 300,
+              opacity: 100,
+              elemTime: 1, // number
+              duration: "00:00:30"
+            },
+            elemSupAttr: {}
           }
         ]
       },

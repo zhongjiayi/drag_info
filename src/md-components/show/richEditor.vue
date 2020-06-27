@@ -1,15 +1,17 @@
 <template>
   <div class="sub-panel">
-    <!-- <div>{{model === 'play' ?'播放中': isEdit ? '编辑中': '没人理我'}}</div> -->
-    <div>
-      <a-card hoverable :style="{ width: '100%', height: '100%' }">
-        <img slot="cover" alt="example" :src="attribute.imageSrc" />
-      </a-card>
+    <div v-if="(model == 'play')||(model == 'edit' && !isEdit)">
+      <div v-html="immediateData?immediateData:'请双击编辑'"></div>
+    </div>
+    <div v-if="model == 'edit' && isEdit">
+      <editor-bar v-model="detail" :isClear="isClear" @change="change"></editor-bar>
     </div>
   </div>
 </template>
 
 <script>
+import EditorBar from "../commonTool/wangEduit/editoritem";
+
 export default {
   props: {
     elemData: {
@@ -19,15 +21,25 @@ export default {
       type: String
     } // 播放模式  edit or play
   },
+  components: { EditorBar },
   data() {
     return {
       isEdit: false,
-      attribute: {}
+      attribute: {},
+      isClear: false,
+      detail: "",
+      immediateData: ""
     };
   },
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
     console.log(this.attribute);
+  },
+  methods: {
+    change(val) {
+      this.immediateData = val;
+      console.log('immediateData', val);
+    }
   }
 };
 </script>
