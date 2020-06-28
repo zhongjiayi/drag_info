@@ -74,6 +74,7 @@ export default {
     }
   },
   created(){
+    debugger
     console.log(this.outerCss)
     if(this.outerCss){
       this.InnerStyle = this.outerCss || {};
@@ -83,14 +84,21 @@ export default {
   data() {
     return {
       isShow: true,
-      InnerStyle:{}
+      InnerStyle:{},
+      time: null
     };
   },
   watch: {
-    attribute: {
-      handler: function() {
+    outerCss: {
+      handler: function(value) {
           this.$nextTick(() => {
-          this.InnerStyle.fontSpeed = this.attribute.fontSpeed;
+            this.InnerStyle.backgroundColor = value.backgroundColor;
+          this.InnerStyle.fontColor = value.fontColor;
+          this.InnerStyle.fontSize = value.fontSize;
+          this.InnerStyle.fontSpacing = value.fontSpacing;
+          this.InnerStyle.fontSpeed = value.fontSpeed;
+          this.InnerStyle.fontWeight = value.fontWeight;
+          this.createFontSpeed();
           console.log(this.InnerStyle);
         })
       },
@@ -99,20 +107,30 @@ export default {
   },
   mounted: function() {
     console.log(this.InnerStyle.fontSpeed)
-    var moveTarget = this.$refs.movebox;
-    var outbox = this.$refs.outbox;
+    this.createFontSpeed();
+    
+  },
+  methods:{
+    createFontSpeed(){
+        var that = this;
+        if(that.time){
+          clearInterval(that.time);
+        }
+        var moveTarget = that.$refs.movebox;
+        var outbox = that.$refs.outbox;
     // if (outbox.offsetHeight > moveTarget.offsetHeight / 2) {
     //   this.isShow = false;
     //   return;
     // }
-    var initTop = 0;
-    setInterval(function() {
-      initTop++;
-      if (initTop >= moveTarget.offsetHeight / 2) {
-        initTop = 0;
-      }
-      moveTarget.style = "transform: translateY(-" + initTop + "px)";
-    }, this.InnerStyle.fontSpeed || 16);
+        var initTop = 0;
+        that.time = setInterval(function() {
+          initTop++;
+          if (initTop >= moveTarget.offsetHeight / 2) {
+            initTop = 0;
+          }
+          moveTarget.style = "transform: translateY(-" + initTop + "px)";
+        }, that.InnerStyle.fontSpeed || 16);
+    }
   }
 };
 </script>
@@ -129,7 +147,6 @@ export default {
     .my-listbox {
       padding: 20px 0;
       font-size: 18px;
-      border-bottom: 1px solid #c7beb1;
       .my-title {
         height: 100%;
         margin-bottom: 10px;

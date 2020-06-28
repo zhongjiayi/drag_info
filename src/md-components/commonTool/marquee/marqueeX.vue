@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="my-outbox"
-    :style="{ backgroundColor: InnerStyle.backgroundColor }"
-  >
+  <div class="my-outbox" :style="{ backgroundColor: InnerStyle.backgroundColor }">
     <div class="my-inbox" ref="box">
       <div
         class="my-list"
@@ -62,7 +59,12 @@ export default {
     outerCss: {
       handler: function(value) {
           this.$nextTick(() => {
+          this.InnerStyle.backgroundColor = value.backgroundColor;
+          this.InnerStyle.fontColor = value.fontColor;
           this.InnerStyle.fontSpeed = value.fontSpeed;
+          this.InnerStyle.fontSize = value.fontSize;
+          this.InnerStyle.fontSpacing = value.fontSpacing;
+          this.InnerStyle.fontWeight = value.fontWeight;
           this.createFontSpeed();
           console.log(this.InnerStyle);
         })
@@ -104,7 +106,6 @@ export default {
 
 <style lang="scss" scoped>
 .my-outbox {
-  color: #d7bc8d;
   overflow: hidden;
   height: 100%;
   position: relative;
