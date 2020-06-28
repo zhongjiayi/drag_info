@@ -89,8 +89,10 @@ export default {
   watch: {
     attribute: {
       handler: function() {
-        this.InnerStyle = this.attribute;
-        console.log(this.InnerStyle);
+          this.$nextTick(() => {
+          this.InnerStyle.fontSpeed = this.attribute.fontSpeed;
+          console.log(this.InnerStyle);
+        })
       },
       deep: true
     }
