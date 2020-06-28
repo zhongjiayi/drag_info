@@ -1,16 +1,17 @@
 <template>
   <div class="sub-panel" style="height: 100%;">
     <div style="height: 100%;">
-      <div v-if="model == 'edit' && isEdit">
-        <span
+      <div v-if="model == 'edit' && isEdit" style="height:'100%'">
+        <div
           :style="{
           width:'100%',
+          height:'100%',
         color: attribute.fontColor,
         fontSize: attribute.fontSize + 'px',
         backgroundColor: attribute.backgroundColor,
         fontWeight:attribute.fontWeight,
         letterSpacing:attribute.fontSpacing+'px'}"
-        >{{attribute.textContent}}</span>
+        >{{attribute.textContent}}</div>
       </div>
       <div v-if="(model == 'play')||(model == 'edit' && !isEdit)" style="height: 100%;">
         <marqueeX
@@ -18,7 +19,7 @@
           :send-val="sumitContent"
           :outer-css="sumitData"
         />
-        <marqueeY v-if="attribute.direction == 'toTop'" :send-val="comment" :outer-css="sumitData"/>
+        <marqueeY v-if="attribute.direction == 'toTop'" :send-val="comment" :outer-css="sumitData" />
       </div>
     </div>
   </div>
@@ -59,17 +60,17 @@ export default {
   watch: {
     attribute: {
       handler: function() {
-        this.sumitData = {...this.attribute};
+        this.sumitData = { ...this.attribute };
         this.sumitContent = this.sumitData.textContent.split("");
         this.comment = [this.sumitData.textContent || ""];
-        console.log('监听attribute', this.sumitData);
+        console.log("监听attribute", this.sumitData);
       },
       deep: true
     }
   },
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
-    console.log('初始化获得属性',this.attribute);
+    console.log("初始化获得属性", this.attribute);
   },
   mounted() {
     // this.timer = setInterval(this.scrollAnimate, 1500);
