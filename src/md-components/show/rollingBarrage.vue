@@ -70,7 +70,8 @@ export default {
   },
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
-    console.log("初始化获得属性", this.attribute);
+    this.sumitData = {...this.attribute};
+    console.log('初始化获得属性',this.attribute);
   },
   mounted() {
     // this.timer = setInterval(this.scrollAnimate, 1500);
