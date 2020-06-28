@@ -429,7 +429,7 @@ export default class HomePage extends Vue {
         fontWeight: "normal", //字体粗细
         direction: "toLeft", //滚动方向
         fontSpacing: 1, //字体间隔
-        fontSpeed: 2000 //默认速度
+        fontSpeed: 16 //默认速度
       }
     },
     {
@@ -452,7 +452,7 @@ export default class HomePage extends Vue {
         fontWeight: "normal", //字体粗细
         direction: "toLeft", //滚动方向
         fontSpacing: 1, //字体间隔
-        fontSpeed: 2000 //默认速度
+        fontSpeed: 16 //默认速度
       }
     },
     {
@@ -485,11 +485,11 @@ export default class HomePage extends Vue {
         fontColor: "#666c7a", //字体颜色
         backgroundColor: "#3390ff", //背景颜色
         fontSize: 28, //字号
-        textContent: "请编辑文字1", //文本内容
+        textContent: "请编辑文字", //文本内容
         fontWeight: "normal", //字体粗细
         direction: "toLeft", //滚动方向
         fontSpacing: 1, //字体间隔
-        fontSpeed: 2000 //默认速度
+        fontSpeed: 16 //默认速度
       }
     }
   ]; // 组件
@@ -548,7 +548,7 @@ export default class HomePage extends Vue {
               fontWeight: "normal", //字体粗细
               direction: "toLeft", //滚动方向
               fontSpacing: 1, //字体间隔
-              fontSpeed: 2000 //默认速度
+              fontSpeed: 16 //默认速度
             }
           },
           {
@@ -657,7 +657,7 @@ export default class HomePage extends Vue {
               fontWeight: "normal", //字体粗细
               direction: "toLeft", //滚动方向
               fontSpacing: 1, //字体间隔
-              fontSpeed: 2000 //默认速度
+              fontSpeed: 16 //默认速度
             }
           },
           {

@@ -1,28 +1,32 @@
 <template>
   <div class="my-outbox" :style="{backgroundColor:InnerStyle.backgroundColor}">
     <div class="my-inbox" ref="box">
-      <div class="my-list" v-for="(item,index) in sendVal" :key="index">
-        <span
-          class="my-uname"
-          :style="{
+      <div
+        class="my-list"
+        v-for="(item,index) in sendVal"
+        :key="index"
+        :style="{
       color:InnerStyle.fontColor,
       fontSize:InnerStyle.fontSize + 'px',
       paddingRight:InnerStyle.fontSpacing + 'px',
       fontWeight:InnerStyle.fontWeight,
     }"
-        >{{item}}</span>
+      >
+        <span class="my-uname">{{item}}</span>
       </div>
       <!-- 复制 -->
-      <div class="my-list" v-for="(item,index) in sendVal" :key="(index+1)*100">
-        <span
-          class="my-uname"
-          :style="{
+      <div
+        class="my-list"
+        v-for="(item,index) in sendVal"
+        :key="(index+1)*100"
+        :style="{
       color:InnerStyle.fontColor,
       fontSize:InnerStyle.fontSize + 'px',
       paddingRight:InnerStyle.fontSpacing + 'px',
       fontWeight:InnerStyle.fontWeight,
     }"
-        >{{item}}</span>
+      >
+        <span class="my-uname">{{item}}</span>
       </div>
     </div>
   </div>
@@ -51,6 +55,15 @@ export default {
       this.InnerStyle = this.outerCss || {};
     }
   },
+  watch: {
+    attribute: {
+      handler: function() {
+        this.InnerStyle = this.attribute;
+        console.log(this.InnerStyle);
+      },
+      deep: true
+    }
+  },
   data() {
     return {
       InnerStyle:{}
@@ -58,7 +71,7 @@ export default {
   },
   mounted: function() {
     var that = this;
-    var target = this.$refs.box;
+    var target = that.$refs.box;
     var initLeft = 0;
     setInterval(function() {
       initLeft++;
@@ -66,7 +79,7 @@ export default {
         initLeft = 0;
       }
       target.style = "transform: translateX(-" + initLeft + "px)";
-    }, 16);
+    }, that.InnerStyle.fontSpeed||16);
   }
 };
 </script>
@@ -75,18 +88,20 @@ export default {
 .my-outbox {
   color: #d7bc8d;
   overflow: hidden;
-  height: 35px;
+  height: 100%;
   position: relative;
   .my-inbox {
+    height: 100%;
     white-space: nowrap;
     position: absolute;
     font-size: 0;
     .my-list {
+      text-align: center;
       margin-right: 10px;
       display: inline-block;
       font-size: 13px;
-      height: 35px;
-      line-height: 35px;
+      height: 100%;
+      line-height: 100%;
     }
   }
 }

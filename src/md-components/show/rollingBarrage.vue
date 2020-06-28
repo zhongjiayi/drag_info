@@ -1,13 +1,6 @@
 <template>
   <div class="sub-panel" style="height: 100%;">
     <div style="height: 100%;">
-      <!-- 上下滚动效果 -->
-      <!-- <div class="marquee-wrap">
-        <ul class="marquee-list" :class="{'animate-up': animateUp}">
-          <li v-for="(item, index) in listData" :key="index">{{item}}</li>
-        </ul>
-      </div>-->
-      <!-- 从右向左滚动效果 -->
       <div v-if="model == 'edit' && isEdit">
         <span
           :style="{
@@ -52,11 +45,11 @@ export default {
       isEdit: false,
       attribute: {},
       animateUp: false,
-      listData: [
-        "12***ve 成功邀请12人 已获奖金60元",
-        "l***e 成功邀请5人 已获奖金40元",
-        "l***e 成功邀请1人 已获奖金5元"
-      ],
+      // listData: [
+      //   "12***ve 成功邀请12人 已获奖金60元",
+      //   "l***e 成功邀请5人 已获奖金40元",
+      //   "l***e 成功邀请1人 已获奖金5元"
+      // ],
       timer: null,
       sumitContent: [],
       comment: [],
@@ -69,8 +62,7 @@ export default {
         this.sumitData = this.attribute;
         this.sumitContent = this.sumitData.textContent.split("");
         this.comment = [this.sumitData.textContent || ""];
-        console.log(this.sumitContent);
-        console.log(this.comment);
+        console.log(this.sumitData);
       },
       deep: true
     }

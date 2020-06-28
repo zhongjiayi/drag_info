@@ -86,7 +86,17 @@ export default {
       InnerStyle:{}
     };
   },
+  watch: {
+    attribute: {
+      handler: function() {
+        this.InnerStyle = this.attribute;
+        console.log(this.InnerStyle);
+      },
+      deep: true
+    }
+  },
   mounted: function() {
+    console.log(this.InnerStyle.fontSpeed)
     var moveTarget = this.$refs.movebox;
     var outbox = this.$refs.outbox;
     // if (outbox.offsetHeight > moveTarget.offsetHeight / 2) {
@@ -100,7 +110,7 @@ export default {
         initTop = 0;
       }
       moveTarget.style = "transform: translateY(-" + initTop + "px)";
-    }, 16);
+    }, this.InnerStyle.fontSpeed || 16);
   }
 };
 </script>

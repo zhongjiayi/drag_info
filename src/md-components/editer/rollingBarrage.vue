@@ -229,19 +229,19 @@ export default class rollingBarrage extends Vue {
   fontSpeedOptions = [
     {
       label: "默认速度",
-      value: 2000
+      value: 16
     },
     {
       label: "1.2倍速",
-      value: 1600
+      value: 13
     },
     {
       label: "1.5倍速",
-      value: 1000
+      value: 8
     },
     {
       label: "2倍速",
-      value: 500
+      value: 4
     }
   ];
 
