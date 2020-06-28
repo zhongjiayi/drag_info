@@ -1,6 +1,6 @@
 <template>
-  <div class="sub-panel">
-    <div>
+  <div class="sub-panel" style="height: 100%;">
+    <div style="height: 100%;">
       <!-- 上下滚动效果 -->
       <!-- <div class="marquee-wrap">
         <ul class="marquee-list" :class="{'animate-up': animateUp}">
@@ -19,9 +19,13 @@
         letterSpacing:attribute.fontSpacing+'px'}"
         >{{attribute.textContent}}</span>
       </div>
-      <div v-if="(model == 'play')||(model == 'edit' && !isEdit)">
-        <marqueeX v-if="attribute.direction == 'toLeft'" :send-val="sumitContent" :outerCss="sumitData" />
-        <marqueeY v-if="attribute.direction == 'toTop'" :send-val="comment" />
+      <div v-if="(model == 'play')||(model == 'edit' && !isEdit)" style="height: 100%;">
+        <marqueeX
+          v-if="attribute.direction == 'toLeft'"
+          :send-val="sumitContent"
+          :outerCss="sumitData"
+        />
+        <marqueeY v-if="attribute.direction == 'toTop'" :send-val="comment" :outerCss="sumitData"/>
       </div>
     </div>
   </div>
@@ -66,6 +70,7 @@ export default {
         this.sumitContent = this.sumitData.textContent.split("");
         this.comment = [this.sumitData.textContent || ""];
         console.log(this.sumitContent);
+        console.log(this.comment);
       },
       deep: true
     }
@@ -75,20 +80,20 @@ export default {
     console.log(this.attribute);
   },
   mounted() {
-    this.timer = setInterval(this.scrollAnimate, 1500);
+    // this.timer = setInterval(this.scrollAnimate, 1500);
   },
   methods: {
-    scrollAnimate() {
-      this.animateUp = true;
-      setTimeout(() => {
-        this.listData.push(this.listData[0]);
-        this.listData.shift();
-        this.animateUp = false;
-      }, 500);
-    }
+    // scrollAnimate() {
+    //   this.animateUp = true;
+    //   setTimeout(() => {
+    //     this.listData.push(this.listData[0]);
+    //     this.listData.shift();
+    //     this.animateUp = false;
+    //   }, 500);
+    // }
   },
   destroyed() {
-    clearInterval(this.timer);
+    // clearInterval(this.timer);
   }
 };
 </script>
