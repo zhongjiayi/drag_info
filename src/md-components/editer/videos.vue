@@ -67,8 +67,8 @@ export default class videos extends Vue {
       value: "normal"
     },
     {
-      label: "blod",
-      value: "blod"
+      label: "bold",
+      value: "bold"
     }
   ];
   fontSizeOptions = [

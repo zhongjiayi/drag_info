@@ -140,8 +140,8 @@ export default class textEditor extends Vue {
       value: "normal"
     },
     {
-      label: "blod",
-      value: "blod"
+      label: "bold",
+      value: "bold"
     }
   ];
   fontSizeOptions = [

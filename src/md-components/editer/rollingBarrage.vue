@@ -1,7 +1,7 @@
 <template>
   <div class="sub-panel">
     <header @click="changExtend">
-      <p>文本编辑器</p>
+      <p>滚动字幕编辑</p>
       <svg class="svg-icon" viewBox="0 0 12 12" aria-hidden="true">
         <path
           d="M6 6.82l2.494-2.555a.867.867 0 0 1 1.248 0 .919.919 0 0 1 0 1.277L6.624 8.735a.867.867 0 0 1-1.248 0L2.258 5.542a.919.919 0 0 1 0-1.277.867.867 0 0 1 1.248 0L6 6.819z"
@@ -12,10 +12,8 @@
     <div class="sub-panel-body" :style="{height: stretch ? height + 'px': '0'}">
       <div v-if="stretch">
         <div class="panel-horizon">
-          <!--一横行数据-->
           <div class="editForm">
             <a-form id="componentEdit" :form="form" v-bind="formItemLayout">
-              <!-- 动态生成表单 -->
               <a-form-item :label="'字体颜色'">
                 <div class="fontChooseBox">
                   <section class="colorBox">
@@ -48,7 +46,7 @@
               </a-form-item>
               <a-form-item :label="'字号'">
                 <a-select
-                  style="width: 100px"
+                  style="width:'100px'"
                   v-decorator="[
                   'fontSize',
                     {
@@ -64,8 +62,9 @@
                 </a-select>
               </a-form-item>
               <a-form-item :label="'文本'">
-                <a-input
-                  autocomplete="off"
+                <a-textarea
+                  placeholder="请编辑文本内容"
+                  :auto-size="{ minRows: 2 }"
                   v-decorator="[
                     'textContent',
                     {
@@ -74,9 +73,26 @@
                   ]"
                 />
               </a-form-item>
+              <a-form-item :label="'滚动方向'">
+                <a-select
+                 style="width:'100px'"
+                  v-decorator="[
+                  'direction',
+                    {
+                      initialValue: attribute.direction,
+                    },
+                  ]"
+                >
+                  <a-select-option
+                    v-for="(item, index) of directionOptions"
+                    :key="index"
+                    :value="item.value"
+                  >{{ item.label }}</a-select-option>
+                </a-select>
+              </a-form-item>
               <a-form-item :label="'字体粗细'">
                 <a-select
-                  style="width: 100px"
+                  style="width:'100px'"
                   v-decorator="[
                   'fontWeight',
                     {
@@ -101,6 +117,23 @@
                   ]"
                 />
               </a-form-item>
+              <a-form-item :label="'滚动速度'">
+                <a-select
+                  style="width:'100px'"
+                  v-decorator="[
+                    'fontSpeed',
+                    {
+                      initialValue: attribute.fontSpeed,
+                    },
+                  ]"
+                >
+                  <a-select-option
+                    v-for="(item, index) of fontSpeedOptions"
+                    :key="index"
+                    :value="item.value"
+                  >{{ item.label }}</a-select-option>
+                </a-select>
+              </a-form-item>
             </a-form>
           </div>
         </div>
@@ -118,7 +151,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
     componColor
   }
 })
-export default class textEditor extends Vue {
+export default class rollingBarrage extends Vue {
   @Prop() elemData!: Elem; // 元素数据
 
   private stretch = true; // 加载时是折叠还是不折叠
@@ -185,12 +218,12 @@ export default class textEditor extends Vue {
 
   directionOptions = [
     {
-      label: "从右往左",
-      value: "toLeft"
+      label: "从下往上",
+      value: "toTop"
     },
     {
-      label: "从左往右",
-      value: "toRight"
+      label: "从右往左",
+      value: "toLeft"
     }
   ];
   fontSpeedOptions = [

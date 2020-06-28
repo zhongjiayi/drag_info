@@ -468,6 +468,29 @@ export default class HomePage extends Vue {
         height: 500
       },
       initData: {}
+    },
+    {
+      name: "滚动",
+      type: "rollingBarrage",
+      scope: "global",
+      path: [
+        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
+      ],
+      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
+      initCom: {
+        width: "0.5", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
+        height: 300
+      },
+      initData: {
+        fontColor: "#666c7a", //字体颜色
+        backgroundColor: "#3390ff", //背景颜色
+        fontSize: 28, //字号
+        textContent: "请编辑文字1", //文本内容
+        fontWeight: "normal", //字体粗细
+        direction: "toLeft", //滚动方向
+        fontSpacing: 1, //字体间隔
+        fontSpeed: 2000 //默认速度
+      }
     }
   ]; // 组件
   private playbillData = {

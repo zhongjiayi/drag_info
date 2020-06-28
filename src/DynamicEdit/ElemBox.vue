@@ -56,6 +56,7 @@ import videos from "../md-components/show/videos.vue";
 import rotationGroup from "../md-components/show/rotationGroup.vue";
 import textEditor from "../md-components/show/textEditor.vue";
 import richEditor from "../md-components/show/richEditor.vue";
+import rollingBarrage from "../md-components/show/rollingBarrage.vue";
 
 @Component({
   components: {
@@ -66,7 +67,8 @@ import richEditor from "../md-components/show/richEditor.vue";
     videos,
     rotationGroup,
     textEditor,
-    richEditor
+    richEditor,
+    rollingBarrage
   }
 })
 export default class ElemBox extends Vue {
