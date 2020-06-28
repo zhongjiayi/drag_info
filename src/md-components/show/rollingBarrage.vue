@@ -59,10 +59,10 @@ export default {
   watch: {
     attribute: {
       handler: function() {
-        this.sumitData = this.attribute;
+        this.sumitData = {...this.attribute};
         this.sumitContent = this.sumitData.textContent.split("");
         this.comment = [this.sumitData.textContent || ""];
-        console.log(this.sumitData);
+        console.log('attribute', this.sumitData);
       },
       deep: true
     }

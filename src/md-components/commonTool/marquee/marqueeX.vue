@@ -1,38 +1,41 @@
 <template>
-  <div class="my-outbox" :style="{backgroundColor:InnerStyle.backgroundColor}">
+  <div
+    class="my-outbox"
+    :style="{ backgroundColor: InnerStyle.backgroundColor }"
+  >
     <div class="my-inbox" ref="box">
       <div
         class="my-list"
-        v-for="(item,index) in sendVal"
+        v-for="(item, index) in sendVal"
         :key="index"
         :style="{
-      color:InnerStyle.fontColor,
-      fontSize:InnerStyle.fontSize + 'px',
-      paddingRight:InnerStyle.fontSpacing + 'px',
-      fontWeight:InnerStyle.fontWeight,
-    }"
+          color: InnerStyle.fontColor,
+          fontSize: InnerStyle.fontSize + 'px',
+          paddingRight: InnerStyle.fontSpacing + 'px',
+          fontWeight: InnerStyle.fontWeight,
+        }"
       >
-        <span class="my-uname">{{item}}</span>
+        <span class="my-uname">{{ item }}</span>
       </div>
       <!-- 复制 -->
       <div
         class="my-list"
-        v-for="(item,index) in sendVal"
-        :key="(index+1)*100"
+        v-for="(item, index) in sendVal"
+        :key="(index + 1) * 100"
         :style="{
-      color:InnerStyle.fontColor,
-      fontSize:InnerStyle.fontSize + 'px',
-      paddingRight:InnerStyle.fontSpacing + 'px',
-      fontWeight:InnerStyle.fontWeight,
-    }"
+          color: InnerStyle.fontColor,
+          fontSize: InnerStyle.fontSize + 'px',
+          paddingRight: InnerStyle.fontSpacing + 'px',
+          fontWeight: InnerStyle.fontWeight,
+        }"
       >
-        <span class="my-uname">{{item}}</span>
+        <span class="my-uname">{{ item }}</span>
       </div>
     </div>
   </div>
 </template>
 
-<script lang='js'>
+<script lang="js">
 export default {
   name: "my-marquee-left",
   props: {
@@ -56,10 +59,11 @@ export default {
     }
   },
   watch: {
-    attribute: {
-      handler: function() {
+    outerCss: {
+      handler: function(value) {
           this.$nextTick(() => {
-          this.InnerStyle.fontSpeed = this.attribute.fontSpeed;
+          this.InnerStyle.fontSpeed = value.fontSpeed;
+          this.createFontSpeed();
           console.log(this.InnerStyle);
         })
       },
@@ -68,21 +72,33 @@ export default {
   },
   data() {
     return {
-      InnerStyle:{}
+      InnerStyle:{},
+      time: null
     };
   },
   mounted: function() {
-    var that = this;
-    var target = that.$refs.box;
-    var initLeft = 0;
-    setInterval(function() {
-      initLeft++;
-      if (initLeft >= target.offsetWidth / 2) {
-        initLeft = 0;
-      }
-      target.style = "transform: translateX(-" + initLeft + "px)";
-    }, that.InnerStyle.fontSpeed||16);
+    this.createFontSpeed();
+  },
+  methods: {
+    createFontSpeed(){
+        var that = this;
+
+        if(that.time){
+          clearInterval(that.time);
+        }
+
+        var target = that.$refs.box;
+        var initLeft = 0;
+        that.time = setInterval(function() {
+          initLeft++;
+          if (initLeft >= target.offsetWidth / 2) {
+            initLeft = 0;
+          }
+          target.style = "transform: translateX(-" + initLeft + "px)";
+        }, that.InnerStyle.fontSpeed||16);
+    }
   }
+
 };
 </script>
 
