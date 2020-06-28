@@ -16,9 +16,9 @@
         <marqueeX
           v-if="attribute.direction == 'toLeft'"
           :send-val="sumitContent"
-          :outerCss="sumitData"
+          :outer-css="sumitData"
         />
-        <marqueeY v-if="attribute.direction == 'toTop'" :send-val="comment" :outerCss="sumitData"/>
+        <marqueeY v-if="attribute.direction == 'toTop'" :send-val="comment" :outer-css="sumitData"/>
       </div>
     </div>
   </div>
@@ -62,14 +62,14 @@ export default {
         this.sumitData = {...this.attribute};
         this.sumitContent = this.sumitData.textContent.split("");
         this.comment = [this.sumitData.textContent || ""];
-        console.log('attribute', this.sumitData);
+        console.log('监听attribute', this.sumitData);
       },
       deep: true
     }
   },
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
-    console.log(this.attribute);
+    console.log('初始化获得属性',this.attribute);
   },
   mounted() {
     // this.timer = setInterval(this.scrollAnimate, 1500);

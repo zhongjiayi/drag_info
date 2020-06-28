@@ -49,12 +49,7 @@ export default {
       }
     }
   },
-  created(){
-    console.log(this.outerCss)
-    if(this.outerCss){
-      this.InnerStyle = this.outerCss || {};
-    }
-  },
+
   watch: {
     outerCss: {
       handler: function(value) {
@@ -66,7 +61,7 @@ export default {
           this.InnerStyle.fontSpacing = value.fontSpacing;
           this.InnerStyle.fontWeight = value.fontWeight;
           this.createFontSpeed();
-          console.log(this.InnerStyle);
+          console.log('监听',this.InnerStyle);
         })
       },
       deep: true
@@ -79,7 +74,18 @@ export default {
     };
   },
   mounted: function() {
+    console.log('外部来的属性样式',this.outerCss)
+    if(this.outerCss){
+      this.InnerStyle = this.outerCss
+      // this.InnerStyle.backgroundColor = this.outerCss.backgroundColor;
+      // this.InnerStyle.fontColor = this.outerCss.fontColor;
+      // this.InnerStyle.fontSpeed = this.outerCss.fontSpeed;
+      // this.InnerStyle.fontSize = this.outerCss.fontSize;
+      // this.InnerStyle.fontSpacing = this.outerCss.fontSpacing;
+      // this.InnerStyle.fontWeight = this.outerCss.fontWeight;
+    }
     this.createFontSpeed();
+
   },
   methods: {
     createFontSpeed(){
