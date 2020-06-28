@@ -69,6 +69,7 @@ export default {
   },
   created() {
     this.attribute = this.elemData.elemSupAttr || {};
+    this.sumitData = {...this.attribute};
     console.log('初始化获得属性',this.attribute);
   },
   mounted() {
