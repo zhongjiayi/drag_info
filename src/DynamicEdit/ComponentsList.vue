@@ -126,6 +126,8 @@
       const totalHeight = Number(this.resolution.split('*')[1])
       const newElem = {
         pIndex: maxIndex + 1,
+        lock:false,
+        hidden:false,
         elemName: component.name + ' ' + lackNameIndex,
         elemType: component.type,
         content: "",

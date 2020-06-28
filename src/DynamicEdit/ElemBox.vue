@@ -5,12 +5,12 @@
       v-for="(elem,index) of elemList"
       :key="elem.pIndex"
       :style="{width:elem.elemComAttr.width + 'px',height:elem.elemComAttr.height + 'px',top:elem.elemComAttr.pointY + 'px',left:(elem.elemComAttr.pointX > 0 ? elem.elemComAttr.pointX : '-' + Math.abs(elem.elemComAttr.pointX)) + 'px',
-         zIndex:elemActive === elem.pIndex ? '8888888' : elemList.length-index}"
+         zIndex:elemActive === elem.pIndex ? '8888888' : elemList.length-index, display : elem.hidden && elemActive !== elem.pIndex ? 'none' : 'block'}"
     >
       <!--Ԫ��չʾ���-->
       <div
         class="elemBox-elem-content"
-        :style="{opacity:elem.elemComAttr.opacity / 100}"
+        :style="{opacity:elem.elemComAttr.opacity / 100,display:elem.hidden? 'none':'block'}"
         @mousedown.stop
       >
         <components :is="elem.elemType" :elemData="elem" :model="model"></components>
@@ -25,10 +25,11 @@
         v-if="model === 'edit' && !isActive"
         :class="{activePlat:(!isActive && elemActive === elem.pIndex)}"
         @mousedown.stop="changeElemActive($event,elem)"
-        @dblclick="changeIsEdit"
+        @dblclick="changeIsEdit(elem)"
       >
         <div
           class="interPlat-resizer"
+          :class="{lock:elem.lock}"
           v-show="!isActive && elemActive === elem.pIndex"
           :style="{fontSize: (14 / scale) + 'px'}"
         >
@@ -95,11 +96,12 @@ export default class ElemBox extends Vue {
     }
   }
 
-  changeIsEdit() {
+  changeIsEdit(elem: Elem) {
     // @ts-ignore
     if (
       this.$children[0] !== undefined &&
-      this.$children[0].isEdit !== undefined
+      this.$children[0].isEdit !== undefined &&
+      elem.lock === false
     ) {
       // @ts-ignore
       this.$children[0].isEdit = true;
@@ -111,110 +113,115 @@ export default class ElemBox extends Vue {
   changeElemActive(e: any, elem: Elem) {
     // @ts-ignore
     this.$parent.$parent.activeElemIndex = elem.pIndex;
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const pointX = elem.elemComAttr.pointX;
-    const pointY = elem.elemComAttr.pointY;
-    const scale = this.scale;
-    const maxX = Number(this.resolution.split("*")[0]) - elem.elemComAttr.width;
-    const maxY =
-      Number(this.resolution.split("*")[1]) - elem.elemComAttr.height;
+    if (elem.lock === false) {
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const pointX = elem.elemComAttr.pointX;
+      const pointY = elem.elemComAttr.pointY;
+      const scale = this.scale;
+      const maxX =
+        Number(this.resolution.split("*")[0]) - elem.elemComAttr.width;
+      const maxY =
+        Number(this.resolution.split("*")[1]) - elem.elemComAttr.height;
 
-    function moveHandle(e: any) {
-      let subX = Math.round((e.clientX - startX) / scale);
-      let subY = Math.round((e.clientY - startY) / scale);
-      subX =
-        subX + pointX < 0
-          ? -pointX
-          : subX + pointX > maxX
-          ? maxX - pointX
-          : subX;
-      subY =
-        subY + pointY < 0
-          ? -pointY
-          : subY + pointY > maxY
-          ? maxY - pointY
-          : subY;
-      elem.elemComAttr.pointX = subX + pointX;
-      elem.elemComAttr.pointY = subY + pointY;
+      function moveHandle(e: any) {
+        let subX = Math.round((e.clientX - startX) / scale);
+        let subY = Math.round((e.clientY - startY) / scale);
+        subX =
+          subX + pointX < 0
+            ? -pointX
+            : subX + pointX > maxX
+            ? maxX - pointX
+            : subX;
+        subY =
+          subY + pointY < 0
+            ? -pointY
+            : subY + pointY > maxY
+            ? maxY - pointY
+            : subY;
+        elem.elemComAttr.pointX = subX + pointX;
+        elem.elemComAttr.pointY = subY + pointY;
+      }
+
+      document.addEventListener("mousemove", moveHandle);
+      document.addEventListener("mouseup", function clickHandle() {
+        document.removeEventListener("mousemove", moveHandle);
+        document.removeEventListener("mouseup", clickHandle);
+      });
     }
-
-    document.addEventListener("mousemove", moveHandle);
-    document.addEventListener("mouseup", function clickHandle() {
-      document.removeEventListener("mousemove", moveHandle);
-      document.removeEventListener("mouseup", clickHandle);
-    });
   }
 
   // �޸�Ԫ�ش�С
   getStartPoint(e: any, direction: string, elem: Elem) {
-    const width = elem.elemComAttr.width;
-    const pointX = elem.elemComAttr.pointX;
-    const startX = e.clientX;
-    const height = elem.elemComAttr.height;
-    const pointY = elem.elemComAttr.pointY;
-    const startY = e.clientY;
-    const min = 50;
-    const scale = this.scale;
-    const maxX = Number(this.resolution.split("*")[0]);
-    const maxY = Number(this.resolution.split("*")[1]);
+    if (elem.lock === false) {
+      const width = elem.elemComAttr.width;
+      const pointX = elem.elemComAttr.pointX;
+      const startX = e.clientX;
+      const height = elem.elemComAttr.height;
+      const pointY = elem.elemComAttr.pointY;
+      const startY = e.clientY;
+      const min = 50;
+      const scale = this.scale;
+      const maxX = Number(this.resolution.split("*")[0]);
+      const maxY = Number(this.resolution.split("*")[1]);
 
-    function moveHandle(e: any) {
-      if (/(l|r)/.test(direction)) {
-        let sub = Math.round((e.clientX - startX) / scale);
-        sub = direction.indexOf("l") !== -1 ? -sub : sub;
-        const max =
-          direction.indexOf("l") !== -1 ? pointX + width : maxX - pointX;
-        sub =
-          sub + width < min
-            ? min - width
-            : sub + width > max
-            ? max - width
-            : sub;
-        if (direction.indexOf("l") !== -1) {
-          if (pointX - sub < 0) {
-            sub = pointX;
+      function moveHandle(e: any) {
+        if (/(l|r)/.test(direction)) {
+          let sub = Math.round((e.clientX - startX) / scale);
+          sub = direction.indexOf("l") !== -1 ? -sub : sub;
+          const max =
+            direction.indexOf("l") !== -1 ? pointX + width : maxX - pointX;
+          sub =
+            sub + width < min
+              ? min - width
+              : sub + width > max
+              ? max - width
+              : sub;
+          if (direction.indexOf("l") !== -1) {
+            if (pointX - sub < 0) {
+              sub = pointX;
+            }
+            if (pointX - sub > maxX) {
+              sub = pointX - maxX;
+            }
           }
-          if (pointX - sub > maxX) {
-            sub = pointX - maxX;
+          elem.elemComAttr.width = sub + width;
+          if (direction.indexOf("l") !== -1) {
+            elem.elemComAttr.pointX = pointX - sub;
           }
         }
-        elem.elemComAttr.width = sub + width;
-        if (direction.indexOf("l") !== -1) {
-          elem.elemComAttr.pointX = pointX - sub;
+        if (/(t|b)/.test(direction)) {
+          let sub = Math.round((e.clientY - startY) / scale);
+          sub = direction.indexOf("t") !== -1 ? -sub : sub;
+          const max =
+            direction.indexOf("t") !== -1 ? pointY + height : maxY - pointY;
+          sub =
+            height + sub < min
+              ? min - height
+              : height + sub > max
+              ? max - height
+              : sub;
+          if (direction.indexOf("t") !== -1) {
+            if (pointY - sub < 0) {
+              sub = pointY;
+            }
+            if (pointY - sub > maxY) {
+              sub = pointX - maxY;
+            }
+          }
+          elem.elemComAttr.height = sub + height;
+          if (direction.indexOf("t") !== -1) {
+            elem.elemComAttr.pointY = pointY - sub;
+          }
         }
       }
-      if (/(t|b)/.test(direction)) {
-        let sub = Math.round((e.clientY - startY) / scale);
-        sub = direction.indexOf("t") !== -1 ? -sub : sub;
-        const max =
-          direction.indexOf("t") !== -1 ? pointY + height : maxY - pointY;
-        sub =
-          height + sub < min
-            ? min - height
-            : height + sub > max
-            ? max - height
-            : sub;
-        if (direction.indexOf("t") !== -1) {
-          if (pointY - sub < 0) {
-            sub = pointY;
-          }
-          if (pointY - sub > maxY) {
-            sub = pointX - maxY;
-          }
-        }
-        elem.elemComAttr.height = sub + height;
-        if (direction.indexOf("t") !== -1) {
-          elem.elemComAttr.pointY = pointY - sub;
-        }
-      }
+
+      document.addEventListener("mousemove", moveHandle);
+      document.addEventListener("mouseup", function clickHandle() {
+        document.removeEventListener("mousemove", moveHandle);
+        document.removeEventListener("mouseup", clickHandle);
+      });
     }
-
-    document.addEventListener("mousemove", moveHandle);
-    document.addEventListener("mouseup", function clickHandle() {
-      document.removeEventListener("mousemove", moveHandle);
-      document.removeEventListener("mouseup", clickHandle);
-    });
   }
 }
 </script>
@@ -248,6 +255,19 @@ $activeColor: rgb(25, 106, 212);
 
 .activePlat {
   border: 1px solid $activeColor;
+}
+
+.interPlat-resizer.lock .resizable-handle {
+  cursor: not-allowed;
+}
+
+.interPlat-resizer.lock .resizable-handle:nth-child(-n + 4) {
+  display: none;
+}
+
+.interPlat-resizer.lock .resizable-handle:after {
+  background: #7d8694;
+  border: 1px solid white;
 }
 
 .interPlat-resizer .t {

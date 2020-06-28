@@ -42,7 +42,7 @@
         <ul class="currentLists">
           <li v-for="(elem,index) of showElemList" :key="elem.pIndex" class="currentList-list"
               :class="{active: elem.pIndex === elemActive}"
-              :draggable="filterKey === '' && !isEdit && !extend" @dragstart="dragstart(index)"
+              :draggable="filterKey === '' && !isEdit" @dragstart="dragstart(index)"
               @dragover="allowDrop" @drop="dropHandle(index)"
               @click.left.stop="changeActive(elem)" @dblclick.stop="startEdit(elem)">
             <div class="screen-item">
@@ -55,12 +55,8 @@
                      @keyup.enter="endEdit(elem.index)" @blur="endEdit(elem)">
               <div v-else class="textBox">{{elem.elemName}}</div>
             </div>
-            <div v-if="!isEdit" class="handleButton"
-                 @mouseenter="mouseenterHandle(elem)" @mouseleave="mouseleaveHandle(elem)">
-              <svg class="svg-icon icon-ellipsis" viewBox="0 0 18 18" aria-hidden="true">
-                <path
-                    d="M16 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-7 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"></path>
-              </svg>
+            <div v-if="!isEdit" class="handleButton">
+
             </div>
           </li>
         </ul>
@@ -125,7 +121,6 @@
       this.$emit('changeActiveIndex', 'elem', elem.pIndex)
       this.isEdit = true
       this.editName = elem.elemName
-      console.log()
       this.$nextTick(() => {
         (this.$refs.elemInput as HTMLInputElement[])[0].focus()
       })
@@ -202,21 +197,6 @@
         this.elemList.splice(index, 0, this.elemList.splice(this.dragIndex, 1)[0])
         this.dragIndex = -1
       }
-    }
-
-    /**
-     * 进入和离开
-     */
-    private extend = false
-
-    // 进入
-    mouseenterHandle() {
-      this.extend = true
-    }
-
-    //离开
-    mouseleaveHandle() {
-      this.extend = false
     }
   }
 </script>

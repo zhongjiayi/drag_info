@@ -1,7 +1,7 @@
 <template>
   <div class="my-outbox" :style="{ backgroundColor: InnerStyle.backgroundColor }">
     <div class="my-inbox" ref="box">
-      <div
+      <span
         class="my-list"
         v-for="(item, index) in sendVal"
         :key="index"
@@ -12,10 +12,11 @@
           fontWeight: InnerStyle.fontWeight,
         }"
       >
-        <span class="my-uname">{{ item }}</span>
-      </div>
+      {{ item }}
+        <!-- <span class="my-uname">{{ item }}</span> -->
+      </span>
       <!-- 复制 -->
-      <div
+      <span
         class="my-list"
         v-for="(item, index) in sendVal"
         :key="(index + 1) * 100"
@@ -26,8 +27,9 @@
           fontWeight: InnerStyle.fontWeight,
         }"
       >
-        <span class="my-uname">{{ item }}</span>
-      </div>
+      {{ item }}
+        <!-- <span class="my-uname">{{ item }}</span> -->
+      </span>
     </div>
   </div>
 </template>
@@ -120,14 +122,17 @@ export default {
     white-space: nowrap;
     position: absolute;
     font-size: 0;
-    .my-list {
-      text-align: center;
-      margin-right: 10px;
-      display: inline-block;
-      font-size: 13px;
-      height: 100%;
-      line-height: 100%;
-    }
+    // .my-list {
+      // text-align: center;
+      // margin-right: 10px;
+      // display: inline-block;
+      // font-size: 13px;
+      // height: 100%;
+      // line-height: 100%;
+      // .my-uname {
+      //   height: initial;
+      // }
+    // }
   }
 }
 </style>

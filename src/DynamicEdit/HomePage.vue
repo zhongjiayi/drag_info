@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="homePage" @wheel.ctrl.exact.prevent @keyup.enter="deleteElem">
+  <div class="homePage" @wheel.ctrl.exact.prevent @contextmenu.prevent>
     <div class="ht-toolbar">
       <div class="toolbar-left"></div>
       <div class="toolbar-center">
@@ -41,8 +41,6 @@
             </div>
             <p class="toolbar-box-text">保存</p>
           </div>
-        </div>
-        <div class="toolbar-center-c">
           <div class="scaleBox">
             <div class="toolbar-box scale-icon" @click="changeScale({deltaY: 1})">
               <div class="toolbar-box-icon">
@@ -65,7 +63,9 @@
               </div>
             </div>
           </div>
-          <div class="toolbar-box">
+        </div>
+        <div class="toolbar-center-c">
+          <div class="toolbar-box" :class="{disabled: activeElemIndex === -1 || activeElem.lock}">
             <div class="toolbar-box-icon">
               <svg
                 class="svg-icon"
@@ -77,8 +77,9 @@
               </svg>
             </div>
             <p class="toolbar-box-text">对齐</p>
+            <div class="group-content"></div>
           </div>
-          <div class="toolbar-box">
+          <div class="toolbar-box" :class="{disabled: activeElemIndex === -1 || activeElem.lock}">
             <div class="toolbar-box-icon">
               <svg
                 class="svg-icon"
@@ -90,6 +91,50 @@
               </svg>
             </div>
             <p class="toolbar-box-text">图层</p>
+            <div class="group-content">
+              <div>
+                <span>置顶</span>
+              </div>
+              <div>置底</div>
+              <div>上移一层</div>
+              <div>下移一层</div>
+            </div>
+          </div>
+          <div
+            class="toolbar-box"
+            :class="{disabled: activeElemIndex === -1,active:activeElem.lock}"
+            @click="lockHandle"
+          >
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 6V5c0-2.916 1.737-5 5-5s5 2.084 5 5v1h1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1zm2 0h6V5c0-1.884-.93-3-3-3S5 3.116 5 5v1zM2 8v6h12V8H2zm6 1a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1z"
+                />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">锁定</p>
+          </div>
+          <div
+            class="toolbar-box"
+            :class="{disabled: activeElemIndex === -1,active:activeElem.hidden}"
+            @click="hiddenHandle"
+          >
+            <div class="toolbar-box-icon">
+              <svg
+                class="svg-icon"
+                style="width: 16px;height: 16px"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path d="M15 2H5v1H4V1h12v12h-2v-1h1V2zM1 4h12v12H1V4zm2 2v8h8V6H3z" />
+              </svg>
+            </div>
+            <p class="toolbar-box-text">隐藏</p>
           </div>
         </div>
         <div class="toolbar-center-r">
@@ -309,10 +354,10 @@ export default class HomePage extends Vue {
         height: 300
       },
       initData: {
-        brightness: 1, //亮度
-        contrast: 100, //对比度 单位%
-        dropShadow: "", //阴影
-        invert: 100, //反转色 %
+        // brightness: 1, //亮度
+        // contrast: 100, //对比度 单位%
+        // dropShadow: "", //阴影
+        // invert: 100, //反转色 %
         imageSrc:
           "http://img.hb.aicdn.com/adbde61e4343dedd21e97ea7f22666825a8db7d077ffe-qn8Pjn_fw658"
       }
@@ -408,54 +453,6 @@ export default class HomePage extends Vue {
       }
     },
     {
-      name: "文本编辑器",
-      type: "textEditor",
-      scope: "global",
-      path: [
-        "M26.86 18.433a.995.995 0 0 0 .14-.51V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v12.923a1 1 0 0 0 .038.272l3.625-3.099 2.931 2.255L19.7 11.09l7.16 7.344zM7 2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6.25 9.77c-1.243 0-2.25-1.034-2.25-2.308 0-1.275 1.007-2.308 2.25-2.308s2.25 1.033 2.25 2.308c0 1.274-1.007 2.307-2.25 2.307z"
-      ],
-      sPath: [
-        "M0 0h12v12H0V0zm1 1v10h10V1H1zm2 2h2v2H3V3zm-1 7V9l1.778-2 1.778 1.5L8.222 5 10 8v2H2z"
-      ],
-      initCom: {
-        width: "0.8", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
-        height: 300
-      },
-      initData: {
-        fontColor: "#666c7a", //字体颜色
-        backgroundColor: "#3390ff", //背景颜色
-        fontSize: 28, //字号
-        textContent: "请编辑文字2", //文本内容
-        fontWeight: "normal", //字体粗细
-        direction: "toLeft", //滚动方向
-        fontSpacing: 1, //字体间隔
-        fontSpeed: 16 //默认速度
-      }
-    },
-    {
-      name: "滚动字幕",
-      type: "scrollingText",
-      scope: "global",
-      path: [
-        "M24 4h-6l-.042 15h2a1 1 0 1 1 0 2H14a1 1 0 0 1 0-2h1.958L16 4h-6v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V4z"
-      ],
-      sPath: ["M5 10V1H1v2H0V0h11v3h-1V1H6v9h2v1H3v-1h2z"],
-      initCom: {
-        width: "0.5", // 数字类型，传数字为赋值，传字符串为相对于整个分辨率的比例
-        height: 300
-      },
-      initData: {
-        fontColor: "#666c7a", //字体颜色
-        backgroundColor: "#3390ff", //背景颜色
-        fontSize: 28, //字号
-        textContent: "请编辑文字1", //文本内容
-        fontWeight: "normal", //字体粗细
-        direction: "toLeft", //滚动方向
-        fontSpacing: 1, //字体间隔
-        fontSpeed: 16 //默认速度
-      }
-    },
-    {
       name: "富文本编辑器",
       type: "richEditor",
       scope: "global",
@@ -526,31 +523,6 @@ export default class HomePage extends Vue {
         playTime: 1,
         progBg: "black",
         elemList: [
-          {
-            pIndex: 1,
-            elemName: "文本编辑器",
-            elemType: "textEditor",
-            content: "",
-            elemComAttr: {
-              pointX: 300,
-              pointY: 500,
-              width: 400,
-              height: 300,
-              opacity: 100,
-              elemTime: 1, // number
-              duration: "00:00:30"
-            },
-            elemSupAttr: {
-              fontColor: "#666c7a", //字体颜色
-              backgroundColor: "#3390ff", //背景颜色
-              fontSize: 28, //字号
-              textContent: "请编辑文字2", //文本内容
-              fontWeight: "normal", //字体粗细
-              direction: "toLeft", //滚动方向
-              fontSpacing: 1, //字体间隔
-              fontSpeed: 16 //默认速度
-            }
-          },
           {
             pIndex: 1,
             elemName: "视频",
@@ -629,35 +601,10 @@ export default class HomePage extends Vue {
               duration: "00:00:30"
             },
             elemSupAttr: {
-              brightness: 1, //亮度
-              contrast: 100, //对比度 单位%
-              dropShadow: "", //阴影
-              invert: 100 //反转色 %
-            }
-          },
-          {
-            pIndex: 3,
-            elemName: "滚动字幕",
-            elemType: "scrollingText",
-            content: "",
-            elemComAttr: {
-              pointX: 300,
-              pointY: 500,
-              width: 400,
-              height: 300,
-              opacity: 100,
-              elemTime: 1, // number
-              duration: "00:00:30"
-            },
-            elemSupAttr: {
-              fontColor: "#666c7a", //字体颜色
-              backgroundColor: "#3390ff", //背景颜色
-              fontSize: 28, //字号
-              textContent: "请编辑文字2", //文本内容
-              fontWeight: "normal", //字体粗细
-              direction: "toLeft", //滚动方向
-              fontSpacing: 1, //字体间隔
-              fontSpeed: 16 //默认速度
+              // brightness: 1, //亮度
+              // contrast: 100, //对比度 单位%
+              // dropShadow: "", //阴影
+              // invert: 100 //反转色 %
             }
           },
           {
@@ -740,10 +687,6 @@ export default class HomePage extends Vue {
   private activeProgramIndex = -1; // 激活的节目编号
   private activeElemIndex = -1; // 激活的元素编号
 
-  deleteElem() {
-    console.log(321);
-  }
-
   get programsListObj() {
     // @ts-ignore
     return this.playbillData.progList.reduce(
@@ -766,18 +709,7 @@ export default class HomePage extends Vue {
         data: this.programsListObj[this.activeProgramIndex]
       });
     } else {
-      // @ts-ignore
-      const elemList =
-        this.activeProgramIndex === -1
-          ? this.playbillData.elemList
-          : this.programsListObj[this.activeProgramIndex].elemList;
-      let elem;
-      for (const item of elemList) {
-        if (item.pIndex === this.activeElemIndex) {
-          elem = item;
-          break;
-        }
-      }
+      const elem = this.activeElem as Elem;
       arr.push({
         model: "commonElem",
         data: elem.elemComAttr
@@ -788,6 +720,22 @@ export default class HomePage extends Vue {
       });
     }
     return arr;
+  }
+
+  get activeElem() {
+    // @ts-ignore
+    const elemList =
+      this.activeProgramIndex === -1
+        ? this.playbillData.elemList
+        : this.programsListObj[this.activeProgramIndex].elemList;
+    let elem = {};
+    for (const item of elemList) {
+      if (item.pIndex === this.activeElemIndex) {
+        elem = item;
+        break;
+      }
+    }
+    return elem;
   }
 
   // 修改激活的编号
@@ -924,7 +872,38 @@ export default class HomePage extends Vue {
     } else if (e.deltaY >= 0 && this.scale > 0.2) {
       this.scale = Number((this.scale - 0.05).toFixed(2));
     }
-    console.log(this.scale);
+  }
+
+  lockHandle() {
+    if (this.activeElemIndex !== -1) {
+      (this.activeElem as Elem).lock = !(this.activeElem as Elem).lock;
+    }
+  }
+
+  hiddenHandle() {
+    if (this.activeElemIndex !== -1) {
+      (this.activeElem as Elem).hidden = !(this.activeElem as Elem).hidden;
+    }
+  }
+
+  created(): void {
+    document.onkeydown = e => {
+      if (e.key === "Delete" || e.key === "Del") {
+        if (this.activeElemIndex !== -1) {
+          // @ts-ignore
+          const elemList =
+            this.activeProgramIndex === -1
+              ? this.playbillData.elemList
+              : this.programsListObj[this.activeProgramIndex].elemList;
+          elemList.forEach((item: Elem, index: number) => {
+            if (item.pIndex === this.activeElemIndex) {
+              elemList.splice(index, 1);
+              this.activeElemIndex = -1;
+            }
+          });
+        }
+      }
+    };
   }
 }
 </script>
@@ -1020,6 +999,7 @@ $activeColor: rgb(25, 106, 212);
 </style>
 
 <style scoped lang="scss">
+$fontColor1: rgb(214, 221, 224);
 $toolbarH: 52px;
 $bgColor1: rgb(53, 55, 56);
 $bgColor2: rgb(21, 21, 21);
@@ -1027,6 +1007,7 @@ $bgColor3: rgb(37, 38, 38);
 $bgColor4: rgb(69, 70, 71);
 $gbColor5: rgb(215, 221, 224);
 $gbColor5: rgb(89, 90, 92);
+$bgColor6: rgb(128, 128, 128);
 $activeColor: rgb(25, 106, 212);
 $toolbarNormalColor: rgb(217, 217, 217);
 $toolbarActiveColor: rgb(242, 244, 245);
@@ -1276,6 +1257,30 @@ $toolbarActiveBg: rgb(23, 38, 38);
   background: $toolbarActiveBg;
 }
 
+.toolbar-box.active {
+  background: $bgColor3;
+  border-top: 2px solid $bgColor6;
+}
+
+.toolbar-box.active .toolbar-box-icon {
+  color: $toolbarActiveColor;
+}
+
+.toolbar-box.disabled {
+  color: $bgColor6;
+}
+
+.toolbar-box.disabled :after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+
 .toolbar-center > div,
 .toolbar-box-icon {
   display: flex;
@@ -1307,7 +1312,7 @@ $toolbarActiveBg: rgb(23, 38, 38);
 
 .toolbar-box:hover .cloud-arrow {
   color: $activeColor;
-  animation: cloud-arrow-run 2s infinite;
+  animation: cloud-arrow-run 1s infinite;
 }
 
 @keyframes cloud-arrow-run {
@@ -1315,7 +1320,28 @@ $toolbarActiveBg: rgb(23, 38, 38);
     transform: translateY(-5px);
   }
   100% {
-    transform: translateY(-17px);
+    transform: translateY(-15px);
   }
+}
+
+.toolbar-center-c .group-content {
+  display: none;
+  position: absolute;
+  left: -100%;
+  top: 100%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 2px 6px 0, rgba(0, 0, 0, 0.15) 0 10px 30px 0,
+    rgb(37, 38, 38) 0 1px 0 0 inset;
+  padding: 4px 0;
+  background: rgb(54, 55, 56);
+}
+
+.toolbar-center-c .group-content > div {
+  height: 32px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  color: $fontColor1;
+  padding: 0px 16px;
+  border-radius: 2px;
 }
 </style>

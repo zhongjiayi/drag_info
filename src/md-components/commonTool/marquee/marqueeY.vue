@@ -74,7 +74,6 @@ export default {
     }
   },
   created(){
-    debugger
     console.log(this.outerCss)
     if(this.outerCss){
       this.InnerStyle = this.outerCss || {};
@@ -140,7 +139,7 @@ export default {
   color: #fee7b1;
   height: 100%;
   padding: 5px;
-  overflow: hidden;
+  overflow-y: hidden;
   border: 2px solid #c46302;
   .my-inbox {
     margin: 0 45px;

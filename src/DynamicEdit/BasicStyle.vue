@@ -29,6 +29,7 @@
   // ап╠М
   .currentList-list:hover .handleButton {
     display: block;
+    color: $fontColor2;
   }
 
   .currentList-list {
